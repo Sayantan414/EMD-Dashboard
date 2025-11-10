@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Settings",
+        "default": true
+    },
+    {
+        "name": "Reports",
+        "default": true
+    },
+    {
+        "name": "Trends",
+        "default": true
+    }
+]

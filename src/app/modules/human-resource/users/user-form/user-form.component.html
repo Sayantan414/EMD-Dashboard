@@ -1,0 +1,139 @@
+<div class="flex flex-col   max-h-screen -m-6 overflow-hidden">
+
+  <!-- View mode -->
+
+
+  <!-- Header -->
+  <div class="flex flex-row items-center justify-between w-full p-2 px-6 bg-primary  ">
+    <span class="text-white font-semibold text-xl">{{updateFlag ? 'Update':'Add'}} User</span>
+
+    <a mat-icon-button [matTooltip]="'Close'" (click)="cancel()">
+      <mat-icon class="text-white">close</mat-icon>
+    </a>
+
+
+  </div>
+
+  <form class="grid grid-cols-1 sm:grid-cols-2 gap-3 p-1 sm:p-6 overflow-y-auto" [formGroup]="contactForm">
+
+    <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
+      <mat-label>Role</mat-label>
+      <mat-select name="role" [(ngModel)]="user.role" formControlName="role" required>
+        <mat-option *ngFor="let role of roles" [value]="role.name">
+          {{role.name}}
+        </mat-option>
+      </mat-select>
+      <mat-icon matSuffix class="secondary-text">person_outline</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field class="flex-auto gt-xs:pr-3 w-full" *ngIf="!updateFlag">
+      <mat-label>Username</mat-label>
+      <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+      <input name="userid" formControlName="userid" [(ngModel)]="user.userid" matInput required>
+      <mat-error>First Name is required!</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
+      <mat-label>First Name</mat-label>
+      <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+      <input name="firstname" formControlName="firstname" [(ngModel)]="user.firstname" matInput required>
+      <mat-error>First Name is required!</mat-error>
+    </mat-form-field>
+    <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
+      <mat-label>Last Name</mat-label>
+      <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+      <input name="lastname" formControlName="lastname" [(ngModel)]="user.lastname" matInput>
+      <mat-error>Last Name is required!</mat-error>
+    </mat-form-field>
+    <!-- <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
+      <mat-label>Mobile number</mat-label>
+      <mat-icon matSuffix class="secondary-text">mobile_friendly</mat-icon>
+      <input name="mobile" formControlName="mobile" [(ngModel)]="user.mobile" matInput required pattern="(^\d{10}$)">
+     <mat-error *ngIf="!mobile.errors?.pattern">Mobile No is required!</mat-error>
+      <mat-error>Mobile No is not incorrect format!</mat-error>
+    </mat-form-field> -->
+
+
+    <!--  -->
+    <!-- <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
+      <mat-label>Password</mat-label>
+      <mat-icon matSuffix class="secondary-text" *ngIf="addFlag" (click)="visible=!visible">{{!visible ?
+        'visibility'
+        : 'visibility_off'}}</mat-icon>
+      <mat-icon matSuffix class="secondary-text" *ngIf="editFlag">visibility_off</mat-icon>
+      <input [type]="!visible ? 'password' : 'text'" formControlName="password" [readonly]="editFlag"
+        [(ngModel)]="user.password" matInput required>
+      <mat-error>Password is required!</mat-error>
+
+    </mat-form-field> -->
+    <!-- <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
+      <mat-label>Email</mat-label>
+      <mat-icon matSuffix class="secondary-text">email</mat-icon>
+      <input name="email" [(ngModel)]="user.email" matInput formControlName="email" type="email"
+        pattern="[A-Za-z0-9._%+-]{1,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})" required>
+      <mat-error>Email is not incorrect format!</mat-error>
+    </mat-form-field> -->
+
+    <!-- 
+    <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
+      <mat-label>Department</mat-label>
+      <mat-select name="department" [(ngModel)]="user.department" formControlName="department" required>
+        <mat-option *ngFor="let department of departments" [value]="department.name">
+          {{department.name}}
+        </mat-option>
+        <mat-option value="None">--None--</mat-option>
+      </mat-select>
+      <mat-icon matSuffix class="secondary-text">person_outline</mat-icon>
+    </mat-form-field>
+    <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
+      <mat-label>Designation</mat-label>
+      <mat-select name="designation" [(ngModel)]="user.designation" formControlName="designation" required>
+        <mat-option *ngFor="let designation of designations" [value]="designation.name">
+          {{designation.name}}
+        </mat-option>
+        <mat-option value="None">--None--</mat-option>
+      </mat-select>
+      <mat-icon matSuffix class="secondary-text">person_outline</mat-icon>
+    </mat-form-field> -->
+
+    <mat-form-field class="w-full" *ngIf="!updateFlag">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" [formControlName]="'password'" [(ngModel)]="user.password" required
+        #passwordField>
+      <button mat-icon-button type="button" *ngIf="!updateFlag"
+        (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'"
+        matSuffix>
+        <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'password'"
+          [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+        <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'text'"
+          [svgIcon]="'heroicons_solid:eye-slash'"></mat-icon>
+      </button>
+      <button mat-icon-button type="button" *ngIf="updateFlag" matSuffix>
+        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+      </button>
+      <mat-error>
+        Password is required
+      </mat-error>
+    </mat-form-field>
+
+
+
+
+
+
+
+
+  </form>
+
+  <div class="flex flex-row items-center justify-end px-6 py-3 bg-primary-100">
+    <button mat-raised-button color="primary" (click)="onAdd()" class="submit-button" aria-label="Filter"
+      *ngIf="!updateFlag" [disabled]="contactForm.invalid">
+      ADD
+    </button>
+    <button mat-raised-button color="primary" (click)="onUpdate()" class="submit-button" aria-label="Filter"
+      *ngIf="updateFlag" [disabled]="contactForm.invalid">
+      Update
+    </button>
+  </div>
+
+</div>

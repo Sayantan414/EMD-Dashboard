@@ -1,0 +1,251 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+
+  <div
+    class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+    <div class="flex-1 min-w-0">
+      <!-- Breadcrumbs -->
+      <div>
+        <!-- <div class="hidden sm:flex flex-wrap items-center font-medium">
+                <div>
+                    <a class="whitespace-nowrap text-primary-500">Projects</a>
+                </div>
+                <div class="flex items-center ml-1 whitespace-nowrap">
+                    <mat-icon
+                        class="icon-size-5 text-secondary"
+                        [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
+                    <a class="ml-1 text-primary-500">Weekend Project</a>
+                </div>
+                <div class="flex items-center ml-1 whitespace-nowrap">
+                    <mat-icon
+                        class="icon-size-5 text-secondary"
+                        [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
+                    <span class="ml-1 text-secondary">Overview</span>
+                </div>
+            </div> -->
+        <!-- <div class="flex sm:hidden">
+                <a
+                    class="inline-flex items-center -ml-1.5 text-secondary font-medium"
+                    [routerLink]="'./..'">
+                    <mat-icon
+                        class="icon-size-5 text-secondary"
+                        [svgIcon]="'heroicons_solid:chevron-left'"></mat-icon>
+                    <span class="ml-1">Back</span>
+                </a>
+            </div> -->
+      </div>
+      <!-- Title -->
+      <div class="mt-2">
+        <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+          App Dashboard
+        </h2>
+        <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+          <span style="color:purple; font-weight: 600;font-size:20px;">{{userList.length==0?'':userList.length==1?
+            userList.length +' Organization' : userList.length +' Organizations'}}</span>
+
+        </div>
+
+      </div>
+
+    </div>
+    <!-- Actions -->
+    <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+      <button class="ml-4" mat-flat-button [color]="'primary'" (click)="addnew()">
+        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+        <span class="ml-2 mr-1">Add</span>
+      </button>
+      <button mat-icon-button [color]="'primary'" (click)="matDrawer.open()">
+        <mat-icon [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
+      </button>
+
+    </div>
+  </div>
+  <mat-drawer-container class="flex-auto h-full" [hasBackdrop]="false">
+
+    <!-- Drawer -->
+    <mat-drawer class="w-full sm:w-100 lg:border-r lg:shadow-none dark:bg-gray-900" [autoFocus]="false"
+      [(opened)]="drawerOpened" [position]="'end'" #matDrawer>
+
+      <div class="flex flex-col w-full overflow-hidden" style="height: calc(100vh-120px);">
+
+        <!-- View mode -->
+
+
+        <!-- Header -->
+        <div class=" items-center w-full py-3 px-8 sm:px-12 bg-primary-800 dark:bg-accent-700">
+          <div class="flex items-center justify-between w-full max-w-3xl mx-auto">
+            <span class="text-white font-semibold text-xl md:text-2xl">Filter User</span>
+            <div class="flex flex-row items-center justify-center">
+
+              <!-- <button mat-icon-button [matTooltip]="'Add'">
+                                <mat-icon class="text-white" [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                            </button> -->
+              <button mat-icon-button [matTooltip]="'Close'" (click)="matDrawer.close()">
+                <mat-icon class="text-white" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+        <form [formGroup]="filterForm" class="flex flex-col flex-auto p-6 pt-10 sm:p-8 sm:pt-10 overflow-y-auto">
+          <!-- Header -->
+
+
+
+          <!-- Role -->
+          <mat-form-field class="flex-auto gt-xs:pr-3">
+            <mat-label>Country</mat-label>
+            <mat-select [formControlName]="'country'" id="country" [(ngModel)]="dashboard.country"
+              (selectionChange)="getState(dashboard.country)">
+              <mat-option *ngFor="let country of countries" [value]="country">{{country}}</mat-option>
+
+            </mat-select>
+            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:map-pin'"></mat-icon>
+          </mat-form-field>
+
+
+          <mat-form-field class="flex-auto gt-xs:pr-3 halfwidth">
+            <mat-label>States</mat-label>
+            <mat-select [formControlName]="'state'" id="state" [(ngModel)]="dashboard.state"
+              (selectionChange)="getCity(dashboard.country,dashboard.state)">
+              <!-- <mat-option value="null" disabled selected hidden>---Select Status ---</mat-option> -->
+              <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
+            </mat-select>
+            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon>
+          </mat-form-field>
+
+          <mat-form-field class="flex-auto gt-xs:pr-3 halfwidth">
+            <mat-label>City</mat-label>
+            <mat-select [formControlName]="'city'" id="city" [(ngModel)]="dashboard.city">
+              <!-- <mat-option value="null" disabled selected hidden>---Select Status ---</mat-option> -->
+              <mat-option *ngFor="let city of cities" [value]="city">{{city}}</mat-option>
+            </mat-select>
+            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon>
+          </mat-form-field>
+
+          <mat-form-field class="flex-auto gt-xs:pr-3 halfwidth">
+            <mat-label>Name</mat-label>
+            <input matInput [formControlName]="'oname'" id="oname" [(ngModel)]="dashboard.oname">
+            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon>
+          </mat-form-field>
+
+          <mat-form-field class="flex-auto gt-xs:pr-3 halfwidth">
+            <mat-label>Code</mat-label>
+            <input matInput [formControlName]="'ocode'" id="ocode" [(ngModel)]="dashboard.ocode">
+            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon>
+          </mat-form-field>
+
+          <div fxLayout="column" fxLayoutAlign="end center"
+            style="margin-bottom: 20px; margin-top:20px;margin-left:10px;">
+            <button mat-raised-button color="primary" (click)="onFilter()" class="submit-button" aria-label="Filter">
+              Filter
+            </button>
+          </div>
+        </form>
+      </div>
+
+
+    </mat-drawer>
+
+    <!-- Drawer content -->
+    <mat-drawer-content class="flex overflow-hidden">
+
+      <!-- <fuse-alert class="mb-8" *ngIf="showAlert" [type]="'success'" [appearance]="'fill'">
+        <span fuseAlertTitle>Success alert</span>
+        {{alert.message}}
+      </fuse-alert> -->
+
+
+
+
+
+      <ng-container>
+
+        <div class="flex-auto  w-full p-6 overflow-y-auto border-l" *ngIf="orgList.length>0">
+          <!-- <fuse-alert class="mt-8" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type"
+            [@shake]="alert.type === 'error'">
+            {{alert.message}}
+          </fuse-alert> -->
+          <div class="flex flex-row items-center justify-center w-full fuse-alert-container" *ngIf="showAlert">
+            <!-- <fuse-alert class="mb-8 w-1/2 justify-center" *ngIf="showAlert" [appearance]="'soft'" [dismissible]="true"
+              [dismissed]="false" [name]="'alertBox1'" [type]="'success'">
+              <b>{{alert.message}}</b> Has Been Selected To View Details.
+            </fuse-alert> -->
+            <fuse-alert [type]="'success'" [appearance]="'fill'">
+              <span fuseAlertTitle>{{alert.message}}</span>
+              Has Been Selected To View Details.
+            </fuse-alert>
+          </div>
+
+
+
+
+          <table class="w-full" cellspacing="0">
+            <tr class="bolder bg-blue-200">
+              <th class="text-left px-3">Code</th>
+              <th class="text-left px-3">Name</th>
+              <th class="text-left px-3">Country</th>
+              <th class="text-left px-3">Addedon</th>
+              <th class="text-left px-3"></th>
+              <!-- <th >Edit</th>
+                           <th >Delete</th> -->
+              <!-- <th width="230">Name</th>
+                           <th width="230">Email</th>
+                           <th width="230">Phone</th>
+                           <th width="150">Edit</th>
+                           <th width="60">Delete</th> -->
+            </tr>
+
+            <tr class="border" *ngFor="let list of orgList; let rindex=index">
+
+              <td class="text-left px-3 cursor-pointer">
+                <button mat-stroked-button
+                  [ngClass]="(user?.ocode == list.ocode) ? 'bg-green-500 text-white' :  'bg-primary-800 text-white'"
+                  (click)="selectOrganization(list)">
+                  {{list.ocode}}
+                </button>
+              </td>
+              <td class="text-left px-3">{{list.oname}}</td>
+              <td class="text-left px-3">{{list.country}}</td>
+              <td class="text-left px-3">{{list.addedon | date: "dd.MM.yyyy"}}</td>
+              <td class="text-left px-3">
+                <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
+                  (click)="$event.stopPropagation();">
+                  <mat-icon class="secondary-text">more_vert</mat-icon>
+                </button>
+
+                <mat-menu #moreMenu="matMenu">
+
+                  <button mat-menu-item aria-label="settings" (click)="setProduct(list)">
+                    <mat-icon>settings</mat-icon>
+                    <span>Features Settings</span>
+                  </button>
+                  <button mat-menu-item aria-label="edit" (click)="vendorEdit(list)">
+                    <mat-icon>edit</mat-icon>
+                    <span>Edit</span>
+                  </button>
+                  <button mat-menu-item aria-label="remove" (click)="deleteVendor(list)">
+                    <mat-icon>delete</mat-icon>
+                    <span>Remove</span>
+                  </button>
+                </mat-menu>
+              </td>
+              <!-- (click)="go2Profile(list,rindex)"<td (click)="edtiUSer(rindex,list)" style= "cursor:pointer ;"><mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon></td>
+                           <td (click)="deleteUser(rindex,list)" style= "cursor:pointer ;"><mat-icon [svgIcon]="'heroicons_outline:trash'" ></mat-icon></td> -->
+            </tr>
+          </table>
+
+
+
+        </div>
+        <div class="flex flex-auto flex-col items-center justify-center h-full" *ngIf="orgList.length==0">
+          <mat-icon class="icon-size-24" [svgIcon]="'iconsmind:administrator'"></mat-icon>
+          <div class="mt-4 text-2xl font-semibold tracking-tight text-secondary">There are no Organization!</div>
+        </div>
+      </ng-container>
+
+    </mat-drawer-content>
+
+  </mat-drawer-container>
+
+</div>

@@ -1,0 +1,43 @@
+<div
+    class="area flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0">
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <div
+        class="md:flex md:items-center md:justify-end w-full sm:w-auto md:h-full md:w-1/2 py-8 px-4 sm:p-12 md:p-16 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none bg-card z-10">
+        <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
+            <!-- Logo -->
+            <div class="w-26">
+                <img src="assets\images\logo\raillogo.png">
+            </div>
+
+            <!-- Title -->
+            <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Confirmation required</div>
+            <div class="mt-4">
+                A confirmation mail with instructions has been sent to your email address.
+                Follow those instructions to confirm your email address and activate your account.
+            </div>
+
+            <!-- Form footer -->
+            <div class="my-3 flex flex-row items-center   justify-end w-full space-x-5">
+
+                <a mat-button class="text-md hover:font-extrabold text-primary hover:underline"
+                    [routerLink]="['/sign-in']">Return
+                    To
+                    Login
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

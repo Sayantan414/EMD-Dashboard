@@ -1,0 +1,47 @@
+<div class="flex flex-col w-full overflow-hidden">
+
+  <!-- View mode -->
+
+
+  <!-- Header -->
+  <div class=" items-center w-full py-0 px-3 bg-primary-800 dark:bg-accent-700">
+    <div class="flex items-center justify-between w-full max-w-3xl mx-auto">
+      <span class="text-white font-semibold text-xl">Filter User</span>
+      <div class="flex flex-row items-center justify-center">
+
+        <!-- <button mat-icon-button [matTooltip]="'Add'">
+                            <mat-icon class="text-white" [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                        </button> -->
+        <a mat-icon-button [matTooltip]="'Close'" (click)="cancel()">
+          <mat-icon class="text-white">close</mat-icon>
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+  <form class="flex flex-col flex-auto p-6 pt-10 sm:p-12 sm:pt-10 overflow-y-auto">
+    <!-- Header -->
+
+
+
+    <!-- Role 88151-->
+    <div>
+      <mat-form-field class="flex-auto gt-xs:pr-3 w-full">
+        <mat-label>Select Role</mat-label>
+        <select matNativeControl [placeholder]="'Select Role'" name="role" [(ngModel)]="criteria.role">
+          <option *ngFor="let role of roles" [value]="role.name">
+            {{role.name}}</option>
+        </select>
+        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="end center" style="margin-bottom: 20px; margin-top:20px;margin-left:10px;">
+      <button mat-raised-button color="primary" (click)="onFilter()" class="submit-button" aria-label="Filter">
+        Filter
+      </button>
+    </div>
+  </form>
+</div>

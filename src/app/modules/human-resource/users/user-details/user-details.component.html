@@ -1,0 +1,193 @@
+<div class="flex flex-col w-full" *ngIf="user">
+
+  <!-- View mode -->
+  <ng-container>
+
+    <!-- Header -->
+    <div class="relative w-full h-40 sm:h-48 px-8 sm:px-12 bg-accent-100 dark:bg-accent-700">
+      <!-- Background -->
+      <ng-container *ngIf="coverUrl">
+        <img class="absolute inset-0 object-cover w-full h-full" [src]="coverUrl">
+      </ng-container>
+      <!-- Close button -->
+      <div class="flex items-center justify-end w-full max-w-3xl mx-auto pt-6 bg-slate-400">
+        <a mat-icon-button [matTooltip]="'Close'" (click)="cancel()">
+          <mat-icon class="text-white">close</mat-icon>
+        </a>
+      </div>
+    </div>
+
+    <!-- user -->
+    <div class="relative flex flex-col flex-auto items-center p-6 pt-0 sm:p-12 sm:pt-0">
+      <div class="w-full max-w-3xl">
+
+        <!-- imageURL and actions -->
+        <div class="flex flex-auto items-end -mt-16">
+          <!-- imageURL -->
+          <div
+            class="relative flex items-center justify-center w-32 h-32 rounded-full overflow-hidden ring-4 ring-bg-card bg-gray-200">
+            <!-- Upload / Remove avatar -->
+            <!-- <div class="absolute inset-0 bg-black bg-opacity-50 z-10"></div> -->
+            <div class="absolute inset-0 flex items-end justify-end z-20"
+              *ngIf="currentUser.userid == user.userid || currentUser.role == 'ADMIN' || currentUser.role == 'APPADMIN' || currentUser.role == 'APPUSER'">
+              <div>
+                <!-- <div class="absolute inset-0 bg-black bg-opacity-50 z-10"></div> -->
+                <input id="avatar-file-input" class="absolute h-0 w-0 opacity-0 invisible pointer-events-none"
+                  type="file" [multiple]="false" [accept]="'image/jpeg, image/png'"
+                  (change)="onFileSelect($event.target.files)" #avatarFileInput>
+                <label
+                  class="flex items-center justify-center   z-10 w-10 h-10 mr-3 mb-3 rounded-full cursor-pointer hover:bg-hover"
+                  for="avatar-file-input" matRipple>
+                  <mat-icon class="text-white bg-black bg-opacity-50 rounded-full"
+                    [svgIcon]="'heroicons_outline:camera'"></mat-icon>
+                </label>
+              </div>
+              <!-- <div>
+                            <button mat-icon-button (click)="removeAvatar()">
+                              <mat-icon class="text-white" [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                            </button>
+                          </div> -->
+            </div>
+            <!-- Image/Letter -->
+            <img class="object-cover w-full h-full" *ngIf="user.imageURL" [src]="user.imageURL">
+            <div
+              class="flex items-center justify-center w-full h-full rounded overflow-hidden uppercase text-8xl font-bold leading-none bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200"
+              *ngIf="!user.imageURL">
+              {{user.firstname.charAt(0)}}
+            </div>
+          </div>
+          <!-- Actions -->
+          <!-- <div class="flex items-center ml-auto mb-1">
+            <button mat-stroked-button (click)="toggleEditMode(true)">
+              <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
+              <span class="ml-2">Edit</span>
+            </button>
+          </div> -->
+        </div>
+
+        <!-- Name -->
+        <div class="flex flex-row items-center justify-between py-2 ">
+
+          <div class=" text-4xl font-bold truncate">{{user.firstname}} {{user.lastname}}</div>
+          <button class="flex flex-row items-center px-3 mr-1  sm:inline-flex" mat-stroked-button
+            (click)="resetPassword(user)" *ngIf="resetpasswordFlag">
+            <mat-icon class="icon-size-5 ">lock_reset</mat-icon>
+            <span class="px-2">Reset Password</span>
+          </button>
+        </div>
+
+
+        <!-- Tags -->
+        <!-- <ng-container *ngIf="user.tags.length">
+          <div class="flex flex-wrap items-center mt-2">
+           
+            <ng-container *ngFor="let tag of (user.tags | fuseFindByKey:'id':tags); trackBy: trackByFn">
+              <div
+                class="flex items-center justify-center py-1 px-3 mr-3 mb-3 rounded-full leading-normal text-gray-500 bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
+                <span class="text-sm font-medium whitespace-nowrap">{{tag.title}}</span>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container> -->
+
+        <div class="flex flex-col mt-4 pt-6 border-t space-y-8">
+          <!-- Title -->
+          <!-- <ng-container *ngIf="user.title">
+            <div class="flex sm:items-center">
+              <mat-icon [svgIcon]="'heroicons_outline:briefcase'"></mat-icon>
+              <div class="ml-6 leading-6">{{user.title}}</div>
+            </div>
+          </ng-container> -->
+
+
+
+          <!-- Company -->
+          <!-- <ng-container *ngIf="user.company">
+            <div class="flex sm:items-center">
+              <mat-icon [svgIcon]="'heroicons_outline:building-office-2'"></mat-icon>
+              <div class="ml-6 leading-6">{{user.company}}</div>
+            </div>
+          </ng-container> -->
+
+          <!-- Emails -->
+          <!-- <ng-container *ngIf="user.email">
+            <div class="flex">
+              <mat-icon>email</mat-icon>
+              <div class="min-w-0 ml-6 space-y-1">
+                <ng-container>
+                  <div class="flex items-center leading-6">
+                    <a class="hover:underline text-primary-500" [href]="'mailto:' + user.email" target="_blank">
+                      {{user.email}}
+                    </a>
+
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container> -->
+
+          <!-- Phone -->
+          <!-- <ng-container *ngIf="user.mobile">
+            <div class="flex">
+              <mat-icon [svgIcon]="'heroicons_outline:phone'"></mat-icon>
+              <div class="min-w-0 ml-6 space-y-1">
+                <ng-container>
+                  <div class="flex items-center leading-6">
+
+                    <div class="ml-2.5 font-mono">{{user.mobile}}</div>
+
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container> -->
+
+          <ng-container *ngIf="user.role">
+            <div class="flex" [matTooltip]="'Role: ' + user.role">
+              <mat-icon>engineering</mat-icon>
+              <div class="min-w-0 ml-6 space-y-1">
+                <ng-container>
+                  <div class="flex items-center leading-6">
+
+                    <div class="ml-2.5 font-mono">{{user.role}}</div>
+
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+
+
+
+          <!-- Address -->
+          <!-- <ng-container *ngIf="user.address">
+            <div class="flex sm:items-center">
+              <mat-icon [svgIcon]="'heroicons_outline:map-pin'"></mat-icon>
+              <div class="ml-6 leading-6">{{user.address}}</div>
+            </div>
+          </ng-container> -->
+
+          <!-- Birthday -->
+          <!-- <ng-container *ngIf="user.birthday">
+            <div class="flex sm:items-center">
+              <mat-icon [svgIcon]="'heroicons_outline:cake'"></mat-icon>
+              <div class="ml-6 leading-6">{{user.birthday | date:'longDate'}}</div>
+            </div>
+          </ng-container> -->
+
+          <!-- Notes -->
+          <!-- <ng-container *ngIf="user.notes">
+            <div class="flex">
+              <mat-icon [svgIcon]="'heroicons_outline:bars-3-bottom-left'"></mat-icon>
+              <div class="max-w-none ml-6 prose prose-sm" [innerHTML]="user.notes"></div>
+            </div>
+          </ng-container> -->
+        </div>
+
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Edit mode -->
+
+</div>

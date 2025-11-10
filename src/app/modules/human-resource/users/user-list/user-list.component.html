@@ -1,0 +1,64 @@
+<div class="relative p-10 w-full overflow-y-auto">
+  <div class="table-users w-full " *ngIf="userList.length>0">
+
+    <table class="w-full border bg-card" cellspacing="0">
+      <thead class="bg-blue-200">
+        <th class="p-3 text text-left">Profile Pic</th>
+        <th class="p-3">Name</th>
+        <th class="p-3">Role</th>
+        <th class="p-3" *ngIf=" (editable || deletable)">Actions</th>
+      </thead>
+
+      <tr *ngFor="let list of userList; let rindex=index" class="border  hover:bg-blue-50">
+        <td class="p-3 cursor-pointer" (click)="viewUser(list)">
+          <div
+            class="relative flex items-center justify-center w-8 h-8 rounded-full overflow-hidden ring-4 ring-bg-card bg-gray-200">
+            <img class="w-full h-full" [src]="list.imageUrl" />
+          </div>
+        </td>
+        <td class="p-3 cursor-pointer" (click)="viewUser(list)">{{list.firstname}} {{list.lastname}}</td>
+        <td class="p-3 cursor-pointer" (click)="viewUser(list)">{{list.role}}</td>
+        <td *ngIf="!list.defaltFlag && (editable || deletable || resetPasswordFlag)">
+
+          <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More" (click)="$event.stopPropagation();">
+            <mat-icon class="secondary-text">more_vert</mat-icon>
+          </button>
+
+          <mat-menu #moreMenu="matMenu">
+            <button mat-menu-item aria-label="edit" (click)="edtiUser(list)" *ngIf="editable">
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
+            </button>
+            <button mat-menu-item aria-label="remove" (click)="deleteUser(rindex,list)" *ngIf="deletable">
+              <mat-icon>delete</mat-icon>
+              <span>Remove</span>
+            </button>
+          </mat-menu>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
+  <div class="flex flex-row items-center justify-center  w-full h-full " *ngIf="userList.length == 0">
+    <div class=" inset-0">
+      <!-- Main -->
+      <div class="flex flex-col flex-auto items-center justify-center h-full p-6 sm:p-10">
+        <!-- @formatter:off -->
+        <div class="w-36 max-w-3xl">
+          <img src="assets/images/no-data.png" alt="no data">
+        </div>
+        <!-- @formatter:on -->
+        <div
+          class="mt-6 sm:mt-10 text-4xl md:text-7xl font-extrabold tracking-tight leading-tight md:leading-none text-center">
+          Ooops... No User found!
+        </div>
+
+
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
