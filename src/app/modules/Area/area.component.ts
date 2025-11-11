@@ -253,7 +253,7 @@ export class AreaComponent implements OnInit, OnDestroy {
 
     // Radial chart 1 (Compressor 1 Pressure)
     this.radialChart1 = {
-      series: [76],
+      series: [89],
       chart: {
         height: 200,
         type: 'radialBar',
@@ -297,7 +297,7 @@ export class AreaComponent implements OnInit, OnDestroy {
         },
         formatter: (seriesName, opts) => {
           const value = opts.w.globals.series[opts.seriesIndex];
-          return `${seriesName}: ${value}%`; // Legend will show "Pressure (psi): 76%"
+          return `${seriesName}: ${value}`; // Legend will show "Pressure (psi): 76%"
         },
         onItemClick: {
           toggleDataSeries: true

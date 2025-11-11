@@ -4,7 +4,7 @@ fuse-horizontal-navigation {
     .fuse-horizontal-navigation-wrapper {
         display: flex;
         align-items: center;
-        
+
 
         /* Basic, Branch */
         fuse-horizontal-navigation-basic-item,
@@ -39,33 +39,33 @@ fuse-horizontal-navigation {
         /* Basic - When item active (current link) */
         fuse-horizontal-navigation-basic-item {
 
-    .fuse-horizontal-navigation-item-active,
-    .fuse-horizontal-navigation-item-active-forced {
+            .fuse-horizontal-navigation-item-active,
+            .fuse-horizontal-navigation-item-active-forced {
 
-        .fuse-horizontal-navigation-item-title {
-            color: var(--header_active) !important;
-            font-weight: 600;
-        }
+                .fuse-horizontal-navigation-item-title {
+                    color: var(--header_active) !important;
+                    font-weight: 500;
+                }
 
-        .fuse-horizontal-navigation-item-subtitle {
-            color: rgba(255, 255, 255, 0.8) !important;
+                .fuse-horizontal-navigation-item-subtitle {
+                    color: rgba(255, 255, 255, 0.8) !important;
 
-            .dark & {
-                color: rgba(255, 255, 255, 0.9) !important;
+                    .dark & {
+                        color: rgba(255, 255, 255, 0.9) !important;
+                    }
+                }
+
+                .fuse-horizontal-navigation-item-icon {
+                    color: var(--header_active) !important;
+                }
+
+                .fuse-horizontal-navigation-item-wrapper {
+                    background-color: rgba(255, 255, 255, 0.1);
+                    border-radius: 6px;
+                    transition: background-color 0.3s ease;
+                }
             }
         }
-
-        .fuse-horizontal-navigation-item-icon {
-            color: var(--header_active) !important;
-        }
-
-        .fuse-horizontal-navigation-item-wrapper {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 6px;
-            transition: background-color 0.3s ease;
-        }
-    }
-}
 
 
         /* Branch - When menu open */
@@ -160,15 +160,16 @@ fuse-horizontal-navigation {
             justify-content: flex-start;
             min-height: 48px;
             width: 100%;
-            font-size: 15px;
+            font-size: 17px;
 
-    @media (min-width: 768px) {
-        font-size: 17px;
-    }
+            @media (min-width: 768px) {
+                font-size: 19px;
+            }
 
-    @media (min-width: 1024px) {
-        font-size: 18px;
-    }
+            @media (min-width: 1024px) {
+                font-size: 20px;
+            }
+
             font-weight: 500;
             text-decoration: none;
 

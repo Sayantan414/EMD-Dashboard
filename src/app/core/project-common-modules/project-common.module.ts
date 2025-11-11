@@ -15,7 +15,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { TextFieldModule } from "@angular/cdk/text-field";
 import { MatCheckboxModule } from "@angular/material/checkbox";
-// import { NgApexchartsModule } from "ng-apexcharts";
+import { NgApexchartsModule } from "ng-apexcharts";
 
 @NgModule({
   imports: [
@@ -67,7 +67,7 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
     FormsModule,
     ReactiveFormsModule,
     DatePipe,
-    // NgApexchartsModule
+    NgApexchartsModule
   ],
 })
 export class ProjectCommonModule { }

@@ -51,10 +51,10 @@ export const appRoutes: Route[] = [
 
 
       // ---- Dashboard ----
-      // {
-      //   path: 'area',
-      //   loadChildren: () => import('app/modules/Area/area.routes'),
-      // },
+      {
+        path: 'area',
+        loadChildren: () => import('app/modules/Area/area.routes'),
+      },
 
       // ---- Gas Balance (parent) ----
       {
