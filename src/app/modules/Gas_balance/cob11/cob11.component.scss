@@ -1,0 +1,670 @@
+// .container {
+//   display: flex;
+//   flex-direction: row;
+//   height: calc(100vh - 84px);
+//   padding: 10px;
+//   box-sizing: border-box;
+//   overflow: hidden;
+//   /* prevents scroll */
+// }
+
+
+/* Left detail panel */
+.layout-container {
+  display: flex;
+  align-items: flex-start;
+  /* aligns both at top */
+  gap: 100px;
+  /* spacing between the two */
+  // padding: 10px 20px;
+  /* control top gap globally */
+}
+
+.detail-view {
+  width: 22%;
+  min-width: 250px;
+  height: 200px;
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 14px;
+  padding: 25px 20px;
+  margin-right: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  color: var(--text);
+  font-family: 'Open Sans', sans-serif;
+  transition: all 0.3s ease;
+}
+
+.detail-view:hover {
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+}
+
+.detail-view h3 {
+  // color: var(--text);
+  color: var(--header-text);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+
+
+// /* Right tree area */
+// .tree {
+//   flex: 1;
+//   display: flex;
+//   justify-content: center;
+//   align-items: flex-start;
+//   padding-top: 20px;
+//   overflow: hidden;
+//   /* ensures no scrollbar */
+// }
+
+// /* Make the org chart responsive */
+// ::ng-deep ngx-org-chart {
+//   transform: scale(0.9);
+//   /* scale slightly to fit in viewport */
+//   transform-origin: top center;
+//   width: 100%;
+// }
+
+// @media (max-width: 1500px) {
+//   ::ng-deep ngx-org-chart {
+//     transform: scale(0.8);
+//   }
+// }
+
+// @media (max-width: 1200px) {
+//   ::ng-deep ngx-org-chart {
+//     transform: scale(0.7);
+//   }
+// }
+
+
+// ::ng-deep .line-long .ngx-org-node::before {
+//   height: 80px !important;
+// }
+
+// /* In your component's CSS file */
+// :host ::ng-deep .ngx-org-head {
+//   background: var(--bg-head);
+//   border: 2px solid var(--border-head);
+//   display: flex;
+//   justify-content: center;
+//   color: var(--tree-text);
+//   padding: 15px;
+//   width: 100px;
+// }
+
+// :host ::ng-deep .ngx-org-body {
+//   padding: 10px;
+//   color: var(--tree-text);
+//   background: var(--bg-body);
+//   border: 2px solid var(--border-body);
+//   border-radius: 4px;
+//   transition: all 0.3s ease;
+// }
+
+// :host ::ng-deep .ngx-org-body:hover {
+//   background: var(--bg-body-hover);
+//   border: 2px solid var(--border-body-hover);
+//   transform: translateY(-2px);
+//   box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+// }
+
+// :host ::ng-deep .ngx-org-body_sp {
+//   padding: 10px;
+//   color: var(--tree-text);
+//   background: var(--bg-sp);
+//   border: 2px solid var(--border-sp);
+//   border-radius: 4px;
+//   transition: all 0.3s ease;
+// }
+
+// :host ::ng-deep .ngx-org-body_sp:hover {
+//   background: var(--bg-sp-hover);
+//   border: 2px solid var(--border-sp-hover);
+//   transform: translateY(-2px);
+//   box-shadow: 0 4px 12px rgba(219, 77, 52, 0.3);
+// }
+
+// :host ::ng-deep .ngx-org-body_ldcp {
+//   padding: 10px;
+//   color: var(--tree-text);
+//   background: var(--bg-ldcp);
+//   border: 2px solid var(--border-ldcp);
+//   border-radius: 4px;
+//   transition: all 0.3s ease;
+// }
+
+// :host ::ng-deep .ngx-org-body_ldcp:hover {
+//   background: var(--bg-ldcp-hover);
+//   border: 2px solid var(--border-ldcp-hover);
+//   transform: translateY(-2px);
+//   box-shadow: 0 4px 12px rgba(169, 219, 52, 0.3);
+// }
+
+// :host ::ng-deep .ngx-org-body_pbs {
+//   padding: 10px;
+//   color: var(--tree-text);
+//   background: var(--bg-pbs);
+//   border: 2px solid var(--border-pbs);
+//   border-radius: 4px;
+//   transition: all 0.3s ease;
+// }
+
+// :host ::ng-deep .ngx-org-body_pbs:hover {
+//   background: var(--bg-pbs-hover);
+//   border: 2px solid var(--border-pbs-hover);
+//   transform: translateY(-2px);
+//   box-shadow: 0 4px 12px rgba(219, 133, 52, 0.3);
+// }
+
+// :host ::ng-deep .ngx-org-body_uf {
+//   padding: 10px;
+//   color: var(--tree-text);
+//   background: var(--bg-uf);
+//   border: 2px solid var(--border-uf);
+//   border-radius: 4px;
+//   transition: all 0.3s ease;
+// }
+
+// :host ::ng-deep .ngx-org-body_uf:hover {
+//   background: var(--bg-uf-hover);
+//   border: 2px solid var(--border-uf-hover);
+//   transform: translateY(-2px);
+//   box-shadow: 0 4px 12px rgba(219, 216, 52, 0.3);
+// }
+
+
+
+// /* Purple variant */
+// :host ::ng-deep .ngx-org-body_violet {
+//   padding: 10px;
+//   color: var(--tree-text);
+//   background: var(--bg-violet);
+//   border: 2px solid var(--border-violet);
+//   border-radius: 4px;
+//   transition: all 0.3s ease;
+// }
+
+// :host ::ng-deep .ngx-org-body_violet:hover {
+//   background: var(--bg-violet-hover);
+//   border: 2px solid var(--border-violet-hover);
+//   transform: translateY(-2px);
+//   box-shadow: 0 4px 12px rgba(155, 89, 182, 0.3);
+// }
+
+// /* Teal variant */
+// :host ::ng-deep .ngx-org-body_teal {
+//   padding: 10px;
+//   color: var(--tree-text);
+//   background: var(--bg-teal);
+//   border: 2px solid var(--border-teal);
+//   border-radius: 4px;
+//   transition: all 0.3s ease;
+// }
+
+// :host ::ng-deep .ngx-org-body_teal:hover {
+//   background: var(--bg-teal-hover);
+//   border: 2px solid var(--border-teal-hover);
+//   transform: translateY(-2px);
+//   box-shadow: 0 4px 12px rgba(26, 188, 156, 0.3);
+// }
+
+// /* Yellow variant */
+// :host ::ng-deep .ngx-org-body_yellow {
+//   padding: 10px;
+//   color: var(--tree-text);
+//   background: var(--bg-yellow);
+//   border: 2px solid var(--border-yellow);
+//   border-radius: 4px;
+//   transition: all 0.3s ease;
+// }
+
+// :host ::ng-deep .ngx-org-body_yellow:hover {
+//   background: var(--bg-yellow-hover);
+//   border: 2px solid var(--border-yellow-hover);
+//   transform: translateY(-2px);
+//   box-shadow: 0 4px 12px rgba(241, 196, 15, 0.3);
+// }
+
+// /* Pink variant */
+// :host ::ng-deep .ngx-org-body_pink {
+//   padding: 10px;
+//   color: var(--tree-text);
+//   background: var(--bg-pink);
+//   border: 2px solid var(--border-pink);
+//   border-radius: 4px;
+//   transition: all 0.3s ease;
+// }
+
+// :host ::ng-deep .ngx-org-body_pink:hover {
+//   background: var(--bg-pink-hover);
+//   border: 2px solid var(--border-pink-hover);
+//   transform: translateY(-2px);
+//   box-shadow: 0 4px 12px rgba(236, 112, 99, 0.3);
+// }
+
+
+
+// /* Remove the debug border */
+// // :host ::ng-deep * {
+// //   border: none !important;
+// // }
+
+// // :host ::ng-deep .ngx-org-border {
+// //   border: 1px solid #14851eda !important; /* Adjust border color and width */
+// //   /* Add your custom styles here */
+// // }
+
+
+
+
+
+.gasflow-container {
+  text-align: center;
+  min-height: 160vh;
+  // padding: 20px;
+
+
+
+  .title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--header-text);
+    margin-bottom: 25px;
+  }
+
+  .tree {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Continuous main vertical line through the center */
+  .main-line {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: calc(100% - 200px);
+    /* end at last branch */
+    background: gray;
+    z-index: 0;
+  }
+
+  /* Each branch (pair of boxes on one level) */
+  .branch {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+    position: relative;
+    margin-top: 80px;
+    z-index: 1;
+
+    /* horizontal connector between left & right nodes */
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 10%;
+      right: 10%;
+      height: 3px;
+      background: gray;
+      z-index: 0;
+    }
+
+    /* vertical connector from main spine to branch line */
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 3px;
+      height: 60px;
+      /* extended to connect staggered nodes */
+      background: gray;
+      transform: translate(-50%, -100%);
+      z-index: 0;
+    }
+
+    /* stagger effect */
+    .node.left {
+      transform: translateY(-20px);
+      /* up */
+    }
+
+    .node.right {
+      transform: translateY(20px);
+      /* down */
+    }
+  }
+
+  /* Remove stagger for last single branch (Misc) */
+  .branch.single .node {
+    transform: none !important;
+  }
+
+
+  .node {
+    width: 250px;
+    background: var(--box-bg);
+    // background: linear-gradient(180deg, #80deea, #e0f7fa);
+    border: 1px solid #0277bd;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+    padding: 4px;
+    transition: all 0.3s ease;
+    z-index: 2;
+
+    &:hover {
+      transform: scale(1.03);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .header {
+      background: url('/assets/blue-strip.jpg');
+      background-size: cover;
+      border-bottom: 1px solid #ccc;
+      color: var(--cogheader-text);
+      // color: #0d47a1;
+      font-weight: 600;
+      font-weight: bold;
+      font-size: 20px;
+      padding: 3px 0;
+      text-align: center;
+    }
+
+    .sub-title {
+      display: inline-block;
+      color: #b30000;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 1px;
+      border: 1px solid #b30000;
+      border-radius: 6px;
+      padding: 2px;
+      margin-top: 8px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 4px rgba(179, 0, 0, 0.3);
+      text-shadow: 1px 1px 4px rgba(255, 0, 0, 0.4);
+
+      &.red {
+        color: red;
+        background: linear-gradient(90deg, #fceeee, #ffc4c4);
+      }
+
+      &.green {
+        color: green;
+        background: linear-gradient(90deg, #f4fceb, #7ffd18);
+      }
+    }
+
+    .labels {
+      display: flex;
+      justify-content: space-around;
+      font-size: 15px;
+      color: #b30000;
+      font-weight: 600;
+    }
+
+    .unique,
+    .values {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .unique span,
+    .values>div {
+      width: 48%;
+      /* same width so they align perfectly */
+      text-align: center;
+    }
+
+    .unique {
+      font-size: 15px;
+      color: #b30000;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .values .value {
+      font-size: 30px;
+      font-weight: bold;
+      color: #000;
+    }
+
+    .values .unit {
+      font-size: 14px;
+      color: #333;
+    }
+
+
+    .values {
+      display: flex;
+      justify-content: space-around;
+      gap: 10px;
+
+      >div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .value {
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 3px 6px;
+        font-weight: bold;
+        font-size: 20px;
+        min-width: 60px;
+        text-align: center;
+        color: #0d0d0d;
+      }
+
+      .unit {
+        font-size: 11px;
+        color: #222;
+        margin-top: 2px;
+      }
+    }
+  }
+
+
+  .flow-box {
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 150, 255, 0.6), 0 0 30px rgba(0, 200, 255, 0.4);
+      border: 2px solid #00bcd4;
+    }
+
+    &:hover .header {
+      // color: #fff;
+      text-shadow: 0 0 6px #00bcd4;
+    }
+
+    &:hover .sub-title.green {
+      background: linear-gradient(90deg, #e8ffe8, #99ff99);
+      color: #006600;
+    }
+  }
+
+  .gen {
+    background: var(--box-bg-gen);
+  }
+
+  .top_header {
+    background: url('/assets/blue-strip.jpg');
+    background-size: cover;
+    border-bottom: 1px solid #ccc;
+    color: #002b5c;
+    font-weight: 600;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 3px 0;
+  }
+
+
+  /* Animation */
+  @keyframes pulse-blue-b {
+    0% {
+      box-shadow: 0 0 5px rgba(0, 43, 92, 0.5);
+      transform: scale(1);
+    }
+
+    50% {
+      box-shadow: 0 0 20px rgba(0, 43, 92, 0.8), 0 0 30px rgba(0, 150, 255, 0.6);
+      transform: scale(1.02);
+    }
+
+    100% {
+      box-shadow: 0 0 5px rgba(0, 43, 92, 0.5);
+      transform: scale(1);
+    }
+  }
+
+  .node.generation .header,
+  .top_header,
+
+  .node.consumption .header,
+  .top_header {
+    animation: pulse-blue-b 2s infinite;
+  }
+
+
+
+
+  /* For the last single node branch */
+  .branch.single {
+    width: auto;
+    justify-content: center;
+    margin-top: 50px;
+    font-weight: bold;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 3px;
+      height: 40px;
+      background: gray;
+      transform: translateX(-50%);
+    }
+
+    &::after {
+      content: none;
+      /* remove double connector */
+    }
+
+    .node.center {
+      margin: 0 auto;
+    }
+  }
+
+  .branch.single-left {
+    width: 600px;
+    /* same as your normal branch width */
+    position: relative;
+    margin-top: -50px;
+    display: flex;
+    justify-content: flex-start;
+    /* keep node on left side */
+    z-index: 1;
+    font-weight: bold;
+
+    /* Horizontal connector from main vertical line to left node */
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      /* from center main line */
+      width: 40%;
+      /* half of branch width (connects to left) */
+      height: 3px;
+      background: gray;
+      transform: translateX(-100%);
+      /* draw line from center toward left */
+      z-index: 0;
+    }
+
+    /* Vertical connector from main line to horizontal line */
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 3px;
+      height: 60px;
+      background: gray;
+      transform: translate(-50%, -100%);
+      z-index: 0;
+    }
+
+    .node.left {
+      transform: none;
+      /* keep natural position */
+      margin-left: 0;
+      /* left side */
+    }
+  }
+
+  .branch.single-right {
+    width: 600px;
+    /* same as your normal branch width */
+    position: relative;
+    margin-top: -50px;
+    display: flex;
+    justify-content: flex-end;
+    /* keep node on right side */
+    z-index: 1;
+    font-weight: bold;
+
+    /* Horizontal connector from main vertical line to right node */
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      /* start from main vertical line */
+      width: 40%;
+      /* half branch width (connects to right) */
+      height: 3px;
+      background: gray;
+      /* draw line from center toward right side */
+      transform: translateX(0);
+      z-index: 0;
+    }
+
+    /* Vertical connector from main line to horizontal line */
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 3px;
+      height: 60px;
+      background: gray;
+      transform: translate(-50%, -100%);
+      z-index: 0;
+    }
+
+    .node.right {
+      transform: none;
+      /* keep natural position */
+      margin-right: 0;
+      /* right side alignment */
+    }
+  }
+
+}

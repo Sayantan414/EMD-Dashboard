@@ -75,6 +75,8 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
         // console.log(redirectURL);
 
         let authUser = this.commonService.getItem('currentUser');
+        console.log(authUser);
+
 
         //let navigation = this.commonService.getItem('navigation');
 

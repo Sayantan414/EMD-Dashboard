@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProjectCommonModule } from 'app/core/project-common-modules/project-common.module';
 import { SseService } from 'app/services/sse.servece';
@@ -7,7 +8,7 @@ import { Subscription } from 'rxjs';
   selector: 'app-overview',
   templateUrl: './overview.component.html',
   standalone: true,
-  imports: [ProjectCommonModule],
+  imports: [ProjectCommonModule, CommonModule],
   // styleUrls: ['./overview.component.scss'],
   styleUrls: ['./test2.scss'],
 })

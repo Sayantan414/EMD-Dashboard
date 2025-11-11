@@ -4,6 +4,7 @@ fuse-horizontal-navigation {
     .fuse-horizontal-navigation-wrapper {
         display: flex;
         align-items: center;
+        
 
         /* Basic, Branch */
         fuse-horizontal-navigation-basic-item,
@@ -38,26 +39,34 @@ fuse-horizontal-navigation {
         /* Basic - When item active (current link) */
         fuse-horizontal-navigation-basic-item {
 
-            .fuse-horizontal-navigation-item-active,
-            .fuse-horizontal-navigation-item-active-forced {
+    .fuse-horizontal-navigation-item-active,
+    .fuse-horizontal-navigation-item-active-forced {
 
-                .fuse-horizontal-navigation-item-title {
-                    @apply text-primary #{'!important'};
-                }
+        .fuse-horizontal-navigation-item-title {
+            color: var(--header_active) !important;
+            font-weight: 600;
+        }
 
-                .fuse-horizontal-navigation-item-subtitle {
-                    @apply text-primary-400 #{'!important'};
+        .fuse-horizontal-navigation-item-subtitle {
+            color: rgba(255, 255, 255, 0.8) !important;
 
-                    .dark & {
-                        @apply text-primary-600 #{'!important'};
-                    }
-                }
-
-                .fuse-horizontal-navigation-item-icon {
-                    @apply text-primary #{'!important'};
-                }
+            .dark & {
+                color: rgba(255, 255, 255, 0.9) !important;
             }
         }
+
+        .fuse-horizontal-navigation-item-icon {
+            color: var(--header_active) !important;
+        }
+
+        .fuse-horizontal-navigation-item-wrapper {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+    }
+}
+
 
         /* Branch - When menu open */
         fuse-horizontal-navigation-branch-item {
@@ -151,7 +160,15 @@ fuse-horizontal-navigation {
             justify-content: flex-start;
             min-height: 48px;
             width: 100%;
-            font-size: 13px;
+            font-size: 15px;
+
+    @media (min-width: 768px) {
+        font-size: 17px;
+    }
+
+    @media (min-width: 1024px) {
+        font-size: 18px;
+    }
             font-weight: 500;
             text-decoration: none;
 

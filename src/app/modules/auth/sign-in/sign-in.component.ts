@@ -77,7 +77,7 @@ export class AuthSignInComponent implements OnInit {
      */
     ngOnInit(): void {
 
-        this.coverUrl = 'assets/images/pages/sg-bg.png';
+        this.coverUrl = 'assets/images/digiimg.jpg';
         // Change background image at regular intervals
         setInterval(() => {
             this.imageIndex = (this.imageIndex % this.maxImages) + 1;
@@ -114,7 +114,7 @@ export class AuthSignInComponent implements OnInit {
             .subscribe({
                 next: (response) => {
                     let currentUser = JSON.parse(JSON.stringify(response));
-                    // console.log(currentUser);
+                    console.log(currentUser);
 
 
                     if (!currentUser.features) {
@@ -140,8 +140,12 @@ export class AuthSignInComponent implements OnInit {
                                     console.error('Error fetching features:', dataError);
                                 }
                             });
+                        console.log("hiii");
+
                     }
                     else {
+                        console.log("hello");
+
                         this.commonService.setItem('currentUser', response);
                         this.commonService.currentUser.next(response);
                         this.getRoles(currentUser);
@@ -175,7 +179,7 @@ export class AuthSignInComponent implements OnInit {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((response) => {
                 let defaultRoles = JSON.parse(JSON.stringify(response));
-                // console.log(response);
+                console.log(response);
                 let index = defaultRoles.map((item) => item.name).indexOf(user.role);
                 if (index >= 0) {
                     // this.store.dispatch(new SetUserRoleAction(defaultRoles[index]));
@@ -210,7 +214,11 @@ export class AuthSignInComponent implements OnInit {
             //Redirect to Dashboard
             // alert('Login Successful');
             //   const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
-            this._router.navigate(["/overview"]);
+            // this._router.navigate(["overview"]);
+            this._router.navigate(['/overview']).then(result => {
+                console.log('Navigation result:', result);
+            }).catch(err => console.error('Navigation error:', err));
+
             // this._router.navigateByUrl(redirectURL);
         }
         //}

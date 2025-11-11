@@ -162,3 +162,96 @@ li {
         transform: translateY(0);
     }
 }
+
+#night_mode {
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 23px;
+}
+
+#night_mode {
+  font-size: 28px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.5s ease;
+}
+
+#night_mode:hover {
+  transform: rotate(20deg) scale(1.1);
+}
+
+#night_mode span {
+  display: inline-block;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+#night_mode span.sun {
+  color: orange;
+}
+
+#night_mode span.moon {
+  color: #8888ff;
+}
+
+.footer {
+  display: flex;
+  bottom: 0px;
+  background-color: green;
+  color:  var(--footer_text);  
+  font-size: 20px;
+  width: auto;  
+  justify-content: center;
+  overflow: hidden;
+}
+
+#time {
+position: absolute;
+right: 70px;
+bottom: 25%;              /* raised a bit for better balance */
+margin: 0;
+font-size: 12px;          /* slightly smaller but crisp */
+font-weight: 500;
+font-family: monospace;
+letter-spacing: 0.5px;    /* adds readability */
+
+color: #f1f1f1;           /* soft white text */
+// background: rgba(0, 0, 0, 0.4); /* subtle translucent bg */
+background: #004c8b;
+
+
+padding: 4px 10px;
+border-radius: 6px;       /* rounded pill effect */
+box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+
+transition: all 0.3s ease-in-out;
+}
+
+#time:hover {
+background:  linear-gradient(135deg, rgba(0, 128, 128, 0.6), rgba(0, 255, 255, 0.3)); /* slightly darker on hover */
+transform: scale(1);         /* subtle zoom */
+}
+.gradient-title {
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+/* 🌞 Light mode (default) */
+.gradient-title {
+  background: linear-gradient(90deg,  #00b3b3, #00ffcc, #0f7be7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 🌙 Dark mode */
+.dark .gradient-title {
+  background: linear-gradient(90deg, #ff66cc, #ff007f, #ff3300);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+

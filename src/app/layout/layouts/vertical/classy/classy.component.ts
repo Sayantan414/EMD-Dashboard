@@ -1,7 +1,8 @@
-import { NgIf } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { BrowserModule } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { FuseFullscreenComponent } from '@fuse/components/fullscreen';
 import { FuseLoadingBarComponent } from '@fuse/components/loading-bar';
@@ -29,18 +30,24 @@ import { Subject, takeUntil } from 'rxjs';
     styleUrls: ['./classy.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [FuseLoadingBarComponent, FuseHorizontalNavigationComponent, NotificationsComponent, UserComponent, NgIf, MatIconModule, MatButtonModule, LanguagesComponent, FuseFullscreenComponent, SearchComponent, ShortcutsComponent, MessagesComponent, RouterOutlet, QuickChatComponent],
+    imports: [CommonModule, FuseLoadingBarComponent, FuseHorizontalNavigationComponent, NotificationsComponent, UserComponent, NgIf, MatIconModule, MatButtonModule, LanguagesComponent, FuseFullscreenComponent, SearchComponent, ShortcutsComponent, MessagesComponent, RouterOutlet, QuickChatComponent],
 })
 export class ClassyLayoutComponent implements OnInit, OnDestroy {
     isScreenSmall: boolean;
     // navigation: Navigation;
     navigation = horizontalNavigation;
     user: any;
+    isDark = false;
+
     currentUser: any;
     organizationData = { oname: '', logo: '', logoURL: '' };
     titleInTop = false;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
-
+    currentDateTime: Date = new Date();
+    private intervalId: any;
+    hourTransform = '';
+    minuteTransform = '';
+    secondTransform = '';
     /**
      * Constructor
      */
@@ -79,6 +86,10 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        this.intervalId = setInterval(() => {
+            this.currentDateTime = new Date();
+            this.updateClock();
+        }, 1000);
         // alert('3')
         // this.user = this.commonService.getItem('currentUser');
         // if (this.user) {
@@ -120,6 +131,21 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
 
     }
 
+    updateClock() {
+        const now = new Date();
+        const seconds = now.getSeconds();
+        const minutes = now.getMinutes();
+        const hours = now.getHours();
+
+        const secondDeg = seconds * 6; // 360/60
+        const minuteDeg = minutes * 6 + seconds * 0.1; // smooth minute
+        const hourDeg = hours * 30 + minutes * 0.5; // smooth hour
+
+        this.secondTransform = `rotate(${secondDeg}deg)`;
+        this.minuteTransform = `rotate(${minuteDeg}deg)`;
+        this.hourTransform = `rotate(${hourDeg}deg)`;
+    }
+
     /**
      * On destroy
      */
@@ -127,8 +153,19 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
+        if (this.intervalId) {
+            clearInterval(this.intervalId);
+        }
     }
+    toggleTheme() {
+        this.isDark = !this.isDark;
 
+        if (this.isDark) {
+            document.documentElement.classList.add('dark-theme');
+        } else {
+            document.documentElement.classList.remove('dark-theme');
+        }
+    }
 
 
     getUserFromStore() {

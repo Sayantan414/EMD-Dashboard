@@ -3,7 +3,10 @@
     <div class="col">
       <div class="box">
         <h2 class="overview_header">
-          <span *ngFor="let letter of splitLetters(cob10); let i = index" [style.animation-delay]="i * 0.2 + 's'">
+          <span
+            *ngFor="let letter of splitLetters(cob10); let i = index"
+            [style.animation-delay]="i * 0.2 + 's'"
+          >
             {{ letter }}
           </span>
         </h2>
@@ -43,7 +46,10 @@
       </div>
       <div class="box">
         <h2 class="overview_header">
-          <span *ngFor="let letter of splitLetters(cob11); let i = index" [style.animation-delay]="i * 0.2 + 's'">
+          <span
+            *ngFor="let letter of splitLetters(cob11); let i = index"
+            [style.animation-delay]="i * 0.2 + 's'"
+          >
             {{ letter }}
           </span>
         </h2>
@@ -91,7 +97,10 @@
     <div class="col">
       <div class="box">
         <h2 class="overview_header">
-          <span *ngFor="let letter of splitLetters(bf); let i = index" [style.animation-delay]="i * 0.2 + 's'">
+          <span
+            *ngFor="let letter of splitLetters(bf); let i = index"
+            [style.animation-delay]="i * 0.2 + 's'"
+          >
             {{ letter }}
           </span>
         </h2>
@@ -130,7 +139,10 @@
       </div>
       <div class="box">
         <h2 class="overview_header">
-          <span *ngFor="let letter of splitLetters(stove); let i = index" [style.animation-delay]="i * 0.2 + 's'">
+          <span
+            *ngFor="let letter of splitLetters(stove); let i = index"
+            [style.animation-delay]="i * 0.2 + 's'"
+          >
             {{ letter }}
           </span>
         </h2>
@@ -161,7 +173,10 @@
       </div>
       <div class="box">
         <h2 class="overview_header">
-          <span *ngFor="let letter of splitLetters(sinter); let i = index" [style.animation-delay]="i * 0.2 + 's'">
+          <span
+            *ngFor="let letter of splitLetters(sinter); let i = index"
+            [style.animation-delay]="i * 0.2 + 's'"
+          >
             {{ letter }}
           </span>
         </h2>
@@ -190,7 +205,10 @@
     <div class="col">
       <div class="box">
         <h2 class="overview_header">
-          <span *ngFor="let letter of splitLetters(bof_ccp); let i = index" [style.animation-delay]="i * 0.2 + 's'">
+          <span
+            *ngFor="let letter of splitLetters(bof_ccp); let i = index"
+            [style.animation-delay]="i * 0.2 + 's'"
+          >
             {{ letter }}
           </span>
         </h2>
@@ -217,7 +235,10 @@
       </div>
       <div class="box">
         <h2 class="overview_header">
-          <span *ngFor="let letter of splitLetters(bof_holder); let i = index" [style.animation-delay]="i * 0.2 + 's'">
+          <span
+            *ngFor="let letter of splitLetters(bof_holder); let i = index"
+            [style.animation-delay]="i * 0.2 + 's'"
+          >
             {{ letter }}
           </span>
         </h2>
@@ -241,8 +262,8 @@
           <div class="td">TOTAL EXPORTED</div>
           <div class="td">
             {{
-            overview_res.EXPORTEDGAS + overview_res.GAS_FLOW_mills
-
+              overview_res.EXPORTEDGAS + overview_res.GAS_FLOW_mills
+                | number : "1.2-2"
             }}
           </div>
         </div>
@@ -253,7 +274,10 @@
       </div>
       <div class="box">
         <h2 class="overview_header">
-          <span *ngFor="let letter of splitLetters(ldcp); let i = index" [style.animation-delay]="i * 0.2 + 's'">
+          <span
+            *ngFor="let letter of splitLetters(ldcp); let i = index"
+            [style.animation-delay]="i * 0.2 + 's'"
+          >
             {{ letter }}
           </span>
         </h2>
@@ -286,7 +310,10 @@
     <div class="col">
       <div class="box">
         <h2 class="overview_header">
-          <span *ngFor="let letter of splitLetters(mills); let i = index" [style.animation-delay]="i * 0.2 + 's'">
+          <span
+            *ngFor="let letter of splitLetters(mills); let i = index"
+            [style.animation-delay]="i * 0.2 + 's'"
+          >
             {{ letter }}
           </span>
         </h2>
@@ -337,8 +364,10 @@
       </div>
       <div class="box">
         <h2 class="overview_header">
-          <span *ngFor="let letter of splitLetters(fale_stack_bfg); let i = index"
-            [style.animation-delay]="i * 0.2 + 's'">
+          <span
+            *ngFor="let letter of splitLetters(fale_stack_bfg); let i = index"
+            [style.animation-delay]="i * 0.2 + 's'"
+          >
             {{ letter }}
           </span>
         </h2>
@@ -357,8 +386,10 @@
       </div>
       <div class="box">
         <h2 class="overview_header">
-          <span *ngFor="let letter of splitLetters(fale_stack_cog); let i = index"
-            [style.animation-delay]="i * 0.2 + 's'">
+          <span
+            *ngFor="let letter of splitLetters(fale_stack_cog); let i = index"
+            [style.animation-delay]="i * 0.2 + 's'"
+          >
             {{ letter }}
           </span>
         </h2>
@@ -380,7 +411,10 @@
     <div class="col">
       <div class="box">
         <h2 class="overview_header">
-          <span *ngFor="let letter of splitLetters(cbm); let i = index" [style.animation-delay]="i * 0.2 + 's'">
+          <span
+            *ngFor="let letter of splitLetters(cbm); let i = index"
+            [style.animation-delay]="i * 0.2 + 's'"
+          >
             {{ letter }}
           </span>
         </h2>
@@ -419,7 +453,10 @@
       </div>
       <div class="box">
         <h2 class="overview_header">
-          <span *ngFor="let letter of splitLetters(agbs_cgbs); let i = index" [style.animation-delay]="i * 0.2 + 's'">
+          <span
+            *ngFor="let letter of splitLetters(agbs_cgbs); let i = index"
+            [style.animation-delay]="i * 0.2 + 's'"
+          >
             {{ letter }}
           </span>
         </h2>
@@ -442,7 +479,10 @@
       </div>
       <div class="box">
         <h2 class="overview_header">
-          <span *ngFor="let letter of splitLetters(pbs2); let i = index" [style.animation-delay]="i * 0.2 + 's'">
+          <span
+            *ngFor="let letter of splitLetters(pbs2); let i = index"
+            [style.animation-delay]="i * 0.2 + 's'"
+          >
             {{ letter }}
           </span>
         </h2>

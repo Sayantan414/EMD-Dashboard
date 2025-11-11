@@ -1,0 +1,245 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - 84px);
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+    /* prevents scroll */
+}
+
+
+
+
+/* Right tree area */
+.tree {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 20px;
+    overflow: hidden;
+    /* ensures no scrollbar */
+}
+
+/* Make the org chart responsive */
+::ng-deep ngx-org-chart {
+    transform: scale(0.9);
+    /* scale slightly to fit in viewport */
+    transform-origin: top center;
+    width: 100%;
+}
+
+@media (max-width: 1500px) {
+    ::ng-deep ngx-org-chart {
+        transform: scale(0.8);
+    }
+}
+
+@media (max-width: 1200px) {
+    ::ng-deep ngx-org-chart {
+        transform: scale(0.7);
+    }
+}
+
+
+::ng-deep .line-long .ngx-org-node::before {
+    height: 80px !important;
+}
+
+/* In your component's CSS file */
+:host ::ng-deep .ngx-org-head {
+    background: var(--bg-head);
+    border: 2px solid var(--border-head);
+    display: flex;
+    justify-content: center;
+    color: var(--tree-text);
+    padding: 15px;
+    width: 100px;
+}
+
+:host ::ng-deep .ngx-org-body_uf {
+    padding: 10px;
+    color: var(--tree-text);
+    background: var(--bg-uf);
+    border: 2px solid var(--border-uf);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+:host ::ng-deep .ngx-org-body_uf:hover {
+    background: var(--bg-uf-hover);
+    border: 2px solid var(--border-uf-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(219, 216, 52, 0.3);
+}
+
+
+:host ::ng-deep .ngx-org-body_green {
+    padding: 10px;
+    color: var(--tree-text);
+    background: var(--bg-ldcp);
+    border: 2px solid var(--border-ldcp);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+:host ::ng-deep .ngx-org-body_green:hover {
+    background: var(--bg-ldcp-hover);
+    border: 2px solid var(--border-ldcp-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(169, 219, 52, 0.3);
+}
+
+:host ::ng-deep .ngx-org-body_orange {
+    padding: 10px;
+    color: var(--tree-text);
+    background: var(--bg-pbs);
+    border: 2px solid var(--border-pbs);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+:host ::ng-deep .ngx-org-body_orange:hover {
+    background: var(--bg-pbs-hover);
+    border: 2px solid var(--border-pbs-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(219, 133, 52, 0.3);
+}
+
+:host ::ng-deep .ngx-org-body {
+    padding: 10px;
+    color: var(--tree-text);
+    background: var(--bg-body);
+    border: 2px solid var(--border-body);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+:host ::ng-deep .ngx-org-body:hover {
+    background: var(--bg-body-hover);
+    border: 2px solid var(--border-body-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+:host ::ng-deep .ngx-org-body_redorange {
+    color: var(--tree-text);
+    background: var(--bg-sp);
+    border: 2px solid var(--border-sp);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+:host ::ng-deep .ngx-org-body_redorange:hover {
+    background: var(--bg-sp-hover);
+    border: 2px solid var(--border-sp-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(219, 77, 52, 0.3);
+}
+
+
+
+/* Purple variant */
+:host ::ng-deep .ngx-org-body_violet {
+    padding: 10px;
+    color: var(--tree-text);
+    background: var(--bg-violet);
+    border: 2px solid var(--border-violet);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+:host ::ng-deep .ngx-org-body_violet:hover {
+    background: var(--bg-violet-hover);
+    border: 2px solid var(--border-violet-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(155, 89, 182, 0.3);
+}
+
+/* Teal variant */
+:host ::ng-deep .ngx-org-body_teal {
+    padding: 10px;
+    color: var(--tree-text);
+    background: var(--bg-teal);
+    border: 2px solid var(--border-teal);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+:host ::ng-deep .ngx-org-body_teal:hover {
+    background: var(--bg-teal-hover);
+    border: 2px solid var(--border-teal-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(26, 188, 156, 0.3);
+}
+
+/* Yellow variant */
+:host ::ng-deep .ngx-org-body_yellow {
+    padding: 10px;
+    color: var(--tree-text);
+    background: var(--bg-yellow);
+    border: 2px solid var(--border-yellow);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+:host ::ng-deep .ngx-org-body_yellow:hover {
+    background: var(--bg-yellow-hover);
+    border: 2px solid var(--border-yellow-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(241, 196, 15, 0.3);
+}
+
+/* Pink variant */
+:host ::ng-deep .ngx-org-body_pink {
+    padding: 10px;
+    color: var(--tree-text);
+    background: var(--bg-pink);
+    border: 2px solid var(--border-pink);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+:host ::ng-deep .ngx-org-body_pink:hover {
+    background: var(--bg-pink-hover);
+    border: 2px solid var(--border-pink-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(236, 112, 99, 0.3);
+}
+
+.detail-card {
+    width: 80%;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    padding: 20px 18px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    // color: #002b4d;
+    color: var(--text);
+    font-family: 'Open Sans', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.detail-card:hover {
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    transform: translateY(-2px);
+}
+
+.detail-card h3 {
+    text-align: center;
+    font-weight: 700;
+    // color: #002b4d;
+    color: var(--text);
+    margin-bottom: 12px;
+}
+
+.detail-card p {
+    text-align: justify;
+    font-size: 15px;
+    line-height: 1.5;
+    // color: #003366;
+    color: var(--text);
+}

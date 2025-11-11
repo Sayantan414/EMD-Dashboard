@@ -1,0 +1,59 @@
+<!-- <p>cbm works!</p> -->
+<!-- <div class="container">
+    <div class="detail-view">
+        <div class="detail-card">
+            <h3>Detail View</h3>
+            <div *ngIf="selectedNode; else noSelection">
+                <h4>{{selectedNode.name}}</h4>
+                <p><strong>Title:</strong> {{selectedNode.title}}</p>
+                <p><strong>Type:</strong> {{selectedNode.cssClass}}</p>
+                <p *ngIf="selectedNode.childs">
+                    <strong>Children:</strong> {{selectedNode.childs.length}}
+                </p>
+            </div>
+            <ng-template #noSelection>
+                <p>
+                    Select a node to view its details. You can expand/collapse nodes to explore
+                    the BOFG hierarchy.
+                </p>
+            </ng-template>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <ngx-org-chart class="tree" [nodes]="nodes" direction="vertical" (clicked)="onNodeClick($event)">
+        </ngx-org-chart>
+    </div>
+</div> -->
+
+<div class="bofg-container">
+    <h2 class="title">BOF GAS</h2>
+
+    <div class="bofg-box">
+        <div class="header">
+            <span class="unit-name">BOF 3</span>
+
+        </div>
+        <div>
+            <span class="sub-title">Generation</span>
+        </div>
+        <br>
+        <div class="labels">
+            <div class="label">Flow</div>
+            <div class="label">Pressure</div>
+        </div>
+
+        <div class="values">
+            <div class="value-box">
+                <div class="value flow">431469.5</div>
+                <div class="unit-text">Nm³/hr</div>
+            </div>
+
+            <div class="value-box">
+                <div class="value pressure">--</div>
+                <div class="unit-text">Kg/cm²</div>
+            </div>
+        </div>
+
+    </div>
+</div>

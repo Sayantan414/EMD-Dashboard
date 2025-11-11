@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="switch-buttons">
+    <!-- <button [class.active]="selectedComponent === 'cob11'" (click)="switchComponent('cob11')">
+      COG
+    </button> -->
+    <!-- <button [class.active]="selectedComponent === 'cbm'" (click)="switchComponent('cbm')">
+      CBM
+    </button>
+    <button [class.active]="selectedComponent === 'bf'" (click)="switchComponent('bf')">
+      BF#5
+    </button>
+    <button [class.active]="selectedComponent === 'bofg'" (click)="switchComponent('bofg')">
+      BOFG
+    </button>
+    <button [class.active]="selectedComponent === 'agbs'" (click)="switchComponent('agbs')">
+      AGBS & CGBS
+    </button>
+    <button [class.active]="selectedComponent === 'mills'" (click)="switchComponent('mills')">
+      MILL's gas flow
+    </button> -->
+  </div>
+
+  <div class="component-view">
+    <app-cob11 *ngIf="selectedComponent === 'cob11'"></app-cob11>
+    <app-cbm *ngIf="selectedComponent === 'cbm'"></app-cbm>
+    <app-bf *ngIf="selectedComponent === 'bf'"></app-bf>
+    <app-bofg *ngIf="selectedComponent === 'bofg'"></app-bofg>
+    <app-agbs *ngIf="selectedComponent === 'agbs'"></app-agbs>
+    <app-mills *ngIf="selectedComponent === 'mills'"></app-mills>
+  </div>
+</div>

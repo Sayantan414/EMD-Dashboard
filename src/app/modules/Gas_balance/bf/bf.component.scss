@@ -1,0 +1,454 @@
+// .container {
+//   display: flex;
+//   flex-direction: row;
+//   height: calc(100vh - 84px);
+//   padding: 10px;
+//   box-sizing: border-box;
+//   overflow: hidden;
+//   /* prevents scroll */
+// }
+
+
+
+
+// /* Right tree area */
+// .tree {
+//   flex: 1;
+//   display: flex;
+//   justify-content: center;
+//   align-items: flex-start;
+//   padding-top: 20px;
+//   overflow: hidden;
+//   /* ensures no scrollbar */
+// }
+
+// /* Make the org chart responsive */
+// ::ng-deep ngx-org-chart {
+//   transform: scale(0.9);
+//   /* scale slightly to fit in viewport */
+//   transform-origin: top center;
+//   width: 100%;
+// }
+
+// @media (max-width: 1500px) {
+//   ::ng-deep ngx-org-chart {
+//     transform: scale(0.8);
+//   }
+// }
+
+// @media (max-width: 1200px) {
+//   ::ng-deep ngx-org-chart {
+//     transform: scale(0.7);
+//   }
+// }
+
+
+// ::ng-deep .line-long .ngx-org-node::before {
+//   height: 80px !important;
+// }
+
+// /* In your component's CSS file */
+// :host ::ng-deep .ngx-org-head {
+//   background: var(--bg-head);
+//   border: 2px solid var(--border-head);
+//   display: flex;
+//   justify-content: center;
+//   color: var(--tree-text);
+//   padding: 15px;
+//   width: 100px;
+// }
+
+
+// :host ::ng-deep .ngx-org-body_green {
+//   padding: 10px;
+//   color: var(--tree-text);
+//   background: var(--bg-ldcp);
+//   border: 2px solid var(--border-ldcp);
+//   border-radius: 4px;
+//   transition: all 0.3s ease;
+// }
+
+// :host ::ng-deep .ngx-org-body_green:hover {
+//   background: var(--bg-ldcp-hover);
+//   border: 2px solid var(--border-ldcp-hover);
+//   transform: translateY(-2px);
+//   box-shadow: 0 4px 12px rgba(169, 219, 52, 0.3);
+// }
+
+// :host ::ng-deep .ngx-org-body_orange {
+//   padding: 10px;
+//   color: var(--tree-text);
+//   background: var(--bg-pbs);
+//   border: 2px solid var(--border-pbs);
+//   border-radius: 4px;
+//   transition: all 0.3s ease;
+// }
+
+// :host ::ng-deep .ngx-org-body_orange:hover {
+//   background: var(--bg-pbs-hover);
+//   border: 2px solid var(--border-pbs-hover);
+//   transform: translateY(-2px);
+//   box-shadow: 0 4px 12px rgba(219, 133, 52, 0.3);
+// }
+
+
+// :host ::ng-deep .ngx-org-body_redorange {
+//   color: var(--tree-text);
+//   background: var(--bg-sp);
+//   border: 2px solid var(--border-sp);
+//   border-radius: 4px;
+//   transition: all 0.3s ease;
+// }
+
+// :host ::ng-deep .ngx-org-body_redorange:hover {
+//   background: var(--bg-sp-hover);
+//   border: 2px solid var(--border-sp-hover);
+//   transform: translateY(-2px);
+//   box-shadow: 0 4px 12px rgba(219, 77, 52, 0.3);
+// }
+
+// :host ::ng-deep .ngx-org-body {
+//   padding: 10px;
+//   color: var(--tree-text);
+//   background: var(--bg-body);
+//   border: 2px solid var(--border-body);
+//   border-radius: 4px;
+//   transition: all 0.3s ease;
+// }
+
+// :host ::ng-deep .ngx-org-body:hover {
+//   background: var(--bg-body-hover);
+//   border: 2px solid var(--border-body-hover);
+//   transform: translateY(-2px);
+//   box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+// }
+
+// /* Purple variant */
+// :host ::ng-deep .ngx-org-body_violet {
+//   padding: 10px;
+//   color: var(--tree-text);
+//   background: var(--bg-violet);
+//   border: 2px solid var(--border-violet);
+//   border-radius: 4px;
+//   transition: all 0.3s ease;
+// }
+
+// :host ::ng-deep .ngx-org-body_violet:hover {
+//   background: var(--bg-violet-hover);
+//   border: 2px solid var(--border-violet-hover);
+//   transform: translateY(-2px);
+//   box-shadow: 0 4px 12px rgba(155, 89, 182, 0.3);
+// }
+
+// /* Teal variant */
+// :host ::ng-deep .ngx-org-body_teal {
+//   padding: 10px;
+//   color: var(--tree-text);
+//   background: var(--bg-teal);
+//   border: 2px solid var(--border-teal);
+//   border-radius: 4px;
+//   transition: all 0.3s ease;
+// }
+
+// :host ::ng-deep .ngx-org-body_teal:hover {
+//   background: var(--bg-teal-hover);
+//   border: 2px solid var(--border-teal-hover);
+//   transform: translateY(-2px);
+//   box-shadow: 0 4px 12px rgba(26, 188, 156, 0.3);
+// }
+
+// /* Yellow variant */
+// :host ::ng-deep .ngx-org-body_yellow {
+//   padding: 10px;
+//   color: var(--tree-text);
+//   background: var(--bg-yellow);
+//   border: 2px solid var(--border-yellow);
+//   border-radius: 4px;
+//   transition: all 0.3s ease;
+// }
+
+// :host ::ng-deep .ngx-org-body_yellow:hover {
+//   background: var(--bg-yellow-hover);
+//   border: 2px solid var(--border-yellow-hover);
+//   transform: translateY(-2px);
+//   box-shadow: 0 4px 12px rgba(241, 196, 15, 0.3);
+// }
+
+// /* Pink variant */
+// :host ::ng-deep .ngx-org-body_pink {
+//   padding: 10px;
+//   color: var(--tree-text);
+//   background: var(--bg-pink);
+//   border: 2px solid var(--border-pink);
+//   border-radius: 4px;
+//   transition: all 0.3s ease;
+// }
+
+// :host ::ng-deep .ngx-org-body_pink:hover {
+//   background: var(--bg-pink-hover);
+//   border: 2px solid var(--border-pink-hover);
+//   transform: translateY(-2px);
+//   box-shadow: 0 4px 12px rgba(236, 112, 99, 0.3);
+// }
+
+// .detail-card {
+//   width: 80%;
+//   background: rgba(255, 255, 255, 0.25);
+//   border-radius: 12px;
+//   padding: 20px 18px;
+//   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+//   border: 1px solid rgba(255, 255, 255, 0.4);
+//   backdrop-filter: blur(10px);
+//   // color: #002b4d;
+//   color: var(--text);
+//   font-family: 'Open Sans', sans-serif;
+//   transition: all 0.3s ease;
+// }
+
+// .detail-card:hover {
+//   background: rgba(255, 255, 255, 0.35);
+//   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+//   transform: translateY(-2px);
+// }
+
+// .detail-card h3 {
+//   text-align: center;
+//   font-weight: 700;
+//   // color: #002b4d;
+//   color: var(--text);
+//   margin-bottom: 12px;
+// }
+
+// .detail-card p {
+//   text-align: justify;
+//   font-size: 15px;
+//   line-height: 1.5;
+//   // color: #003366;
+//   color: var(--text);
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// .gasflow-container {
+//   text-align: center;
+//   min-height: 100vh;
+//   padding: 20px;
+
+//   .title {
+//     font-size: 28px;
+//     font-weight: bold;
+//     // color: #8b0035;
+//     color: var(--header-text);
+//     margin-bottom: 25px;
+//   }
+
+//   .tree {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//   }
+
+//   .connector-vertical.main {
+//     width: 3px;
+//     height: 100px;
+//     background: gray;
+//     position: relative;
+//     margin: 0 auto;
+//     margin-bottom: -20px;
+//   }
+
+//   .branch {
+//     display: flex;
+//     justify-content: center;
+//     gap: 80px;
+//     margin-top: -48px;
+//     position: relative;
+
+//     &::before {
+//       content: '';
+//       position: absolute;
+//       top: 8%;
+//       left: 8%;
+//       right: 8%;
+//       height: 3px;
+//       background: gray;
+//       transform: translateY(-50%);
+//       z-index: 0;
+//     }
+
+
+
+
+//     &::after {
+//       content: '';
+//       position: absolute;
+//       top: -14px;
+//       left: 50%;
+//       transform: translateX(-50%);
+//     }
+//   }
+
+//   .col {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     position: relative;
+//   }
+
+//   .connector-vertical {
+//     width: 3px;
+//     height: 100px;
+//     background: gray;
+//     position: relative;
+
+//     &::after {
+//       content: '';
+//       border-width: 0 2px 2px 0;
+//       display: inline-block;
+//       padding: 4px;
+//       transform: rotate(45deg);
+//       top: 10px;
+//       right: -6px;
+//       position: absolute;
+//     }
+//   }
+
+//   .node {
+//     width: 160px;
+//     background: linear-gradient(180deg, #80deea, #e0f7fa);
+//     border: 1px solid #888;
+//     border-radius: 6px;
+//     // margin-bottom: 10px;
+//     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+//     padding: 4px;
+//     transition: all 0.3s ease;
+
+//     &:hover {
+//       transform: scale(1.03);
+//       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+//     }
+
+//     .header {
+//       background: url('/assets/blue-strip.jpg');
+//       background-size: cover;
+//       border-bottom: 1px solid #ccc;
+//       color: #002b5c;
+//       font-weight: bold;
+//       font-size: 15px;
+//       padding: 3px 0;
+//     }
+
+//     .sub-title {
+//       display: inline-block;
+//       color: #b30000;
+//       font-weight: 700;
+//       font-size: 22px;
+//       letter-spacing: 1px;
+//       border: 1px solid #b30000;
+//       border-radius: 6px;
+//       // padding: 3px 10px;
+//       padding: 2px;
+//       margin-top: 8px;
+//       margin-bottom: 10px;
+//       box-shadow: 0 2px 4px rgba(179, 0, 0, 0.3);
+//       text-shadow: 1px 1px 4px rgba(255, 0, 0, 0.4);
+
+//       &.red {
+//         color: red;
+//         background: linear-gradient(90deg, #fceeee, #ffc4c4);
+
+//       }
+
+//       &.green {
+//         color: green;
+//         background: linear-gradient(90deg, #f4fceb, #7ffd18);
+//       }
+//     }
+
+//     .labels {
+//       display: flex;
+//       justify-content: space-around;
+//       font-size: 12px;
+//       color: #b30000;
+//       font-weight: 600;
+//     }
+
+//     .values {
+//       display: flex;
+//       justify-content: space-around;
+//       gap: 10px;
+
+//       >div {
+//         display: flex;
+//         flex-direction: column;
+//         align-items: center;
+//       }
+
+//       .value {
+//         background: #fff;
+//         border: 1px solid #ccc;
+//         border-radius: 4px;
+//         padding: 3px 6px;
+//         font-weight: bold;
+//         font-size: 13px;
+//         min-width: 60px;
+//         text-align: center;
+//       }
+
+//       .unit {
+//         font-size: 11px;
+//         color: #222;
+//         margin-top: 2px;
+//       }
+//     }
+//   }
+
+//   /* ⬇️ Add this part at the end before the final brace */
+//   .ngx-org-connector-vertical {
+//     height: 4.5em !important;
+//     margin-top: 1em !important;
+//   }
+
+//   .ngx-org-node {
+//     position: relative;
+//     top: -0.2em;
+//   }
+
+
+//   /* Component B */
+//   @keyframes pulse-blue-b {
+//     0% {
+//       box-shadow: 0 0 5px rgba(0, 43, 92, 0.5);
+//       transform: scale(1);
+//     }
+
+//     50% {
+//       box-shadow: 0 0 20px rgba(0, 43, 92, 0.8), 0 0 30px rgba(0, 150, 255, 0.6);
+//       transform: scale(1.02);
+//     }
+
+//     100% {
+//       box-shadow: 0 0 5px rgba(0, 43, 92, 0.5);
+//       transform: scale(1);
+//     }
+//   }
+
+//   .node.generation .header,
+//   .node.consumption .header {
+//     animation: pulse-blue-b 2s infinite;
+//   }
+
+// }

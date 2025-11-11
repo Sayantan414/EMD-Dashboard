@@ -14,7 +14,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
     title: 'Dashboard',
     type: 'basic',
     // icon: 'heroicons_outline:chart-bar',
-    link: '/dashboard',
+    link: '/area',
   },
   {
     id: 'gasbalance',
@@ -26,28 +26,28 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         id: 'gasbalance.cog',
         title: 'COG',
         type: 'basic',
-        link: '/gasbalance/cog',
+        link: '/gasbalance/cob11',
       },
-      {
-        id: 'gasbalance.bf',
-        title: 'BF',
-        type: 'basic',
-        link: '/gasbalance/bf',
-      },
-      {
-        id: 'gasbalance.sinter',
-        title: 'Sinter',
-        type: 'basic',
-        link: '/gasbalance/sinter',
-      },
+      // {
+      //   id: 'gasbalance.bf',
+      //   title: 'BF',
+      //   type: 'basic',
+      //   link: '/gasbalance/bf',
+      // },
+      // {
+      //   id: 'gasbalance.sinter',
+      //   title: 'Sinter',
+      //   type: 'basic',
+      //   link: '/gasbalance/sinter',
+      // },
     ],
   },
   {
-    id: 'reports',
-    title: 'Reports',
+    id: 'settings',
+    title: 'Settings',
     type: 'basic',
     // icon: 'heroicons_outline:document-report',
-    link: '/reports',
+    link: '/settings',
   },
 ];
 

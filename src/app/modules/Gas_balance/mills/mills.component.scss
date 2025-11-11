@@ -1,0 +1,74 @@
+// .chart-container {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     background: linear-gradient(to bottom right, #b3e5fc, #e0f7fa);
+//     padding: 20px;
+//     border-radius: 10px;
+// }
+
+// .info-boxes {
+//     display: flex;
+//     justify-content: center;
+//     margin-top: 15px;
+//     gap: 20px;
+// }
+
+// .box {
+//     padding: 10px 25px;
+//     text-align: center;
+//     border: 2px solid #000;
+//     border-radius: 8px;
+//     width: 160px;
+// }
+
+// .calculated {
+//     background-color: #b2fab4;
+//     color: #004d00;
+//     font-weight: bold;
+// }
+
+// .auto-mode {
+//     background-color: #fff59d;
+//     color: #795548;
+//     font-weight: bold;
+// }
+
+.chart-box {
+    flex: 1;
+    max-width: 700px;
+    background: linear-gradient(180deg, #80deea, #e0f7fa);
+    /* soft aqua gradient */
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
+    padding: 15px;
+    margin: 0 auto;
+    /* centers the card horizontally */
+}
+
+.info-boxes {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    gap: 20px;
+}
+
+.box {
+    padding: 10px 25px;
+    text-align: center;
+    border: 2px solid #000;
+    border-radius: 8px;
+    width: 160px;
+}
+
+.calculated {
+    background-color: #b2fab4;
+    color: #004d00;
+    font-weight: bold;
+}
+
+.auto-mode {
+    background-color: #fff59d;
+    color: #795548;
+    font-weight: bold;
+}
