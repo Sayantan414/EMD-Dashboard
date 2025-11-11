@@ -1,44 +1,65 @@
 /* eslint-disable */
 import { FuseNavigationItem } from "@fuse/components/navigation";
 
+export const horizontalNavigation: FuseNavigationItem[] = [
+  {
+    id: 'overview',
+    title: 'Overview',
+    type: 'basic',
+    // icon: 'heroicons_outline:chart-bar',
+    link: '/overview',
+  },
+  {
+    id: 'dashboard',
+    title: 'Dashboard',
+    type: 'basic',
+    // icon: 'heroicons_outline:chart-bar',
+    link: '/dashboard',
+  },
+  {
+    id: 'gasbalance',
+    title: 'Gas_Balance',
+    type: 'collapsable',
+    // icon: 'heroicons_outline:beaker',
+    children: [
+      {
+        id: 'gasbalance.cog',
+        title: 'COG',
+        type: 'basic',
+        link: '/gasbalance/cog',
+      },
+      {
+        id: 'gasbalance.bf',
+        title: 'BF',
+        type: 'basic',
+        link: '/gasbalance/bf',
+      },
+      {
+        id: 'gasbalance.sinter',
+        title: 'Sinter',
+        type: 'basic',
+        link: '/gasbalance/sinter',
+      },
+    ],
+  },
+  {
+    id: 'reports',
+    title: 'Reports',
+    type: 'basic',
+    // icon: 'heroicons_outline:document-report',
+    link: '/reports',
+  },
+];
+
+
+
 export const defaultNavigation: FuseNavigationItem[] = [
 
   {
     id: "dashboards",
     title: "Dashboards",
-    // subtitle: 'UPV',
     type: "group",
     icon: "heroicons_outline:home",
-    // privilege: [
-    //   "Blust Furnace",
-    //   "Stove",
-    //   "GCP & TRTG",
-    //   "Sinter Plant",
-    //   "Coke Ovens",
-    //   "By Product Plant",
-    //   "CDCP",
-    //   "Coke Ovens #11 Complex",
-    //   "BF Stock House",
-    //   "Basic Oxygen Furnace",
-    //   "Torpedo At HMRS",
-    //   "Continuous Casting Plant",
-    //   "Crane Ladle Weight",
-    //   "Ladle Heating Furnace",
-    //   "Mills",
-    //   "Power & Blowing Station",
-    //   "BOF Gas Holder",
-    //   "Gas Utility",
-    //   "Compressed Air Station",
-    //   "Oxygen Plant",
-    //   "LDCP",
-    //   "CBM",
-    //   "Techno Economics",
-    //   "BF Stock House",
-    //   "Lime & Dolo Calcination Plant",
-    //   "Dashboard",
-    //   "Critical Parameter",
-    //   "Digital Dashboard",
-    // ],
     features: ["Reports", "Settings", "Trends"],
     children: [
 
@@ -76,13 +97,5 @@ export const futuristicNavigation: FuseNavigationItem[] = [
     children: [], // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
   },
 ];
-export const horizontalNavigation: FuseNavigationItem[] = [
-  {
-    id: "dashboards",
-    title: "Dashboards",
-    type: "group",
-    icon: "heroicons_outline:home",
-    children: [], // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
-  },
-];
+/* eslint-disable */
 
