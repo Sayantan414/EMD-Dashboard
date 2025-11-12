@@ -20,8 +20,8 @@ export class CommonService {
 
   // private apiUrl = "http://localhost:4050/api"; //Local API
   // private apiUrl = "http://10.150.50.23:4050/rmgapi/api"; //Dev API
-  private apiUrl = "http://10.150.6.15:4060/api"; //Dev API
-  // private apiUrl = "http://59.97.132.209:4060/api";
+  // private apiUrl = "http://10.150.6.15:4060/api"; //Dev API
+  private apiUrl = "http://59.97.132.209:4060/api";
   // private apiUrl = 'https://web.iroms.in/irtmaapi/api';//Prod API
   private authorization = "Bearer c2lzeFVQVkF1dGg6aUk1YzAkUzE5TA==";
   //For Sign up Link
