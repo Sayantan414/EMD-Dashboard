@@ -239,21 +239,34 @@ li {
 }
 
 .gradient-title {
+    position: relative;
+    display: inline-block;
     font-size: 1.8rem;
     font-weight: 500;
     letter-spacing: 0.7px;
     text-transform: uppercase;
     white-space: nowrap;
     user-select: none;
-    background: linear-gradient(90deg,
-            #4fc3f7,
-            #81c784,
-            #ffb74d,
-            #4fc3f7);
+    background: linear-gradient(90deg, #4fc3f7, #81c784, #ffb74d, #4fc3f7);
     background-size: 300% 300%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: gradientMove 5s ease infinite;
+}
+
+/* Animated underline */
+.gradient-title::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #4fc3f7, #81c784, #ffb74d, #4fc3f7);
+    background-size: 200% 200%;
+    border-radius: 2px;
+    transform-origin: center;
+    animation: underlineFullSqueeze 4s ease-in-out infinite, gradientMove 8s ease infinite;
 }
 
 @keyframes gradientMove {
@@ -267,6 +280,24 @@ li {
 
     100% {
         background-position: 0% 50%;
+    }
+}
+
+/* Fully squeeze underline */
+@keyframes underlineFullSqueeze {
+    0% {
+        transform: scaleX(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scaleX(0);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scaleX(1);
+        opacity: 1;
     }
 }
 
