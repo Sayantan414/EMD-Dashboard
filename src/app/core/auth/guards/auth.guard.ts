@@ -75,7 +75,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
         // console.log(redirectURL);
 
         let authUser = this.commonService.getItem('currentUser');
-        console.log(authUser);
+        // console.log(authUser);
 
 
         //let navigation = this.commonService.getItem('navigation');
@@ -130,20 +130,20 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
                     //  console.log(this.navigation);
                     let index = this.navigation.map(n => n.link).indexOf(redirectURL);
                     // console.log(index);
-                    if (index != -1) {
-                        if (this.navigation.length > 0) {
-                            if (this.navigation[index].privilege) {
-                                if (userRole.privilege.includes(this.navigation[index].privilege[0])) {
-                                    return of(true);
-                                }
-                                else {
-                                    this._router.navigate(['/files/files']);
-                                    return of(true);
-                                }
-                            }
+                    // if (index != -1) {
+                    //     if (this.navigation.length > 0) {
+                    //         if (this.navigation[index].privilege) {
+                    //             if (userRole.privilege.includes(this.navigation[index].privilege[0])) {
+                    //                 return of(true);
+                    //             }
+                    //             else {
+                    //                 this._router.navigate(['/files/files']);
+                    //                 return of(true);
+                    //             }
+                    //         }
 
-                        }
-                    }
+                    //     }
+                    // }
                     return of(true);
 
 

@@ -617,7 +617,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     });
 
     this.cob10overview = this.sseService.getcob10().subscribe((data: any) => {
-      console.log('Result', data);
+      // console.log('Result', data);
 
       this.animateValue(
         this.previouscob10Values.benzol_scrubber_gasmake,
