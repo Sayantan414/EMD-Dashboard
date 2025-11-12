@@ -1,6 +1,5 @@
 <div
-  class="area flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 sm:p-20 h-full"
->
+  class="area flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 sm:p-20 h-full">
   <ul class="circles">
     <li></li>
     <li></li>
@@ -15,17 +14,14 @@
     <li></li>
     <li></li>
   </ul>
-  <div
-    class="md:flex md:items-center md:justify-end w-full sm:w-[80%] sm:rounded-2xl sm:shadow sm:bg-card z-10 h-full"
-  >
+  <div class="md:flex md:items-center md:justify-end w-full sm:w-[80%] sm:rounded-2xl sm:shadow sm:bg-card z-10 h-full">
     <div
       class="w-full sm:w-full md:w-1/3 text-center flex flex-col items-center justify-center mx-auto sm:mx-0 bg-card h-full p-6 sm:rounded-2xl md:rounded-r-none"
       style="
         background-image: url('assets/images/circuit-technology.webp');
         background-position: center;
         background-size: cover;
-      "
-    >
+      ">
       <!-- Logo -->
       <div class="flex flex-col items-center justify-center mb-10">
         <div class="w-44">
@@ -33,9 +29,7 @@
         </div>
       </div>
 
-      <div
-        class="sm:hidden text-2xl font-extrabold leading-none text-[#cd2027] w-full text-center mb-4"
-      >
+      <div class="sm:hidden text-2xl font-extrabold leading-none text-[#cd2027] w-full text-center mb-4">
         <!-- <p>SAIL RMG DASHBOARD</p> -->
         <p>Digital Energy Vision</p>
         <!-- <div>our community</div> -->
@@ -43,9 +37,7 @@
       </div>
 
       <!-- Title -->
-      <div
-        class="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight"
-      >
+      <div class="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
         Sign in
       </div>
       <!-- <div class="flex items-baseline mt-0.5 font-medium">
@@ -55,14 +47,8 @@
             </div> -->
 
       <!-- Alert -->
-      <fuse-alert
-        class="mt-8 -mb-4"
-        *ngIf="showAlert"
-        [appearance]="'outline'"
-        [showIcon]="false"
-        [type]="alert.type"
-        [@shake]="alert.type === 'error'"
-      >
+      <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type"
+        [@shake]="alert.type === 'error'">
         {{ alert.message }}
       </fuse-alert>
 
@@ -71,12 +57,7 @@
         <!-- Email field -->
         <mat-form-field class="w-full">
           <mat-label>Login ID</mat-label>
-          <input
-            id="userid"
-            matInput
-            [formControlName]="'userid'"
-            [(ngModel)]="user.userid"
-          />
+          <input id="userid" matInput [formControlName]="'userid'" [(ngModel)]="user.userid" />
           <mat-error *ngIf="signInForm.get('userid').hasError('required')">
             Login ID is required to login
           </mat-error>
@@ -88,32 +69,15 @@
         <!-- Password field -->
         <mat-form-field class="w-full">
           <mat-label>Password</mat-label>
-          <input
-            id="password"
-            matInput
-            type="password"
-            [formControlName]="'password'"
-            [(ngModel)]="user.password"
-            #passwordField
-          />
-          <button
-            mat-icon-button
-            type="button"
-            (click)="
+          <input id="password" matInput type="password" [formControlName]="'password'" [(ngModel)]="user.password"
+            #passwordField />
+          <button mat-icon-button type="button" (click)="
               passwordField.type === 'password'
                 ? (passwordField.type = 'text')
                 : (passwordField.type = 'password')
-            "
-            matSuffix
-          >
-            <mat-icon
-              class="icon-size-5"
-              *ngIf="passwordField.type === 'password'"
-              >visibility</mat-icon
-            >
-            <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'text'"
-              >visibility_off</mat-icon
-            >
+            " matSuffix>
+            <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'password'">visibility</mat-icon>
+            <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'text'">visibility_off</mat-icon>
           </button>
           <mat-error> Password is required </mat-error>
         </mat-form-field>
@@ -127,13 +91,8 @@
                 </div> -->
 
         <!-- Submit button -->
-        <button
-          class="fuse-mat-button-large w-full mt-6"
-          mat-flat-button
-          [color]="'primary'"
-          [disabled]="signInForm.invalid"
-          (click)="signIn()"
-        >
+        <button class="fuse-mat-button-large w-full mt-6" mat-flat-button [color]="'primary'"
+          [disabled]="signInForm.invalid" (click)="signIn()">
           Sign in
         </button>
 
@@ -162,31 +121,26 @@
       class="relative hidden md:flex flex-auto items-center sm:rounded-r-2xl justify-center w-2/3 h-full overflow-hidden bg-gray-800 dark:border-l"
       style="background-image: url('{{
         coverUrl
-      }}'); background-size: cover; background-position: center;"
-    >
+      }}'); background-size: cover; background-position: center;">
       <!-- <div class="absolute bottom-4 right-4 px-3 " style="backdrop-filter: contrast(0.5);">
                 <a class="text-md font-medium text-white hover:underline cursor-pointer test-white"
                     [routerLink]="['/Privacy-Policy']">Privacy Policy
                 </a>
             </div> -->
       <div class="z-10 relative w-full">
-        <div
-          class="text-7xl font-bold leading-none text-white w-full text-center px-10 py-6"
-          style="backdrop-filter: brightness(0.5)"
-        >
+        <div class="text-7xl font-bold leading-none text-white w-full text-center px-10 py-6"
+          style="backdrop-filter: brightness(0.5)">
           <!-- <p>SAIL RMG DASHBOARD</p> -->
           <p>Digital Energy Vision</p>
 
           <!-- <div>our community</div> -->
           <!-- <p>Howrah Division</p> -->
-          <p
-            style="
+          <p style="
               font-size: 12px;
               color: #ffffffa6;
               font-weight: 200;
               margin-top: 15px;
-            "
-          >
+            ">
             <!-- sourav code comment -->
             <!-- Designed & Developed By C&IT, C&A SAIL ISP. -->
             <!-- sourav code comment -->
