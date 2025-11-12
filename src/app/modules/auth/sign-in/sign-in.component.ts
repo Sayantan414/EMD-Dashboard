@@ -64,8 +64,7 @@ export class AuthSignInComponent implements OnInit {
         private commonService: CommonService,
         private userService: UserService,
         private roleService: RoleService,
-        private _snackBar: MatSnackBar,
-        // private store: Store<{ user: any }>,
+        private _snackBar: MatSnackBar
     ) {
     }
 
@@ -107,44 +106,52 @@ export class AuthSignInComponent implements OnInit {
             return;
         }
 
-        // Disable the form
-        this.signInForm.disable();
-
         // Hide the alert
         this.showAlert = false;
 
-        this.userService
-            .signin(this.user)
+        this.userService.signin(this.signInForm.value)
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(
-                (response) => {
+            .subscribe({
+                next: (response) => {
                     let currentUser = JSON.parse(JSON.stringify(response));
+                    console.log(currentUser);
+
 
                     if (!currentUser.features) {
-                        this.commonService
-                            .getFeatures()
+                        this.commonService.getFeatures()
                             .pipe(takeUntil(this._unsubscribeAll))
-                            .subscribe((data: any) => {
-                                // console.log(data);
-                                let features = JSON.parse(JSON.stringify(data));
-                                let newdata = [];
-                                if (features.length > 0) {
-                                    for (let i = 0; i < features.length; i++) {
-                                        newdata.push(features[i].name);
+                            .subscribe({
+                                next: (data: any) => {
+                                    console.log(data);
+
+                                    let features = JSON.parse(JSON.stringify(data));
+                                    let newdata = [];
+                                    if (features.length > 0) {
+                                        for (let i = 0; i < features.length; i++) {
+                                            newdata.push(features[i].name);
+                                        }
+                                        currentUser.features = newdata;
                                     }
-                                    currentUser.features = newdata;
+                                    this.commonService.currentUser.next(currentUser);
+                                    this.getRoles(currentUser);
+                                },
+                                error: (dataError) => {
+                                    // Handle error fetching features (optional)
+                                    console.error('Error fetching features:', dataError);
                                 }
-                                this.commonService.setItem("currentUser", currentUser);
-                                // this.store.dispatch(signin({ user: currentUser }));
-                                this.getDefaultRoles(currentUser);
                             });
-                    } else {
-                        this.commonService.setItem("currentUser", response);
-                        // this.store.dispatch(signin({ user: response }));
-                        this.getDefaultRoles(currentUser);
+                        console.log("hiii");
+
+                    }
+                    else {
+                        console.log("hello");
+
+                        this.commonService.setItem('currentUser', response);
+                        this.commonService.currentUser.next(response);
+                        this.getRoles(currentUser);
                     }
                 },
-                (respError) => {
+                error: (respError) => {
                     // Re-enable the form
                     this.signInForm.enable();
 
@@ -153,57 +160,24 @@ export class AuthSignInComponent implements OnInit {
 
                     // Set the alert
                     this.alert = {
-                        type: "error",
-                        message: respError,
+                        type: 'error',
+                        message: respError
                     };
 
                     // Show the alert
                     this.showAlert = true;
                 }
-            );
-
-        // Sign in
-        /* this._authService.signIn(this.signInForm.value)
-                .subscribe(
-                    () => {
-    
-                        // Set the redirect url.
-                        // The '/signed-in-redirect' is a dummy url to catch the request and redirect the user
-                        // to the correct page after a successful sign in. This way, that url can be set via
-                        // routing file and we don't have to touch here.
-                        const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
-    
-                        // Navigate to the redirect url
-                        this._router.navigateByUrl(redirectURL);
-    
-                    },
-                    (response) => {
-    
-                        // Re-enable the form
-                        this.signInForm.enable();
-    
-                        // Reset the form
-                        this.signInNgForm.resetForm();
-    
-                        // Set the alert
-                        this.alert = {
-                            type   : 'error',
-                            message: 'Wrong email or password'
-                        };
-    
-                        // Show the alert
-                        this.showAlert = true;
-                    }
-                ); */
+            });
     }
 
-    getDefaultRoles(user: any) {
+    getRoles(user: any) {
+
         this.commonService
             .getDefaultRole()
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((response) => {
                 let defaultRoles = JSON.parse(JSON.stringify(response));
-                //console.log(response);
+                console.log(response);
                 let index = defaultRoles.map((item) => item.name).indexOf(user.role);
                 if (index >= 0) {
                     // this.store.dispatch(new SetUserRoleAction(defaultRoles[index]));
@@ -212,7 +186,10 @@ export class AuthSignInComponent implements OnInit {
                 }
                 //else this.getCustomRole(user);
             });
+
+
     }
+
 
     redirectToDashboad(currentUser: any, role: any) {
         this.signingin = false;
@@ -227,8 +204,13 @@ export class AuthSignInComponent implements OnInit {
         //     }
         else {
             //Redirect to Dashboard
+            // alert('Login Successful');
             //   const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
-            this._router.navigate(["plantoverview"]);
+            // this._router.navigate(["overview"]);
+            this._router.navigate(['/overview']).then(result => {
+                console.log('Navigation result:', result);
+            }).catch(err => console.error('Navigation error:', err));
+
             // this._router.navigateByUrl(redirectURL);
         }
         //}
