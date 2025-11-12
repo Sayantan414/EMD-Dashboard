@@ -1,55 +1,3 @@
-.header {
-    display: flex;
-    flex-direction: row;
-    background: var(--gradient-header-background);
-    ;
-    /* semi-transparent */
-    padding: 10px 0;
-    backdrop-filter: blur(20px);
-    /* ✅ blurs background behind element */
-    -webkit-backdrop-filter: blur(5px);
-    /* Safari support */
-    width: 100%;
-    border-bottom: 1px solid #135b77;
-    justify-content: space-between;
-
-    // background-image: url('/assets/bg.jpg');
-    //   background: #000000;
-    // background: linear-gradient(18090deg,rgba(0, 0, 0, 1) 25%, rgba(120, 117, 117, 1) 91%);
-
-}
-
-.header::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    // background: url('/assets/bg2.jpg') center/cover no-repeat;
-    filter: blur(1px);
-    /* ✅ Blurs the image itself */
-    z-index: 0;
-}
-
-.header>* {
-    position: relative;
-    z-index: 1;
-}
-
-li {
-    margin: 5px 10px;
-    color: var(--header_inactive);
-    cursor: pointer;
-    font-family: 'Play';
-    font-size: 22px;
-    // filter: blur(0px);
-}
-
-.header li.active {
-    // background: #4cafef;
-    color: var(--header_active);
-    // font-weight: 1000;
-    font-family: 'Play';
-}
-
 #night_mode {
     margin-right: 10px;
     cursor: pointer;
@@ -239,21 +187,34 @@ li {
 }
 
 .gradient-title {
+    position: relative;
+    display: inline-block;
     font-size: 1.8rem;
     font-weight: 500;
     letter-spacing: 0.7px;
     text-transform: uppercase;
     white-space: nowrap;
     user-select: none;
-    background: linear-gradient(90deg,
-            #4fc3f7,
-            #81c784,
-            #ffb74d,
-            #4fc3f7);
+    background: linear-gradient(90deg, #4fc3f7, #81c784, #ffb74d, #4fc3f7);
     background-size: 300% 300%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: gradientMove 5s ease infinite;
+}
+
+/* Animated underline */
+.gradient-title::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #4fc3f7, #81c784, #ffb74d, #4fc3f7);
+    background-size: 200% 200%;
+    border-radius: 2px;
+    transform-origin: center;
+    animation: underlineFullSqueeze 4s ease-in-out infinite, gradientMove 8s ease infinite;
 }
 
 @keyframes gradientMove {
@@ -267,6 +228,24 @@ li {
 
     100% {
         background-position: 0% 50%;
+    }
+}
+
+/* Fully squeeze underline */
+@keyframes underlineFullSqueeze {
+    0% {
+        transform: scaleX(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scaleX(0);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scaleX(1);
+        opacity: 1;
     }
 }
 
