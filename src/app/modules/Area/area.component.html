@@ -1,118 +1,60 @@
 <!-- <div class="container">
   <h1>Dashboard</h1>
 </div> -->
+<div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="40px" class="cogas-meter-container">
+  <!-- Gauge 1 -->
+  <div class="meter-card">
+    <div class="box">
+    <h2 class="area_header">
+      <span
+      *ngFor="let letter of splitLetters('C.O. GAS MAKE [Th. Nm³/hr]'); let i = index"
 
-<div class="container">
-  <div class="animated-bg">
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
+        [style.animation-delay]="i * 0.2 + 's'"
+      >
+        {{ letter }}
+      </span>
+    </h2>
+    </div>
+    <apx-chart
+      [series]="makeGauge.series"
+      [chart]="makeGauge.chart"
+      [labels]="makeGauge.labels"
+      [plotOptions]="makeGauge.plotOptions"
+      [fill]="makeGauge.fill"
+      [stroke]="makeGauge.stroke">
+    </apx-chart>
+    <!-- Actual live value -->
+    <div class="meter-value">
+      {{ cob10_res.benzol_scrubber_gasmake | number:'1.2-2' }}
+    </div>
   </div>
 
-  <div class="container">
-    <!-- <h1 class="dashboard-title animated-underline">Dashboard</h1> -->
-
-    <div class="charts-grid">
-      <!-- Radial Chart 1 -->
-      <div class="box chart-card fade-in">
-        <h3 class="overview_header">
-          <span [style.animation-delay]="'Compressor 1 Pressure'">
-            COB#10 GAS MAKE</span>
-        </h3>
-        <apx-chart [series]="radialChart1.series" [chart]="radialChart1.chart" [labels]="radialChart1.labels"
-          [colors]="radialChart1.colors" [plotOptions]="radialChart1.plotOptions" [responsive]="radialChart1.responsive"
-          [legend]="radialChart1.legend">
-        </apx-chart>
+  <!-- Gauge 2 -->
+  <div class="meter-card">
+    <div class="box">
+      <h2 class="area_header">
+        <span
+        *ngFor="let letter of splitLetters('C.O. GAS PRESSURE [mmwc]'); let i = index"
+  
+          [style.animation-delay]="i * 0.2 + 's'"
+        >
+          {{ letter }}
+        </span>
+      </h2>
       </div>
-
-      <!-- Radial Chart 2 -->
-      <div class="box chart-card fade-in delay-1">
-        <h3 class="overview_header"> <span [style.animation-delay]="'Compressor 2 Pressure'">COB#10 GAS PRESSURE</span>
-        </h3>
-        <apx-chart [series]="radialChart2.series" [chart]="radialChart2.chart" [labels]="radialChart2.labels"
-          [colors]="radialChart2.colors" [plotOptions]="radialChart2.plotOptions" [responsive]="radialChart2.responsive"
-          [legend]="radialChart2.legend">
-        </apx-chart>
-      </div>
-
-      <!-- ✅ Radial Chart 3 -->
-      <div class="box chart-card fade-in delay-2">
-        <h3 class="overview_header">
-          <span [style.animation-delay]="'Compressor 3 Pressure'">COB#11 GAS MAKE</span>
-        </h3>
-        <apx-chart [series]="radialChart3.series" [chart]="radialChart3.chart" [labels]="radialChart3.labels"
-          [colors]="radialChart3.colors" [plotOptions]="radialChart3.plotOptions" [responsive]="radialChart3.responsive"
-          [legend]="radialChart3.legend">
-        </apx-chart>
-      </div>
-
-      <!-- ✅ Radial Chart 4 -->
-      <div class="box chart-card fade-in delay-3">
-        <h3 class="overview_header">
-          <span [style.animation-delay]="'Compressor 4 Flow'">COB#11 GAS PRESSURE</span>
-        </h3>
-        <apx-chart [series]="radialChart4.series" [chart]="radialChart4.chart" [labels]="radialChart4.labels"
-          [colors]="radialChart4.colors" [plotOptions]="radialChart4.plotOptions" [responsive]="radialChart4.responsive"
-          [legend]="radialChart4.legend">
-        </apx-chart>
-      </div>
+    <apx-chart
+      [series]="pressureGauge.series"
+      [chart]="pressureGauge.chart"
+      [labels]="pressureGauge.labels"
+      [plotOptions]="pressureGauge.plotOptions"
+      [fill]="pressureGauge.fill"
+      [stroke]="pressureGauge.stroke">
+    </apx-chart>
+    <div class="meter-value">
+      {{ cob10_res.cogas_supply_pressure | number:'1.2-2' }}
     </div>
-
-    <!-- Line Chart -->
-    <!-- <div class="box line-chart fade-in delay-2">
-      <h3 class="overview_header"> <span [style.animation-delay]="'Compressor Performance Trend'">Compressor Performance
-          Trend</span></h3>
-      <apx-chart [series]="lineChart.series" [chart]="lineChart.chart" [dataLabels]="lineChart.dataLabels"
-        [stroke]="lineChart.stroke" [title]="lineChart.title" [xaxis]="lineChart.xaxis" [yaxis]="lineChart.yaxis"
-        [colors]="lineChart.colors" [legend]="lineChart.legend" [tooltip]="lineChart.tooltip">
-      </apx-chart>
-    </div> -->
-
-
-
-    <!-- <div class="trend-container">
-      <h3 class="overview_header trend-header">
-        <span [style.animation-delay]="'Trend'">Trend</span>
-      </h3>
-
-      Table Section
-      <div class="trend-table">
-        <table>
-          <thead>
-            <tr>
-              <th>Trend Tag Name</th>
-              <th>Min</th>
-              <th>Max</th>
-              <th>Avg</th>
-              <th>Std Dev</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of trendData">
-              <td>{{ item.name }}</td>
-              <td>{{ item.min }}</td>
-              <td>{{ item.max }}</td>
-              <td>{{ item.avg }}</td>
-              <td>{{ item.stdDev }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      Chart Section
-      <div class="trend-chart">
-        <apx-chart [series]="chartSeries" [chart]="chartOptions.chart!" [xaxis]="chartOptions.xaxis!"
-          [yaxis]="chartOptions.yaxis!" [stroke]="chartOptions.stroke!" [colors]="chartOptions.colors!"
-          [dataLabels]="chartOptions.dataLabels!" [legend]="chartOptions.legend!" [tooltip]="chartOptions.tooltip!"
-          [markers]="chartOptions.markers!">
-        </apx-chart>
-
-      </div>
-
-      <div id="chartdiv"></div>
-      <h2 class="text-white text-center mb-3">Gas Flow Chart</h2>
-      <div id="chartdiv" style="width: 100%; height: 400px;"></div>
-
-    </div> -->
-
   </div>
 </div>
+
+
+

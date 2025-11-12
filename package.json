@@ -29,6 +29,7 @@
         "angular": "^1.8.3",
         "apex-grid": "^1.1.0",
         "apexcharts": "^3.47.0",
+        "chart.js": "^4.4.3",
         "cli": "^1.0.1",
         "crypto-js": "4.2.0",
         "exceljs": "^4.4.0",
@@ -41,6 +42,7 @@
         "luxon": "3.4.4",
         "moment": "^2.30.1",
         "ng-apexcharts": "^1.10.0",
+        "ng2-charts": "^4.1.1",
         "ngx-csv": "^0.3.2",
         "ngx-org-chart": "^1.1.1",
         "ngx-quill": "25.1.1",
@@ -54,7 +56,7 @@
         "zone.js": "0.14.4"
     },
     "devDependencies": {
-        "@angular-builders/custom-webpack": "^19.0.0",
+        "@angular-builders/custom-webpack": "^17.0.0",
         "@angular-devkit/build-angular": "17.2.3",
         "@angular/cli": "17.2.3",
         "@angular/compiler-cli": "17.2.4",
