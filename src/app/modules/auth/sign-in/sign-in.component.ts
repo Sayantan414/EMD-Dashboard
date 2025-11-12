@@ -114,7 +114,7 @@ export class AuthSignInComponent implements OnInit {
             .subscribe({
                 next: (response) => {
                     let currentUser = JSON.parse(JSON.stringify(response));
-                    console.log(currentUser);
+                    // console.log(currentUser);
 
 
                     if (!currentUser.features) {
@@ -140,12 +140,8 @@ export class AuthSignInComponent implements OnInit {
                                     console.error('Error fetching features:', dataError);
                                 }
                             });
-                        console.log("hiii");
-
                     }
                     else {
-                        console.log("hello");
-
                         this.commonService.setItem('currentUser', response);
                         this.commonService.currentUser.next(response);
                         this.getRoles(currentUser);
@@ -170,6 +166,8 @@ export class AuthSignInComponent implements OnInit {
             });
     }
 
+
+
     getRoles(user: any) {
 
         this.commonService
@@ -186,34 +184,30 @@ export class AuthSignInComponent implements OnInit {
                 }
                 //else this.getCustomRole(user);
             });
-
-
     }
 
 
     redirectToDashboad(currentUser: any, role: any) {
-        this.signingin = false;
-        this.signinButtontext = "LOGIN";
-        if (currentUser.onetime) {
-            this._router.navigateByUrl("reset-password");
-        }
-        // else {
-        //     if (role.privilege.indexOf('Overview') >= 0){
-        //         //Redirect to App Dashboard
-        //         this._router.navigate(['plantoverview']);
-        //     }
-        else {
-            //Redirect to Dashboard
-            // alert('Login Successful');
-            //   const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
-            // this._router.navigate(["overview"]);
-            this._router.navigate(['/overview']).then(result => {
-                console.log('Navigation result:', result);
-            }).catch(err => console.error('Navigation error:', err));
+        console.log("currentUser: ", currentUser, "role: ", role);
 
-            // this._router.navigateByUrl(redirectURL);
+        let privilege = [];
+        privilege = JSON.parse(JSON.stringify(role.privilege));
+        this.signingin = false;
+        this.signinButtontext = 'LOGIN';
+        this.commonService.setItem('currentUser', currentUser);
+        this.commonService.currentUser.next(currentUser)
+        if (currentUser.onetime) {
+
+            this._router.navigateByUrl('reset-password');
         }
-        //}
+        else {
+
+            const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
+            console.log(redirectURL); // '/overview'
+
+            this._router.navigateByUrl(redirectURL);
+
+        }
     }
 
     navigateByUrl() {

@@ -38,15 +38,15 @@ export const appRoutes: Route[] = [
   // ------------------------------
   {
     path: "",
-    // canActivate: [AuthGuard],
-    // canActivateChild: [AuthGuard],
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     component: LayoutComponent,
     children: [
 
       // ---- Overview ----
       {
         path: 'overview',
-        loadChildren: () => import('app/modules/Overviwe/overview.routes').then(m => m.default),
+        loadChildren: () => import('app/modules/Overviwe/overview.routes'),
       },
 
 
