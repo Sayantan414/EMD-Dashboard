@@ -4,56 +4,110 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="40px" class="cogas-meter-container">
   <!-- Gauge 1 -->
   <div class="meter-card">
-    <div class="box">
+    <!-- <div class="box"> -->
     <h2 class="area_header">
       <span
-      *ngFor="let letter of splitLetters('C.O. GAS MAKE [Th. Nm³/hr]'); let i = index"
+      *ngFor="let letter of splitLetters(make); let i = index"
 
         [style.animation-delay]="i * 0.2 + 's'"
       >
         {{ letter }}
       </span>
     </h2>
-    </div>
+    <!-- </div> -->
     <apx-chart
-      [series]="makeGauge.series"
-      [chart]="makeGauge.chart"
-      [labels]="makeGauge.labels"
-      [plotOptions]="makeGauge.plotOptions"
-      [fill]="makeGauge.fill"
-      [stroke]="makeGauge.stroke">
+      [series]="makeGauge1.series"
+      [chart]="makeGauge1.chart"
+      [labels]="makeGauge1.labels"
+      [plotOptions]="makeGauge1.plotOptions"
+      [fill]="makeGauge1.fill"
+      [stroke]="makeGauge1.stroke">
     </apx-chart>
     <!-- Actual live value -->
     <div class="meter-value">
-      {{ cob10_res.benzol_scrubber_gasmake | number:'1.2-2' }}
+      {{  cob10_res.benzol_scrubber_gasmake | number:'1.2-2' }}
     </div>
   </div>
 
   <!-- Gauge 2 -->
   <div class="meter-card">
-    <div class="box">
+    <!-- <div class="box"> -->
       <h2 class="area_header">
         <span
-        *ngFor="let letter of splitLetters('C.O. GAS PRESSURE [mmwc]'); let i = index"
+        *ngFor="let letter of splitLetters(pressure); let i = index"
   
           [style.animation-delay]="i * 0.2 + 's'"
         >
           {{ letter }}
         </span>
       </h2>
-      </div>
+      <!-- </div> -->
     <apx-chart
-      [series]="pressureGauge.series"
-      [chart]="pressureGauge.chart"
-      [labels]="pressureGauge.labels"
-      [plotOptions]="pressureGauge.plotOptions"
-      [fill]="pressureGauge.fill"
-      [stroke]="pressureGauge.stroke">
+      [series]="pressureGauge1.series"
+      [chart]="pressureGauge1.chart"
+      [labels]="pressureGauge1.labels"
+      [plotOptions]="pressureGauge1.plotOptions"
+      [fill]="pressureGauge1.fill"
+      [stroke]="pressureGauge1.stroke">
     </apx-chart>
     <div class="meter-value">
       {{ cob10_res.cogas_supply_pressure | number:'1.2-2' }}
     </div>
   </div>
+
+    <!-- Gauge 3 -->
+    <div class="meter-card">
+      <!-- <div class="box"> -->
+      <h2 class="area_header">
+        <span
+        *ngFor="let letter of splitLetters(make); let i = index"
+  
+          [style.animation-delay]="i * 0.2 + 's'"
+        >
+          {{ letter }}
+        </span>
+      </h2>
+      <!-- </div> -->
+      <apx-chart
+        [series]="makeGauge2.series"
+        [chart]="makeGauge2.chart"
+        [labels]="makeGauge2.labels"
+        [plotOptions]="makeGauge2.plotOptions"
+        [fill]="makeGauge2.fill"
+        [stroke]="makeGauge2.stroke">
+      </apx-chart>
+      <!-- Actual live value -->
+      <div class="meter-value">
+        {{ overview_res.MAKE | number:'1.2-2' }}
+      </div>
+    </div>
+  
+    <!-- Gauge 4 -->
+    <div class="meter-card">
+      <!-- <div class="box"> -->
+        <h2 class="area_header">
+          <span
+          *ngFor="let letter of splitLetters(pressure); let i = index"
+    
+            [style.animation-delay]="i * 0.2 + 's'"
+          >
+            {{ letter }}
+          </span>
+        </h2>
+        <!-- </div> -->
+      <apx-chart
+        [series]="pressureGauge2.series"
+        [chart]="pressureGauge2.chart"
+        [labels]="pressureGauge2.labels"
+        [plotOptions]="pressureGauge2.plotOptions"
+        [fill]="pressureGauge2.fill"
+        [stroke]="pressureGauge2.stroke">
+      </apx-chart>
+      <div class="meter-value">
+        {{ overview_res.PRESSURE | number:'1.2-2' }}
+      </div>
+    </div>
+
 </div>
 
 

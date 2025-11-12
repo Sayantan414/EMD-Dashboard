@@ -5,14 +5,14 @@
   gap: 40px;
   flex-wrap: wrap;
   padding: 20px;
-  background: #f7f9fc;
-  border-radius: 8px;
+  background: var(--backg-clr);
+  // border-radius: 8px;
   width: 100%;
 }
 
 .meter-card {
   background: white;
-  border-radius: 8px;
+  // border-radius: 8px;
   // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border: 1px solid var(--box-border);
   // padding: 4px;
@@ -34,3 +34,86 @@
   margin-top: 8px;
 }
 
+
+.area_header {
+  background: var(--gradient-header);
+  // color: var(--color-text-primary);
+  color: white;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 15px;
+  padding: 8px 8px;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--color-border-medium);
+}
+
+.area_header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  // background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.box:hover .area_header::after {
+  left: 100%;
+}
+
+.area_header span {
+  animation: rgbColor 4s infinite linear;
+  display: inline-block;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Apply delay for flowing effect */
+.area_header span:nth-child(1) { animation-delay: 0s !important; }
+.area_header span:nth-child(2) { animation-delay: 0.2s !important; }
+.area_header span:nth-child(3) { animation-delay: 0.4s !important; }
+.area_header span:nth-child(4) { animation-delay: 0.6s !important; }
+.area_header span:nth-child(5) { animation-delay: 0.8s !important; }
+
+.box, .tr, .td, .area_header, .col {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.area_header {
+  font-size: 14px;
+  padding: 10px 8px;
+}
+
+/* Keyframes */
+@keyframes rgbColor {
+  0% {
+    color: var(--0);
+  }
+
+  /* Red */
+  33% {
+    color: var(--33);
+  }
+
+  /* Green */
+  66% {
+    color: var(--66);
+  }
+
+  /* Blue */
+  100% {
+    color: var(--100);
+  }
+
+  /* Magenta */
+}
