@@ -961,3 +961,49 @@ tr:nth-child(even) {
 
   
 //sourav code
+/* For all fuse navigation items (horizontal or vertical) */
+// .fuse-vertical-navigation-item:hover {
+//   background-color: #e3f2fd !important; /* Light blue shade */
+//   transition: background-color 0.3s ease;
+// }
+
+// /* If using custom class */
+// .nav-item-cog:hover {
+//   background-color: #c23ed3 !important;
+//   border-radius: 6px;
+// }
+
+/* Make full width clickable + hoverable */
+/* Make full row clickable */
+.nav-item-cog {
+    display: block !important;
+    width: 100%;
+    border-radius: 6px;
+    padding-left: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  /* Hover effect */
+  .nav-item-cog:hover,
+  .nav-item-cog:hover .fuse-vertical-navigation-item-title {
+    background-color: #e891f3 !important;
+    color: #212121 !important;
+    width: 100% !important;
+  }
+  
+  /* Active (selected) state */
+  .nav-item-cog.active,
+  .nav-item-cog.active .fuse-vertical-navigation-item-title {
+    background-color: #c23ed3 !important;
+    color: #fff !important;
+    font-weight: 600;
+  }
+  
+  .fuse-horizontal-navigation-menu-panel .fuse-horizontal-navigation-menu-item {
+    height: auto;
+    min-height: 0;
+    line-height: normal;
+    white-space: normal;
+    padding: 0px 0px;
+}

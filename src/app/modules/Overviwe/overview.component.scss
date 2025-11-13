@@ -2,9 +2,9 @@
   // margin-bottom: 50px;
 
   height: calc(100vh - 80px);
-  // background-color: var(--overview_bg);
+  background-color: var(--overview_bg);
   padding: 10px;
-  overflow-y: auto !important;
+  overflow-y: hidden !important;
 }
 
 .flex {

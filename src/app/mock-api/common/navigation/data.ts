@@ -27,6 +27,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         title: 'COG',
         type: 'basic',
         link: '/gasbalance/cob11',
+        classes: { wrapper: 'nav-item-cog' }
       },
       // {
       //   id: 'gasbalance.bf',

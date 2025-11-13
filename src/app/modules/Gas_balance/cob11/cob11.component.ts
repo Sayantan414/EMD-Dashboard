@@ -78,7 +78,7 @@ export class Cob11Component implements OnInit {
 
   ngOnInit(): void {
     this.sseoverview = this.sseService.getcogasflow().subscribe((data: any) => {
-      console.log('es', data);
+      // console.log('es', data);
       // console.log(this.bf5_res);
 
       // Animate each property
@@ -177,7 +177,7 @@ export class Cob11Component implements OnInit {
     });
 
     this.ssebooster = this.sseService.getBooster().subscribe((data: any) => {
-      console.log('es', data);
+      // console.log('es', data);
       // console.log(this.bf5_res);
 
       // Animate each property
