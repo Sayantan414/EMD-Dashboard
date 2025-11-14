@@ -1,15 +1,24 @@
+// :host {
+//   display: block;
+//   // overflow-x: auto;
+//   overflow-y: hidden;
+// }
+
+
 /* Left detail panel */
 .layout-container {
   display: flex;
   align-items: flex-start;
-  gap: 100px;
-  padding: 5px;
+  // gap: 50px;
+  padding: 2px;
   background: var(--backg-clr);
+  width: max-content;
+  overflow-x: auto;
 }
 
 
 .detail-view {
-  width: 22%;
+  width: 0%;
   min-width: 250px;
   /* height: 200px; ❌ remove this */
   min-height: 200px; /* ✅ optional: ensures at least some height */

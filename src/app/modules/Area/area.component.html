@@ -3,7 +3,7 @@
 </div> -->
 <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="40px" class="cogas-meter-container">
   <!-- Gauge 1 -->
-  <div class="meter-card">
+  <div class="meter-card" *ngIf="cob10_res.benzol_scrubber_gasmake">
     <!-- <div class="box"> -->
     <h2 class="area_header">
       <span
@@ -25,12 +25,12 @@
     </apx-chart>
     <!-- Actual live value -->
     <div class="meter-value">
-      {{  cob10_res.benzol_scrubber_gasmake | number:'1.2-2' }}
+      {{  cob10_res.benzol_scrubber_gasmake }}
     </div>
   </div>
 
   <!-- Gauge 2 -->
-  <div class="meter-card">
+  <div class="meter-card" >
     <!-- <div class="box"> -->
       <h2 class="area_header">
         <span
@@ -56,7 +56,7 @@
   </div>
 
     <!-- Gauge 3 -->
-    <div class="meter-card">
+    <div class="meter-card" >
       <!-- <div class="box"> -->
       <h2 class="area_header">
         <span
@@ -83,7 +83,7 @@
     </div>
   
     <!-- Gauge 4 -->
-    <div class="meter-card">
+    <div class="meter-card" >
       <!-- <div class="box"> -->
         <h2 class="area_header">
           <span
@@ -108,6 +108,59 @@
       </div>
     </div>
 
+        <!-- Gauge 5 -->
+        <div class="meter-card"  >
+          <!-- <div class="box"> -->
+          <h2 class="area_header">
+            <span
+            *ngFor="let letter of splitLetters(bv); let i = index"
+      
+              [style.animation-delay]="i * 0.2 + 's'"
+            >
+              {{ letter }}
+            </span>
+          </h2>
+          <!-- </div> -->
+          <apx-chart
+            [series]="makeGauge3.series"
+            [chart]="makeGauge3.chart"
+            [labels]="makeGauge3.labels"
+            [plotOptions]="makeGauge3.plotOptions"
+            [fill]="makeGauge3.fill"
+            [stroke]="makeGauge3.stroke">
+          </apx-chart>
+          <!-- Actual live value -->
+          <div class="meter-value">
+            {{ overview_res.BLAST_VOLUME }}
+          </div>
+        </div>
+      
+        <!-- Gauge 6 -->
+        <div class="meter-card" >
+          <!-- <div class="box"> -->
+            <h2 class="area_header">
+              <span
+              *ngFor="let letter of splitLetters(bp); let i = index"
+        
+                [style.animation-delay]="i * 0.2 + 's'"
+              >
+                {{ letter }}
+              </span>
+            </h2>
+            <!-- </div> -->
+          <apx-chart
+            [series]="pressureGauge3.series"
+            [chart]="pressureGauge3.chart"
+            [labels]="pressureGauge3.labels"
+            [plotOptions]="pressureGauge3.plotOptions"
+            [fill]="pressureGauge3.fill"
+            [stroke]="pressureGauge3.stroke">
+          </apx-chart>
+          <div class="meter-value">
+            {{ overview_res.BLAST_PRESSURE | number:'1.2-2' }}
+          </div>
+        </div>
+        
 </div>
 
 

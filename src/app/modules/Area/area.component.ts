@@ -36,19 +36,31 @@ export class AreaComponent implements OnInit, OnDestroy {
   // pressureGauge!: Partial<ChartOptions>;
   makeGauge1!: Partial<ChartOptions>;
 makeGauge2!: Partial<ChartOptions>;
+makeGauge3!: Partial<ChartOptions>;
 pressureGauge1!: Partial<ChartOptions>;
 pressureGauge2!: Partial<ChartOptions>;
+pressureGauge3!: Partial<ChartOptions>;
 
 
   make = 'C.O. GAS MAKE [Th. Nm³/hr]';
   pressure = 'C.O. GAS PRESSURE [mmwc]';
+bv = 'BLAST VOLUME [Nm³/min]';
+bp = 'BLAST PRESSURE [Kg/cm²]';
+
+max_gasmake_cob10 = 80000;
+max_gasmake_cob11 = 60000;
+max_gasmake_bf5   = 50000;
+
+max_pressure_cob10 = 4000;
+max_pressure_cob11 = 3500;
+max_pressure_bf5   = 10;
+
 
   cob10_res = {
     benzol_scrubber_gasmake: 0,
     cogas_supply_pressure: 0,
     cog_gasflow: 0,
-    max_gasmake: 2000,  // fallback default
-    max_pressure: 1000  // fallback default
+
   };
 
   overview_res = {
@@ -167,7 +179,7 @@ pressureGauge2!: Partial<ChartOptions>;
           endAngle: 135,
           hollow: { size: "70%" },
           dataLabels: {
-            name: { show: true, fontSize: "14px", color: "#9932CC", offsetY: 10 },
+            name: { show: true, fontSize: "18px", color: "var(--header_active)", offsetY: 10 },
             value: {
               show: false, // ✅ completely hide numeric value
             },
@@ -178,16 +190,19 @@ pressureGauge2!: Partial<ChartOptions>;
       stroke: { lineCap: "round" },
     };
 
-    this.makeGauge1 = { ...baseGauge, labels: ["C.O. GAS MAKE"]};
-    this.makeGauge2 = { ...baseGauge, labels: ["C.O. GAS MAKE"] };
-    this.pressureGauge1 = { ...baseGauge, labels: ["C.O. GAS PRESSURE"] };
-    this.pressureGauge2 = { ...baseGauge, labels: ["C.O. GAS PRESSURE"] };
+    this.makeGauge1 = { ...baseGauge, labels: ["COB#10"]};
+    this.makeGauge2 = { ...baseGauge, labels: ["COB#11"] };
+    this.makeGauge3 = { ...baseGauge, labels: ["BF#5 KALYANI"] };
+    this.pressureGauge1 = { ...baseGauge, labels: ["COB#10"] };
+    this.pressureGauge2 = { ...baseGauge, labels: ["COB#11"] };
+    this.pressureGauge3 = { ...baseGauge, labels: ["BF#5 KALYANI"] };
+
     
   }
 
   loadData() {
     this.sseoverview = this.sseService.getcob10().subscribe((data: any) => {
-      console.log('Result', data);
+      // console.log('Result', data);
       // console.log(this.bf5_res);
       // Animate each property
       this.animateValue(
@@ -195,13 +210,15 @@ pressureGauge2!: Partial<ChartOptions>;
         data.benzol_scrubber_gasmake,
         800, // ms
         (val) => {
-          this.cob10_res.benzol_scrubber_gasmake = val;
+          if (isNaN(val))  this.cob10_res.benzol_scrubber_gasmake = 0;
+          else this.cob10_res.benzol_scrubber_gasmake = val;
     
           // ✅ Update gauge
-          const maxGasMake = data.max_gasmake || 2000; // fallback if API doesn't send
+          const maxGasMake = this.max_gasmake_cob10 || 80000; // fallback if API doesn't send
           const percent = Math.min((val / maxGasMake) * 100, 100);
           this.makeGauge1.series = [percent];
-        }, 2
+
+        }
       );
 
       this.animateValue(
@@ -210,10 +227,11 @@ pressureGauge2!: Partial<ChartOptions>;
         data.cogas_supply_pressure,
         800,
         (val) => {
-          this.cob10_res.cogas_supply_pressure = val;
+          if (isNaN(val))  this.cob10_res.cogas_supply_pressure = 0;
+          else this.cob10_res.cogas_supply_pressure = val;
     
           // ✅ Update pressure gauge
-          const maxPressure = data.max_pressure || 1000;
+          const maxPressure = this.max_pressure_cob10 || 4000;
           const percent = Math.min((val / maxPressure) * 100, 100);
           this.pressureGauge1.series = [percent];
         },
@@ -232,10 +250,11 @@ pressureGauge2!: Partial<ChartOptions>;
         data.MAKE,
         800, // ms
         (val) => {
-          this.overview_res.MAKE = val;
+          if (isNaN(val))  this.overview_res.MAKE = 0;
+          else this.overview_res.MAKE = val;
     
           // ✅ Update gauge
-          const maxGasMake = data.max_gasmake || 2000; // fallback if API doesn't send
+          const maxGasMake = this.max_gasmake_cob11 || 60000; // fallback if API doesn't send
           const percent = Math.min((val / maxGasMake) * 100, 100);
           this.makeGauge2.series = [percent];
         }
@@ -246,13 +265,47 @@ pressureGauge2!: Partial<ChartOptions>;
         data.PRESSURE,
         800,
         (val) => {
-          this.overview_res.PRESSURE = val;
-    console.log(this.overview_res.PRESSURE);
+          if (isNaN(val))  this.overview_res.PRESSURE = 0;
+          else this.overview_res.PRESSURE = val;
     
           // ✅ Update pressure gauge
-          const maxPressure = data.max_pressure || 1000;
+          const maxPressure = this.max_pressure_cob11 || 3500;
           const percent = Math.min((val / maxPressure) * 100, 100);
           this.pressureGauge2.series = [percent];
+        },
+        2
+        
+      );
+
+      this.animateValue(
+        this.previouscob10Values.BLAST_VOLUME,
+        data.BLAST_VOLUME,
+        800, // ms
+        (val) => {
+         
+          if (isNaN(val))  this.overview_res.BLAST_VOLUME = 0;
+          else this.overview_res.BLAST_VOLUME = val;
+          
+
+          // ✅ Update gauge
+          const maxGasMake = this.max_gasmake_bf5 || 50000; // fallback if API doesn't send
+          const percent = Math.min((val / maxGasMake) * 100, 100);
+          this.makeGauge3.series = [percent];
+        }
+      );
+
+      this.animateValue(
+        this.previouscob10Values.BLAST_PRESSURE,
+        data.BLAST_PRESSURE,
+        800,
+        (val) => {
+          if (isNaN(val))  this.overview_res.BLAST_PRESSURE = 0;
+          else this.overview_res.BLAST_PRESSURE = val;
+    
+          // ✅ Update pressure gauge
+          const maxPressure = this.max_pressure_bf5 || 10;
+          const percent = Math.min((val / maxPressure) * 100, 100);
+          this.pressureGauge3.series = [percent];
         },
         2
         
