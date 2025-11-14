@@ -1,15 +1,31 @@
+// .cogas-meter-container {
+//   display: flex;
+//   justify-content: center;
+//   align-items: flex-start;
+//   gap: 40px;
+//   // flex-wrap: wrap;
+//   padding: 20px;
+//   background: var(--backg-clr);
+//   // border-radius: 8px;
+//   width: 100%;
+// }
+
 .cogas-meter-container {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   gap: 40px;
-  flex-wrap: wrap;
+
+  /* IMPORTANT FIX */
+  flex-wrap: nowrap;            /* 🔥 Prevent cards from going to next row */
+  overflow-x: auto;             /* 🔥 Show scrollbar when zoomed instead of wrapping */
+  // overflow-y: hidden;
+
   padding: 20px;
   background: var(--backg-clr);
-  // border-radius: 8px;
   width: 100%;
+  box-sizing: border-box;
 }
-
 .meter-card {
   // background: white;
   background:linear-gradient(180deg, #ffcc80, #fff3e0);
