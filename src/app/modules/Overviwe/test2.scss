@@ -3,10 +3,10 @@
 
 .container {
   /* width: min(100%); */
-  height: calc(100vh - 78px);
+  // height: calc(100vh - 78px);
   background: var(--backg-clr);
   padding: 10px;
-  overflow-y: auto;
+  overflow-y: auto !important;
 }
 
 .flex {
