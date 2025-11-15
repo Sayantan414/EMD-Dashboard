@@ -25,7 +25,8 @@
   background: transparent; /* important! let host background show */
   padding: 5px;
   box-sizing: border-box;
-  overflow-y: auto !important;
+  // height: calc(100vh - 130px);
+  // overflow-y: auto !important;
 }
 
 
