@@ -140,7 +140,10 @@ export class OverviewComponent implements OnInit, OnDestroy {
     this.sseoverview = this.sseService.getOverview().subscribe((data: any) => {
       // console.log('Result', data);
       // console.log(this.bf5_res);
-
+// 🔥 FIX: Convert all SSE values to numbers
+Object.keys(data).forEach(key => {
+  data[key] = Number(data[key]);
+});
       // Animate each property
       //sourav code
       this.animateValue(
@@ -155,7 +158,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
         this.previousValues.SP1_MIXGASF,
         data.SP1_MIXGASF,
         800, // ms
-        (val) => (this.overview_res.SP1_MIXGASF = val)
+        (val) => (this.overview_res.SP1_MIXGASF = val),2
       );
 
       this.animateValue(
@@ -646,6 +649,8 @@ export class OverviewComponent implements OnInit, OnDestroy {
     });
   }
 
+
+  
   ngOnDestroy(): void {
     // Clean up subscription to prevent memory leaks
     if (this.sseoverview) {
