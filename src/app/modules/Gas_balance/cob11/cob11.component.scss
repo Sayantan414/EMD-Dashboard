@@ -4,7 +4,6 @@
 //   overflow-y: hidden;
 // }
 
-
 /* Left detail panel */
 .layout-container {
   display: flex;
@@ -15,7 +14,7 @@
   width: max-content;
   overflow-x: auto;
   height: calc(100vh - 130px);
-overflow-y: auto;
+  overflow-y: auto;
 }
 
 /* Glass morphism scrollbar */
@@ -35,7 +34,11 @@ overflow-y: auto;
 }
 
 .layout-container::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, var(--color-green-300), var(--color-green-400));
+  background: linear-gradient(
+    to bottom,
+    var(--color-green-300),
+    var(--color-green-400)
+  );
 }
 
 .detail-view {

@@ -1,7 +1,7 @@
 <div class="container ">
   <div class="flex">
     <div class="col">
-      <div class="box">
+      <div class="box" (click)="onClickCOB10()" style="cursor: pointer;">
         <h2 class="overview_header">
           <span
             *ngFor="let letter of splitLetters(cob10); let i = index"
@@ -44,7 +44,7 @@
           <div class="td">Value 4</div>
         </div>
       </div>
-      <div class="box">
+      <div class="box" (click)="onClickCOB11()" style="cursor: pointer;">
         <h2 class="overview_header">
           <span
             *ngFor="let letter of splitLetters(cob11); let i = index"
@@ -163,6 +163,10 @@
           <div class="td">{{ overview_res.STOVE_4_BF_GAS }}</div>
         </div>
         <div class="tr">
+          <div class="td">TOTAL BF GAS CONS [Nm³/hr]</div>
+          <div class="td">{{ overview_res.TOTAL_BF_GAS_CONS_STOVE }}</div>
+        </div>
+        <div class="tr">
           <div class="td">C.O. GAS CONSUMPTION [Nm³/hr]</div>
           <div class="td">{{ overview_res.BF_COF }}</div>
         </div>
@@ -198,7 +202,7 @@
         </div>
         <div class="tr">
           <div class="td">TOTAL FLOW</div>
-          <div class="td">{{ overview_res.SP1_MIXGASF + overview_res.SP2_MIXGASF }}</div>
+          <div class="td">{{ overview_res.TOTAL_FLOW_SINTER }}</div>
         </div>
       </div>
     </div>

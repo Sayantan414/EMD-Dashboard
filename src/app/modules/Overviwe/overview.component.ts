@@ -1,33 +1,36 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ProjectCommonModule } from 'app/core/project-common-modules/project-common.module';
-import { SseService } from 'app/services/sse.servece';
-import { Subscription } from 'rxjs';
+import { CommonModule } from "@angular/common";
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { ProjectCommonModule } from "app/core/project-common-modules/project-common.module";
+import { SseService } from "app/services/sse.servece";
+import { Subscription } from "rxjs";
+import { Cob10Component } from "./cob10/cob10.component";
+import { MatDialog } from "@angular/material/dialog";
+import { Cob11modalComponent } from "./cob11modal/cob11modal.component";
 
 @Component({
-  selector: 'app-overview',
-  templateUrl: './overview.component.html',
+  selector: "app-overview",
+  templateUrl: "./overview.component.html",
   standalone: true,
   imports: [ProjectCommonModule, CommonModule],
   // styleUrls: ['./overview.component.scss'],
-  styleUrls: ['./test2.scss'],
+  styleUrls: ["./test2.scss"],
 })
 export class OverviewComponent implements OnInit, OnDestroy {
-  bf = 'BF#5 KALYANI';
-  cob11 = 'COB#11';
-  cob10 = 'COB#10';
-  bof_holder = 'BOF HOLDER';
-  cbm = 'CBM';
-  pbs2 = 'PBS#2 BOILER (1,2,3)';
-  sinter = 'SINTER PLANTS';
-  ldcp = 'LDCP';
-  bof_ccp = 'BOF/CCP';
-  agbs_cgbs = 'AGBS/CGBS';
-  stove = 'BF#5 STOVES';
+  bf = "BF#5 KALYANI";
+  cob11 = "COB#11";
+  cob10 = "COB#10";
+  bof_holder = "BOF HOLDER";
+  cbm = "CBM";
+  pbs2 = "PBS#2 BOILER (1,2,3)";
+  sinter = "SINTER PLANTS";
+  ldcp = "LDCP";
+  bof_ccp = "BOF/CCP";
+  agbs_cgbs = "AGBS/CGBS";
+  stove = "BF#5 STOVES";
   mills = "MILL'S";
-  fale_stack_cog = 'FLARE STACK (COG)';
-  fale_stack_bfg = 'FLARE STACK (BFG)';
-  micellanous = 'MICELLANEOUS';
+  fale_stack_cog = "FLARE STACK (COG)";
+  fale_stack_bfg = "FLARE STACK (BFG)";
+  micellanous = "MICELLANEOUS";
 
   overview_res = {
     BLAST_VOLUME: 0,
@@ -39,6 +42,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     MG_BRM_FLOW: 0,
     MG_USM_FLOW: 0,
     TOTAL_FLOW: 0,
+    TOTAL_FLOW_SINTER: 0,
     MG_WRM_PRESSURE: 0,
     MG_BRM_PRESSURE: 0,
     MG_USM_PRESSURE: 0,
@@ -50,6 +54,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     STOVE_2_BF_GAS: 0,
     STOVE_3_BF_GAS: 0,
     STOVE_4_BF_GAS: 0,
+    TOTAL_BF_GAS_CONS_STOVE:0,
     CO_GAS_CONSUMPTION: 0,
     CDI_COG_CONSUMPTION: 0,
     COG123: 0,
@@ -97,7 +102,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     benzol_scrubber_gasmake: 0,
     cogas_supply_pressure: 0,
     cog_gasflow: 0,
-  }
+  };
 
   previousValues: any = { ...this.overview_res };
   previouscob10Values: any = { ...this.cob10_res };
@@ -105,10 +110,10 @@ export class OverviewComponent implements OnInit, OnDestroy {
   private sseoverview?: Subscription;
   private cob10overview?: Subscription;
 
-  constructor(private sseService: SseService) { }
+  constructor(private sseService: SseService, private _matDialog: MatDialog) {}
 
   splitLetters(text: string): string[] {
-    return text.split('').map((c) => (c === ' ' ? '\u00A0' : c));
+    return text.split("").map((c) => (c === " " ? "\u00A0" : c));
   }
 
   animateValue(
@@ -140,10 +145,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     this.sseoverview = this.sseService.getOverview().subscribe((data: any) => {
       // console.log('Result', data);
       // console.log(this.bf5_res);
-// 🔥 FIX: Convert all SSE values to numbers
-Object.keys(data).forEach(key => {
-  data[key] = Number(data[key]);
-});
+
       // Animate each property
       //sourav code
       this.animateValue(
@@ -158,7 +160,10 @@ Object.keys(data).forEach(key => {
         this.previousValues.SP1_MIXGASF,
         data.SP1_MIXGASF,
         800, // ms
-        (val) => (this.overview_res.SP1_MIXGASF = val),2
+        (val) => {
+          this.overview_res.SP1_MIXGASF = val;
+          this.updateTotalFlowSinter();
+        }
       );
 
       this.animateValue(
@@ -174,8 +179,12 @@ Object.keys(data).forEach(key => {
         this.previousValues.SP2_MIXGASF,
         data.SP2_MIXGASF,
         800,
-        (val) => (this.overview_res.SP2_MIXGASF = val),
-        2
+        // (val) => (this.overview_res.SP2_MIXGASF = val),
+        // 2
+        (val) => {
+          this.overview_res.SP2_MIXGASF =  parseFloat(val.toFixed(2));
+          this.updateTotalFlowSinter();
+        }
       );
 
       this.animateValue(
@@ -328,16 +337,25 @@ Object.keys(data).forEach(key => {
         this.previousValues.STOVE_1_BF_GAS,
         data.STOVE_1_BF_GAS,
         800, // ms
-        (val) => (this.overview_res.STOVE_1_BF_GAS = val),
-        2
+        // (val) => (this.overview_res.STOVE_1_BF_GAS = val),
+        // 2
+        (val) => {
+          this.overview_res.STOVE_1_BF_GAS =  parseFloat(val.toFixed(2));
+          this.updateTotalFlowStove();
+        }
       );
 
       this.animateValue(
         this.previousValues.STOVE_2_BF_GAS,
         data.STOVE_2_BF_GAS,
         800,
-        (val) => (this.overview_res.STOVE_2_BF_GAS = val),
-        2
+        // (val) => (this.overview_res.STOVE_2_BF_GAS = val),
+        // 2
+
+        (val) => {
+          this.overview_res.STOVE_2_BF_GAS =  parseFloat(val.toFixed(2));
+          this.updateTotalFlowStove();
+        }
       );
 
       // repeat for other props
@@ -345,16 +363,24 @@ Object.keys(data).forEach(key => {
         this.previousValues.STOVE_3_BF_GAS,
         data.STOVE_3_BF_GAS,
         800,
-        (val) => (this.overview_res.STOVE_3_BF_GAS = val),
-        2
+        // (val) => (this.overview_res.STOVE_3_BF_GAS = val),
+        // 2
+        (val) => {
+          this.overview_res.STOVE_3_BF_GAS =  parseFloat(val.toFixed(2));
+          this.updateTotalFlowStove();
+        }
       );
 
       this.animateValue(
         this.previousValues.STOVE_4_BF_GAS,
         data.STOVE_4_BF_GAS,
         800,
-        (val) => (this.overview_res.STOVE_4_BF_GAS = val),
-        2
+        // (val) => (this.overview_res.STOVE_4_BF_GAS = val),
+        // 2
+        (val) => {
+          this.overview_res.STOVE_4_BF_GAS =  parseFloat(val.toFixed(2));
+          this.updateTotalFlowStove();
+        }
       );
 
       this.animateValue(
@@ -649,8 +675,63 @@ Object.keys(data).forEach(key => {
     });
   }
 
+  updateTotalFlowStove(){
+    this.overview_res.TOTAL_BF_GAS_CONS_STOVE =
+    (this.overview_res.STOVE_1_BF_GAS || 0) +
+    (this.overview_res.STOVE_2_BF_GAS || 0) +
+    (this.overview_res.STOVE_3_BF_GAS || 0) +
+    (this.overview_res.STOVE_4_BF_GAS || 0);
+  }
 
-  
+  updateTotalFlowSinter() {
+    this.overview_res.TOTAL_FLOW_SINTER =
+      (this.overview_res.SP1_MIXGASF || 0) +
+      (this.overview_res.SP2_MIXGASF || 0);
+  }
+
+  onClickCOB10(){
+    let dialogRef = this._matDialog.open(Cob10Component, {
+      width: "90vw",
+      maxWidth: "100vw",
+      height: "100vh",
+      maxHeight: "100vh",
+      panelClass: "full-screen-dialog",
+      data: {
+        action: "viewCOB10",
+      },
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((response: any) => {
+      if (!response) {
+        return;
+      }
+    });
+    
+  }
+
+
+  onClickCOB11(){
+    let dialogRef = this._matDialog.open(Cob11modalComponent, {
+      width: "90vw",
+      maxWidth: "100vw",
+      height: "100vh",
+      maxHeight: "100vh",
+      panelClass: "full-screen-dialog",
+      data: {
+        action: "viewCOB11",
+      },
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((response: any) => {
+      if (!response) {
+        return;
+      }
+    });
+    
+  }
+
   ngOnDestroy(): void {
     // Clean up subscription to prevent memory leaks
     if (this.sseoverview) {

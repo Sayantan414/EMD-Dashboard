@@ -1,0 +1,31 @@
+<!-- <p>
+  cob10 works!
+</p> -->
+<div class="container">
+  <div class="flex">
+      <div class="box">
+        <!-- <h2 class="overview_header">
+          <span
+            *ngFor="let letter of splitLetters(cob10); let i = index"
+            [style.animation-delay]="i * 0.2 + 's'"
+          >
+            {{ letter }}
+          </span>
+        </h2> -->
+        <div class="header-row">
+          <h2 class="overview_header">
+            <span
+              *ngFor="let letter of splitLetters(cob10); let i = index"
+              [style.animation-delay]="i * 0.2 + 's'"
+            >
+              {{ letter }}
+            </span>
+          </h2>
+      
+          <button class="back-btn" mat-dialog-close>
+            Back to Overview
+          </button>
+        </div>
+      </div>
+  </div>
+</div>
