@@ -1021,3 +1021,19 @@ tr:nth-child(even) {
     white-space: normal;
     padding: 0px 0px;
 }
+
+
+/* Remove all gaps around dialog */
+.full-screen-dialog .mat-mdc-dialog-container {
+    padding: 0 !important;
+  }
+  
+  /* Remove white border & gaps */
+  .full-screen-dialog .mdc-dialog__surface {
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    
+  }
+  
