@@ -44,6 +44,21 @@ export class TrendService {
       .pipe(retry(1), catchError(this.errorHandler));
   }
   
+  cob11_trend(emd: any): Observable<any> {
+
+    return this.http
+      .get<any>(
+        `${this.baseUrl}/emd/cob11_trend`,
+        {
+          headers: new HttpHeaders({
+            "Content-Type": "application/json",
+            Authorization: this.authorization,
+          }),
+          params: emd    // 👈 send emd values as query params
+        }
+      )
+      .pipe(retry(1), catchError(this.errorHandler));
+  }
 
   private errorHandler(error: HttpErrorResponse) {
     console.error(error);

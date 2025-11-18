@@ -1,7 +1,7 @@
 <!-- <p>
   cob11modal works!
 </p> -->
-<div class="modal-header">
+<!-- <div class="modal-header">
   <h2 class="overview_header">
     <span
       *ngFor="let letter of splitLetters(cob11); let i = index"
@@ -17,5 +17,29 @@
 </div>
 
 <div class="modal-body">
-  <!-- Your content -->
-</div>
+</div> -->
+
+
+
+  <!-- Header -->
+
+  <div class="modal-header">
+    <h2 class="overview_header">
+      <span
+        *ngFor="let letter of splitLetters(cob11); let i = index"
+        [style.animation-delay]="i * 0.2 + 's'"
+      >
+        {{ letter }}
+      </span>
+    </h2>
+  
+    <button mat-icon-button class="close-btn" [matTooltip]="'Close'" mat-dialog-close>
+      <mat-icon class="text-white">close</mat-icon>
+    </button>
+  </div>
+  
+  <div class="modal-body">
+    <!-- Your content -->
+    <div id="cob11Chart" style="width: 100%; height: 300px;" class="mt-10"></div>
+  </div>
+  

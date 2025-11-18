@@ -20,8 +20,6 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 })
 export class Cob10Component implements OnInit {
   cob10 = "COB#10";
-  back = "Back to Overview";
-  cob10Form: any = FormGroup;
   private root!: am5.Root;
   private _unsubscribeAll: Subject<any> = new Subject();
   constructor(
