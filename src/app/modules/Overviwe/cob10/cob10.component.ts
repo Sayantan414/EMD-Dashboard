@@ -66,7 +66,9 @@ export class Cob10Component implements OnInit {
 
           console.log(chartData);
 
-          this.createChart(chartData);
+            // Create two charts
+        this.createGasMakeChart(chartData);
+        this.createPressureChart(chartData);
         },
         error: (err) => {
           this._snackBar.open(err, "", {
@@ -77,120 +79,133 @@ export class Cob10Component implements OnInit {
       });
   }
 
-  createChart(chartData: any[]) {
-    this.root = am5.Root.new("cob10Chart");
-    this.root.setThemes([am5themes_Animated.new(this.root)]);
 
-    // ⭐ TOP CONTAINER (Legend)
-    const topContainer = this.root.container.children.push(
-      am5.Container.new(this.root, {
-        width: am5.percent(100),
-        layout: this.root.horizontalLayout,
-        paddingTop: 0,
-        paddingBottom: 10,
-        centerX: am5.p50,
-        x: am5.p50,
+  createGasMakeChart(chartData: any[]) {
+    let root = am5.Root.new("gasmakeChart");
+    root.setThemes([am5themes_Animated.new(root)]);
+  
+    let chart = root.container.children.push(
+      am5xy.XYChart.new(root, {
+        panX: true,
+        panY: false,
+        wheelX: "panX",  // scroll wheel pans X
+        wheelY: "zoomX", // vertical scroll zooms X
+        pinchZoomX: true
       })
     );
-
-    // ⭐ Legend ABOVE chart
-    const legend = topContainer.children.push(
-      am5.Legend.new(this.root, {
-        centerX: am5.p50,
-        x: am5.p50,
+  
+    // ⭐ Add Horizontal Scrollbar
+    chart.set("scrollbarX", am5.Scrollbar.new(root, { orientation: "horizontal" }));
+  
+    let xAxis = chart.xAxes.push(
+      am5xy.DateAxis.new(root, {
+        baseInterval: { timeUnit: "minute", count: 1 },
+        renderer: am5xy.AxisRendererX.new(root, {}),
       })
     );
+  
+    let yAxis = chart.yAxes.push(
+      am5xy.ValueAxis.new(root, {
+        renderer: am5xy.AxisRendererY.new(root, {})
+      })
+    );
+  
+    // let series = chart.series.push(
+    //   am5xy.LineSeries.new(root, {
+    //     name: "Gas Make",
+    //     xAxis,
+    //     yAxis,
+    //     valueYField: "gasmake",
+    //     valueXField: "date"
+    //   })
+    // );
+  
+    let series = chart.series.push(
+      am5xy.LineSeries.new(root, {
+        name: "Gas Make",
+        xAxis,
+        yAxis,
+        valueYField: "gasmake",
+        valueXField: "date",
+        stroke: root.interfaceColors.get("primaryButton"),
+        tooltip: am5.Tooltip.new(root, {
+          labelText: "Gas Make: {valueY}"   // <-- tooltip here
+        })
+      })
+    );
+    
+    series.data.setAll(chartData);
+  
+    // Cursor
+    chart.set("cursor", am5xy.XYCursor.new(root, {
+      behavior: "none"
+    }));
+  }
+  
 
-    // ⭐ Main Chart BELOW legend
-    let chart = this.root.container.children.push(
-      am5xy.XYChart.new(this.root, {
+  
+  createPressureChart(chartData: any[]) {
+    let root = am5.Root.new("pressureChart");
+    root.setThemes([am5themes_Animated.new(root)]);
+  
+    let chart = root.container.children.push(
+      am5xy.XYChart.new(root, {
         panX: true,
         panY: false,
         wheelX: "panX",
         wheelY: "zoomX",
-        paddingTop: 50, // chart slightly down
+        pinchZoomX: true
       })
     );
-
-    // X Axis
+  
+    // ⭐ Add Horizontal Scrollbar
+    chart.set("scrollbarX", am5.Scrollbar.new(root, { orientation: "horizontal" }));
+  
     let xAxis = chart.xAxes.push(
-      am5xy.DateAxis.new(this.root, {
-        baseInterval: { timeUnit: "second", count: 1 },
-        renderer: am5xy.AxisRendererX.new(this.root, {}),
-        groupData: false,
+      am5xy.DateAxis.new(root, {
+        baseInterval: { timeUnit: "minute", count: 1 },
+        renderer: am5xy.AxisRendererX.new(root, {}),
       })
     );
-
-    // Y Axis
+  
     let yAxis = chart.yAxes.push(
-      am5xy.ValueAxis.new(this.root, {
-        renderer: am5xy.AxisRendererY.new(this.root, {}),
+      am5xy.ValueAxis.new(root, {
+        renderer: am5xy.AxisRendererY.new(root, {})
       })
     );
-
-    // 🎨 COLORS
-    const gasMakeColor = am5.color("#2979FF"); // blue
-    const pressureColor = am5.color("#FF7043"); // orange
-
-    // 🔵 Series 1 – GAS MAKE
-    let gasMakeSeries = chart.series.push(
-      am5xy.LineSeries.new(this.root, {
-        name: "C.O. GAS MAKE",
-        xAxis: xAxis,
-        yAxis: yAxis,
-        valueYField: "gasmake",
-        valueXField: "date",
-        stroke: gasMakeColor,
-      })
-    );
-    gasMakeSeries.strokes.template.setAll({
-      strokeWidth: 2,
-      stroke: gasMakeColor,
-    });
-
-    // ⭐ FIX LEGEND COLOR FOR GAS MAKE
-    gasMakeSeries.events.on("datavalidated", () => {
-      let marker = gasMakeSeries.get("legendDataItem")?.get("marker");
-      if (marker) {
-        marker.get("background")?.setAll({
-          fill: gasMakeColor,
-          stroke: gasMakeColor,
-        });
-      }
-    });
-
-    // 🟠 Series 2 – PRESSURE
-    let pressureSeries = chart.series.push(
-      am5xy.LineSeries.new(this.root, {
-        name: "C.O. GAS PRESSURE",
-        xAxis: xAxis,
-        yAxis: yAxis,
+  
+    // let series = chart.series.push(
+    //   am5xy.LineSeries.new(root, {
+    //     name: "Pressure",
+    //     xAxis,
+    //     yAxis,
+    //     valueYField: "pressure",
+    //     valueXField: "date"
+    //   })
+    // );
+  
+    let series = chart.series.push(
+      am5xy.LineSeries.new(root, {
+        name: "Pressure",
+        xAxis,
+        yAxis,
         valueYField: "pressure",
         valueXField: "date",
-        stroke: pressureColor,
+        stroke: root.interfaceColors.get("primaryButtonHover"),
+        tooltip: am5.Tooltip.new(root, {
+          labelText: "Pressure: {valueY}"   // <-- tooltip here
+        })
       })
     );
-    pressureSeries.strokes.template.setAll({
-      strokeWidth: 2,
-      stroke: pressureColor,
-    });
-
-    // ⭐ FIX LEGEND COLOR FOR PRESSURE
-    pressureSeries.events.on("datavalidated", () => {
-      let marker = pressureSeries.get("legendDataItem")?.get("marker");
-      if (marker) {
-        marker.get("background")?.setAll({
-          fill: pressureColor,
-          stroke: pressureColor,
-        });
-      }
-    });
-
-    // Set data
-    gasMakeSeries.data.setAll(chartData);
-    pressureSeries.data.setAll(chartData);
-
-    // ⭐ Legend shows series colors
-    legend.data.setAll(chart.series.values);
+    
+    series.data.setAll(chartData);
+  
+    // Cursor
+    chart.set("cursor", am5xy.XYCursor.new(root, {
+      behavior: "none"
+    }));
   }
+  
+  
+
 }
