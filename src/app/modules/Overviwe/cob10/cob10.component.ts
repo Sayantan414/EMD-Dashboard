@@ -21,6 +21,10 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 export class Cob10Component implements OnInit {
   cob10 = "COB#10";
   private root!: am5.Root;
+  responseData: any = [];
+  hasMake: boolean = true;
+  hasPressure: boolean = true;
+
   private _unsubscribeAll: Subject<any> = new Subject();
   constructor(
     //  private router: Router,
@@ -54,8 +58,13 @@ export class Cob10Component implements OnInit {
       .subscribe({
         next: (response) => {
           const data = JSON.parse(JSON.stringify(response));
-          console.log(data);
+          this.responseData = JSON.parse(JSON.stringify(response));
 
+          if(data.length === 0){
+            this.hasMake = false;
+            this.hasPressure = false;
+          }
+          else{
           // Prepare data for the chart
           const chartData = response.map((data: any) => ({
             date: new Date(data.datestamp).getTime(),
@@ -64,11 +73,11 @@ export class Cob10Component implements OnInit {
             gasflow: data.cog_gasflow,
           }));
 
-          console.log(chartData);
+          // Create two charts
+          this.createGasMakeChart(chartData);
+          this.createPressureChart(chartData);
+          }
 
-            // Create two charts
-        this.createGasMakeChart(chartData);
-        this.createPressureChart(chartData);
         },
         error: (err) => {
           this._snackBar.open(err, "", {
@@ -79,47 +88,59 @@ export class Cob10Component implements OnInit {
       });
   }
 
-
   createGasMakeChart(chartData: any[]) {
     let root = am5.Root.new("gasmakeChart");
     root.setThemes([am5themes_Animated.new(root)]);
-  
+
+    // ⭐ Get CSS variable color
+    let axisColor = getComputedStyle(document.documentElement)
+      .getPropertyValue("--text")
+      .trim();
+
     let chart = root.container.children.push(
       am5xy.XYChart.new(root, {
         panX: true,
         panY: false,
-        wheelX: "panX",  // scroll wheel pans X
-        wheelY: "zoomX", // vertical scroll zooms X
-        pinchZoomX: true
+        wheelX: "panX",
+        wheelY: "zoomX",
+        pinchZoomX: true,
       })
     );
-  
-    // ⭐ Add Horizontal Scrollbar
-    chart.set("scrollbarX", am5.Scrollbar.new(root, { orientation: "horizontal" }));
-  
+
+    chart.set(
+      "scrollbarX",
+      am5.Scrollbar.new(root, { orientation: "horizontal" })
+    );
+
     let xAxis = chart.xAxes.push(
       am5xy.DateAxis.new(root, {
         baseInterval: { timeUnit: "minute", count: 1 },
         renderer: am5xy.AxisRendererX.new(root, {}),
       })
     );
-  
+
     let yAxis = chart.yAxes.push(
       am5xy.ValueAxis.new(root, {
-        renderer: am5xy.AxisRendererY.new(root, {})
+        renderer: am5xy.AxisRendererY.new(root, {}),
       })
     );
-  
-    // let series = chart.series.push(
-    //   am5xy.LineSeries.new(root, {
-    //     name: "Gas Make",
-    //     xAxis,
-    //     yAxis,
-    //     valueYField: "gasmake",
-    //     valueXField: "date"
-    //   })
-    // );
-  
+
+    // ⭐ APPLY COLOR TO AXIS LABELS
+    xAxis.get("renderer").labels.template.setAll({
+      fill: am5.color(axisColor),
+    });
+    yAxis.get("renderer").labels.template.setAll({
+      fill: am5.color(axisColor),
+    });
+
+    // ⭐ Optional: color grid lines + ticks
+    xAxis
+      .get("renderer")
+      .grid.template.setAll({ stroke: am5.color(axisColor) });
+    yAxis
+      .get("renderer")
+      .grid.template.setAll({ stroke: am5.color(axisColor) });
+
     let series = chart.series.push(
       am5xy.LineSeries.new(root, {
         name: "Gas Make",
@@ -129,61 +150,78 @@ export class Cob10Component implements OnInit {
         valueXField: "date",
         stroke: root.interfaceColors.get("primaryButton"),
         tooltip: am5.Tooltip.new(root, {
-          labelText: "Gas Make: {valueY}"   // <-- tooltip here
-        })
+          labelText: "Gas Make: {valueY}",
+        }),
       })
     );
-    
-    series.data.setAll(chartData);
-  
-    // Cursor
-    chart.set("cursor", am5xy.XYCursor.new(root, {
-      behavior: "none"
-    }));
-  }
-  
 
-  
+    series.data.setAll(chartData);
+
+    chart.set("cursor", am5xy.XYCursor.new(root, { behavior: "none" }));
+    this.hasMake = true;
+  }
+
   createPressureChart(chartData: any[]) {
     let root = am5.Root.new("pressureChart");
     root.setThemes([am5themes_Animated.new(root)]);
-  
+
+    // ⭐ Get CSS variable color
+    let axisColor = getComputedStyle(document.documentElement)
+      .getPropertyValue("--text")
+      .trim();
+
     let chart = root.container.children.push(
       am5xy.XYChart.new(root, {
         panX: true,
         panY: false,
         wheelX: "panX",
         wheelY: "zoomX",
-        pinchZoomX: true
+        pinchZoomX: true,
       })
     );
-  
+
     // ⭐ Add Horizontal Scrollbar
-    chart.set("scrollbarX", am5.Scrollbar.new(root, { orientation: "horizontal" }));
-  
+    chart.set(
+      "scrollbarX",
+      am5.Scrollbar.new(root, { orientation: "horizontal" })
+    );
+
     let xAxis = chart.xAxes.push(
       am5xy.DateAxis.new(root, {
         baseInterval: { timeUnit: "minute", count: 1 },
         renderer: am5xy.AxisRendererX.new(root, {}),
       })
     );
-  
+
     let yAxis = chart.yAxes.push(
       am5xy.ValueAxis.new(root, {
-        renderer: am5xy.AxisRendererY.new(root, {})
+        renderer: am5xy.AxisRendererY.new(root, {}),
       })
     );
-  
-    // let series = chart.series.push(
-    //   am5xy.LineSeries.new(root, {
-    //     name: "Pressure",
-    //     xAxis,
-    //     yAxis,
-    //     valueYField: "pressure",
-    //     valueXField: "date"
-    //   })
-    // );
-  
+
+    // ⭐ APPLY COLOR TO AXIS LABELS + GRID
+    xAxis.get("renderer").labels.template.setAll({
+      fill: am5.color(axisColor),
+    });
+    yAxis.get("renderer").labels.template.setAll({
+      fill: am5.color(axisColor),
+    });
+
+    xAxis
+      .get("renderer")
+      .grid.template.setAll({ stroke: am5.color(axisColor) });
+    yAxis
+      .get("renderer")
+      .grid.template.setAll({ stroke: am5.color(axisColor) });
+
+    xAxis
+      .get("renderer")
+      .ticks.template.setAll({ stroke: am5.color(axisColor) });
+    yAxis
+      .get("renderer")
+      .ticks.template.setAll({ stroke: am5.color(axisColor) });
+
+    // ⭐ SERIES
     let series = chart.series.push(
       am5xy.LineSeries.new(root, {
         name: "Pressure",
@@ -193,19 +231,22 @@ export class Cob10Component implements OnInit {
         valueXField: "date",
         stroke: root.interfaceColors.get("primaryButtonHover"),
         tooltip: am5.Tooltip.new(root, {
-          labelText: "Pressure: {valueY}"   // <-- tooltip here
-        })
+          labelText: "Pressure: {valueY}",
+        }),
       })
     );
-    
-    series.data.setAll(chartData);
-  
-    // Cursor
-    chart.set("cursor", am5xy.XYCursor.new(root, {
-      behavior: "none"
-    }));
-  }
-  
-  
 
+    series.data.setAll(chartData);
+
+    // Cursor
+    chart.set(
+      "cursor",
+      am5xy.XYCursor.new(root, {
+        behavior: "none",
+      })
+    );
+
+    this.hasPressure = true;
+
+  }
 }

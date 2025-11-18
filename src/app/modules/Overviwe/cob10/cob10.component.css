@@ -336,6 +336,29 @@
     color: white !important;
   }
   
+  .chart-header {
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 20px 0 10px 0;
+    position: relative;
+  }
+  
+  .chart-header::after {
+    content: "";
+    width: 120px;
+    height: 4px;
+    background: linear-gradient(to right, #0099cc, #33ccff);
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 20px;
+  }
+
+  
   /* Body section */
   .modal-body {
     /* padding: 20px; */
@@ -343,5 +366,39 @@
     height: calc(100vh - 70px);
     overflow-y: auto;
     overflow-x: auto !important;
+  }
+  
+  .no-data {
+    text-align: center;
+    margin-top: -18%;
+    font-size: 30px;
+    color: var(--text);
+    /* opacity: 0.7; */
+    animation: fadeUp 0.8s ease-out;
+  }
+  
+  /* Fade-up animation */
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 0.7;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Blinking dots animation */
+  .dots::after {
+    content: "...";
+    animation: blink 1.5s infinite;
+  }
+  
+  /* Keyframes for blinking dots */
+  @keyframes blink {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
   }
   
