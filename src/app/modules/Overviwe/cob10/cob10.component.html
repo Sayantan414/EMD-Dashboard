@@ -40,20 +40,22 @@
   </div>
   
   <div class="modal-body">
-
+    <div *ngIf="loading" class="absolute inset-0 z-50 flex items-center justify-center mt-[-150px]">
+      <mat-spinner color="primary" [diameter]="100"></mat-spinner>
+    </div>
     <!-- If data exists -->
   
       <!-- Chart 1 -->
-      <span class="chart-header" *ngIf="responseData.length>0 && hasMake">C.O. GAS MAKE [Th. Nm³/hr]</span>
-      <div id="gasmakeChart" style="width: 100%; height: 300px;" class="mt-10" ></div>
+      <span class="chart-header" *ngIf="responseData.length>0 && hasMake && !loading">C.O. GAS MAKE [Th. Nm³/hr]</span>
+      <div id="cob10gasmakeChart" style="width: 100%; height: 300px;" class="mt-10" ></div>
   
       <!-- Chart 2 -->
-      <span class="chart-header" *ngIf="responseData.length>0 && hasPressure">C.O. GAS PRESSURE [mmwc]</span>
-      <div id="pressureChart" style="width: 100%; height: 300px;" class="mt-10" ></div>
+      <span class="chart-header" *ngIf="responseData.length>0 && hasPressure && !loading">C.O. GAS PRESSURE [mmwc]</span>
+      <div id="cob10pressureChart" style="width: 100%; height: 300px;" class="mt-10" ></div>
   
   
     <!-- If no data -->
-      <div class="no-data" *ngIf="responseData.length===0 && !hasMake && !hasPressure">
+      <div class="no-data" *ngIf="responseData.length===0 && !hasMake && !hasPressure && !loading">
         <p class="no-data">No data available<span class="dots"></span></p>
       </div>
   

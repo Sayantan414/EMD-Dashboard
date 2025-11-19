@@ -24,6 +24,7 @@ export class Cob10Component implements OnInit {
   responseData: any = [];
   hasMake: boolean = true;
   hasPressure: boolean = true;
+  loading: boolean = true;
 
   private _unsubscribeAll: Subject<any> = new Subject();
   constructor(
@@ -58,26 +59,25 @@ export class Cob10Component implements OnInit {
       .subscribe({
         next: (response) => {
           const data = JSON.parse(JSON.stringify(response));
+          console.log(data);
+
           this.responseData = JSON.parse(JSON.stringify(response));
 
-          if(data.length === 0){
+          if (data.length === 0) {
             this.hasMake = false;
             this.hasPressure = false;
-          }
-          else{
-          // Prepare data for the chart
-          const chartData = response.map((data: any) => ({
-            date: new Date(data.datestamp).getTime(),
-            gasmake: data.benzol_scrubber_gasmake,
-            pressure: data.cogas_supply_pressure,
-            gasflow: data.cog_gasflow,
-          }));
+          } else {
+            // Prepare data for the chart
+            const chartData = response.map((data: any) => ({
+              date: new Date(data.datestamp).getTime(),
+              gasmake: data.benzol_scrubber_gasmake,
+              pressure: data.cogas_supply_pressure,
+              gasflow: data.cog_gasflow,
+            }));
 
-          // Create two charts
-          this.createGasMakeChart(chartData);
-          this.createPressureChart(chartData);
+            // Create two charts
+            this.createGasMakeChart(chartData);
           }
-
         },
         error: (err) => {
           this._snackBar.open(err, "", {
@@ -89,12 +89,12 @@ export class Cob10Component implements OnInit {
   }
 
   createGasMakeChart(chartData: any[]) {
-    let root = am5.Root.new("gasmakeChart");
+    let root = am5.Root.new("cob10gasmakeChart");
     root.setThemes([am5themes_Animated.new(root)]);
 
     // ⭐ Get CSS variable color
     let axisColor = getComputedStyle(document.documentElement)
-      .getPropertyValue("--text")
+      .getPropertyValue("--charttext")
       .trim();
 
     let chart = root.container.children.push(
@@ -116,8 +116,23 @@ export class Cob10Component implements OnInit {
       am5xy.DateAxis.new(root, {
         baseInterval: { timeUnit: "minute", count: 1 },
         renderer: am5xy.AxisRendererX.new(root, {}),
+        groupData: false,
       })
     );
+
+    // Format labels
+    xAxis.set("dateFormats", {
+      minute: "HH:mm",
+      hour: "HH:mm",
+    });
+
+    xAxis.set("tooltipDateFormats", {
+      minute: "HH:mm",
+      hour: "HH:mm",
+    });
+
+    // ⭐ Correct method
+    xAxis.get("renderer").set("minGridDistance", 40);
 
     let yAxis = chart.yAxes.push(
       am5xy.ValueAxis.new(root, {
@@ -155,19 +170,37 @@ export class Cob10Component implements OnInit {
       })
     );
 
+    // ⭐ Make line bold
+    series.strokes.template.setAll({
+      strokeWidth: 3,
+    });
+
+    // ⭐ Add circle marker at each data point
+    series.bullets.push(() =>
+      am5.Bullet.new(root, {
+        sprite: am5.Circle.new(root, {
+          radius: 4,
+          fill: series.get("stroke"),
+          stroke: am5.color("#fff"),
+          strokeWidth: 1,
+        }),
+      })
+    );
+
     series.data.setAll(chartData);
 
     chart.set("cursor", am5xy.XYCursor.new(root, { behavior: "none" }));
     this.hasMake = true;
+    this.createPressureChart(chartData);
   }
 
   createPressureChart(chartData: any[]) {
-    let root = am5.Root.new("pressureChart");
+    let root = am5.Root.new("cob10pressureChart");
     root.setThemes([am5themes_Animated.new(root)]);
 
     // ⭐ Get CSS variable color
     let axisColor = getComputedStyle(document.documentElement)
-      .getPropertyValue("--text")
+      .getPropertyValue("--charttext")
       .trim();
 
     let chart = root.container.children.push(
@@ -190,8 +223,23 @@ export class Cob10Component implements OnInit {
       am5xy.DateAxis.new(root, {
         baseInterval: { timeUnit: "minute", count: 1 },
         renderer: am5xy.AxisRendererX.new(root, {}),
+        groupData: false,
       })
     );
+
+    // Format labels
+    xAxis.set("dateFormats", {
+      minute: "HH:mm",
+      hour: "HH:mm",
+    });
+
+    xAxis.set("tooltipDateFormats", {
+      minute: "HH:mm",
+      hour: "HH:mm",
+    });
+
+    // ⭐ Correct method
+    xAxis.get("renderer").set("minGridDistance", 40);
 
     let yAxis = chart.yAxes.push(
       am5xy.ValueAxis.new(root, {
@@ -236,6 +284,23 @@ export class Cob10Component implements OnInit {
       })
     );
 
+    // ⭐ Make line bold
+    series.strokes.template.setAll({
+      strokeWidth: 3,
+    });
+
+    // ⭐ Add circle marker at each value
+    series.bullets.push(() =>
+      am5.Bullet.new(root, {
+        sprite: am5.Circle.new(root, {
+          radius: 4,
+          fill: series.get("stroke"),
+          stroke: am5.color("#fff"),
+          strokeWidth: 1,
+        }),
+      })
+    );
+
     series.data.setAll(chartData);
 
     // Cursor
@@ -247,6 +312,6 @@ export class Cob10Component implements OnInit {
     );
 
     this.hasPressure = true;
-
+    this.loading = false;
   }
 }

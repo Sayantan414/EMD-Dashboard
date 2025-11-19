@@ -189,8 +189,8 @@ li {
 .gradient-title {
     position: relative;
     display: inline-block;
-    font-size: 1.8rem;
-    font-weight: 500;
+    font-size: 2rem;
+    font-weight: 700;
     letter-spacing: 0.7px;
     text-transform: uppercase;
     white-space: nowrap;
@@ -216,6 +216,7 @@ li {
     transform-origin: center;
     animation: underlineFullSqueeze 4s ease-in-out infinite, gradientMove 8s ease infinite;
 }
+
 
 @keyframes gradientMove {
     0% {
