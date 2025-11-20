@@ -82,7 +82,7 @@
     >
     </apx-chart> -->
     <fusioncharts
-      width="280"
+      width="270"
       height="175"
       type="angulargauge"
       [dataSource]="fusionMakeCOB11"
@@ -116,7 +116,7 @@
     >
     </apx-chart> -->
     <fusioncharts
-      width="280"
+      width="270"
       height="175"
       type="angulargauge"
       [dataSource]="fusionPressureCOB11"
@@ -139,7 +139,7 @@
       </span>
     </h2>
     <!-- </div> -->
-    <apx-chart
+    <!-- <apx-chart
       [series]="makeGauge3.series"
       [chart]="makeGauge3.chart"
       [labels]="makeGauge3.labels"
@@ -147,7 +147,16 @@
       [fill]="makeGauge3.fill"
       [stroke]="makeGauge3.stroke"
     >
-    </apx-chart>
+    </apx-chart> -->
+    <fusioncharts
+    width="270"
+    height="175"
+    type="angulargauge"
+    [dataSource]="volumeClockChart?.dataSource"
+  >
+  </fusioncharts>
+  
+
     <!-- Actual live value -->
     <div class="meter-value">
       {{ overview_res.BLAST_VOLUME }}
@@ -179,4 +188,6 @@
       {{ overview_res.BLAST_PRESSURE | number : "1.2-2" }}
     </div>
   </div>
+
+  
 </div>

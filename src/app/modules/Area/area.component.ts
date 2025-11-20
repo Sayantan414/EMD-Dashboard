@@ -6,6 +6,9 @@ import * as FusionCharts from "fusioncharts";
 import * as Widgets from "fusioncharts/fusioncharts.widgets";
 import * as FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
 import { FusionChartsModule } from "angular-fusioncharts";
+// Removed invalid import for HighchartsChartModule
+
+
 
 import {
   ApexNonAxisChartSeries,
@@ -32,7 +35,7 @@ export type ChartOptions = {
   templateUrl: "./area.component.html",
   styleUrls: ["./area.component.scss"],
   standalone: true,
-  imports: [ProjectCommonModule, FusionChartsModule],
+  imports: [ProjectCommonModule, FusionChartsModule ],
 })
 export class AreaComponent implements OnInit, OnDestroy {
   // makeGauge!: Partial<ChartOptions>;
@@ -51,7 +54,7 @@ export class AreaComponent implements OnInit, OnDestroy {
 
   max_gasmake_cob10 = 80000;
   max_gasmake_cob11 = 60000;
-  max_gasmake_bf5 = 50000;
+  max_gasmake_bf5 = 10000;
 
   max_pressure_cob10 = 4000;
   max_pressure_cob11 = 3500;
@@ -132,6 +135,8 @@ export class AreaComponent implements OnInit, OnDestroy {
 
   private sseoverview?: Subscription;
   private cob10overview?: Subscription;
+  
+  volumeClockChart: any;
 
   constructor(private sseService: SseService) {
     FusionChartsModule.fcRoot(FusionCharts, Widgets, FusionTheme);
@@ -145,8 +150,16 @@ export class AreaComponent implements OnInit, OnDestroy {
       upperLimit: this.max_gasmake_cob11,
       theme: "fusion",
     },
+     // ⭐ Color zones
+     colorRange: {
+      color: [
+        { minValue: "0",    maxValue: "2000",  code: "#00ff0a" }, // green
+        { minValue: "2000", maxValue: "6000",  code: "#ffcc00" }, // yellow
+        { minValue: "6000", maxValue: "10000", code: "#00E5FF" }  // red
+      ]
+    },
     dials: {
-      dial: [{ value: 0 }],
+      dial: [{ value: 0 , color: "#ff0000"}],
     },
   };
 
@@ -157,8 +170,16 @@ export class AreaComponent implements OnInit, OnDestroy {
       upperLimit: this.max_pressure_cob11,
       theme: "fusion",
     },
+     // ⭐ Color zones
+     colorRange: {
+      color: [
+        { minValue: "0",    maxValue: "2000",  code: "#00ff0a" }, // green
+        { minValue: "2000", maxValue: "6000",  code: "#ffcc00" }, // yellow
+        { minValue: "6000", maxValue: "10000", code: "#00E5FF" }  // red
+      ]
+    },
     dials: {
-      dial: [{ value: 0 }],
+      dial: [{ value: 0, color: "#ff0000" }],
     },
   };
 
@@ -196,6 +217,58 @@ export class AreaComponent implements OnInit, OnDestroy {
     this.loadData();
   }
 
+  createBlastVolumeClock(value: number) {
+    this.volumeClockChart = {
+      width: "100%",
+      height: "260",
+      type: "angulargauge",
+      dataFormat: "json",
+      dataSource: {
+        chart: {
+          caption: "",
+          lowerLimit: "0",
+          upperLimit: this.max_gasmake_bf5 || 10000,
+          showValue: "0",
+          gaugeFillMix: "{light+0}",
+          theme: "fusion",
+          showTickMarks: "1",
+          showTickValues: "1",
+          majorTMNumber: "12",  // Show 12 numbers like a clock
+          majorTMHeight: "20",
+        },
+        // colorRange: {
+        //   color: [
+        //     {
+        //       minValue: "0",
+        //       maxValue: this.max_gasmake_bf5,
+        //       code: "#dddddd"
+        //     }
+        //   ]
+        // },
+         // ⭐ Color zones
+      colorRange: {
+        color: [
+          { minValue: "0",    maxValue: "2000",  code: "#00ff0a" }, // green
+          { minValue: "2000", maxValue: "6000",  code: "#ffcc00" }, // yellow
+          { minValue: "6000", maxValue: "10000", code: "#00E5FF" }  // red
+        ]
+      },
+        dials: {
+          dial: [
+            {
+              value,
+              rearExtension: "0",
+              baseWidth: "6",
+              topWidth: "1",
+              radius: "90",
+               color: "#ff0000"
+            }
+          ]
+        }
+      }
+    };
+  }
+
   initializeCharts() {
     const baseGauge: Partial<ChartOptions> = {
       series: [0],
@@ -225,6 +298,7 @@ export class AreaComponent implements OnInit, OnDestroy {
       stroke: { lineCap: "round" },
     };
 
+    
     this.makeGauge1 = { ...baseGauge, labels: ["COB#10"] };
     // this.makeGauge2 = { ...baseGauge, labels: ["COB#11"] };
     this.makeGauge3 = { ...baseGauge, labels: ["BF#5 KALYANI"] };
@@ -325,6 +399,7 @@ export class AreaComponent implements OnInit, OnDestroy {
             const maxGasMake = this.max_gasmake_bf5 || 50000; // fallback if API doesn't send
             const percent = Math.min((val / maxGasMake) * 100, 100);
             this.makeGauge3.series = [percent];
+            this.createBlastVolumeClock(val);
           }
         );
 
@@ -355,4 +430,9 @@ export class AreaComponent implements OnInit, OnDestroy {
     if (this.sseoverview) this.sseoverview.unsubscribe();
     if (this.cob10overview) this.cob10overview.unsubscribe();
   }
+
+
+
+
+  
 }
