@@ -96,6 +96,7 @@ export class Cob10Component implements OnInit {
     let axisColor = getComputedStyle(document.documentElement)
       .getPropertyValue("--charttext")
       .trim();
+      console.log("axisColor =", axisColor);
 
     let chart = root.container.children.push(
       am5xy.XYChart.new(root, {

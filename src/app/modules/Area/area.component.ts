@@ -1,14 +1,15 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ProjectCommonModule } from "app/core/project-common-modules/project-common.module";
 import { SseService } from "app/services/sse.servece";
-import { Subscription } from "rxjs";
+import { Subject, Subscription, takeUntil } from "rxjs";
 import * as FusionCharts from "fusioncharts";
 import * as Widgets from "fusioncharts/fusioncharts.widgets";
 import * as FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
 import { FusionChartsModule } from "angular-fusioncharts";
 // Removed invalid import for HighchartsChartModule
-
-
+import * as am5 from "@amcharts/amcharts5";
+import * as am5xy from "@amcharts/amcharts5/xy";
+import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 
 import {
   ApexNonAxisChartSeries,
@@ -18,6 +19,8 @@ import {
   ApexFill,
   ApexTooltip,
 } from "ng-apexcharts";
+import { TrendService } from "app/services/trend.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -35,7 +38,7 @@ export type ChartOptions = {
   templateUrl: "./area.component.html",
   styleUrls: ["./area.component.scss"],
   standalone: true,
-  imports: [ProjectCommonModule, FusionChartsModule ],
+  imports: [ProjectCommonModule, FusionChartsModule],
 })
 export class AreaComponent implements OnInit, OnDestroy {
   // makeGauge!: Partial<ChartOptions>;
@@ -135,53 +138,63 @@ export class AreaComponent implements OnInit, OnDestroy {
 
   private sseoverview?: Subscription;
   private cob10overview?: Subscription;
-  
+
   volumeClockChart: any;
 
-  constructor(private sseService: SseService) {
-    FusionChartsModule.fcRoot(FusionCharts, Widgets, FusionTheme);
+  // graph representation
+  private root!: am5.Root;
+  responseData: any = [];
+  hasMake: boolean = true;
+  hasPressure: boolean = true;
+  loading: boolean = true;
 
+  private _unsubscribeAll: Subject<any> = new Subject();
+
+  constructor(
+    private sseService: SseService,
+    private trendService: TrendService,
+    private _snackBar: MatSnackBar
+  ) {
+    FusionChartsModule.fcRoot(FusionCharts, Widgets, FusionTheme);
   }
 
   fusionMakeCOB11: any = {
     chart: {
-      
       lowerLimit: "0",
-      upperLimit: this.max_gasmake_cob11,
+      upperLimit: "60000",   // Default
       theme: "fusion",
     },
-     // ⭐ Color zones
-     colorRange: {
+    colorRange: {
       color: [
-        { minValue: "0",    maxValue: "2000",  code: "#00ff0a" }, // green
-        { minValue: "2000", maxValue: "6000",  code: "#ffcc00" }, // yellow
-        { minValue: "6000", maxValue: "10000", code: "#00E5FF" }  // red
-      ]
-    },
-    dials: {
-      dial: [{ value: 0 , color: "#ff0000"}],
-    },
-  };
-
-  fusionPressureCOB11: any = {
-    chart: {
-     
-      lowerLimit: "0",
-      upperLimit: this.max_pressure_cob11,
-      theme: "fusion",
-    },
-     // ⭐ Color zones
-     colorRange: {
-      color: [
-        { minValue: "0",    maxValue: "2000",  code: "#00ff0a" }, // green
-        { minValue: "2000", maxValue: "6000",  code: "#ffcc00" }, // yellow
-        { minValue: "6000", maxValue: "10000", code: "#00E5FF" }  // red
-      ]
+        { minValue: "0", maxValue: "2000", code: "#00ff0a" },
+        { minValue: "2000", maxValue: "6000", code: "#ffcc00" },
+        { minValue: "6000", maxValue: "10000", code: "#00E5FF" },
+      ],
     },
     dials: {
       dial: [{ value: 0, color: "#ff0000" }],
     },
   };
+  
+
+  fusionPressureCOB11: any = {
+    chart: {
+      lowerLimit: "0",
+      upperLimit: "3500",
+      theme: "fusion",
+    },
+    colorRange: {
+      color: [
+        { minValue: "0", maxValue: "2000", code: "#00ff0a" },
+        { minValue: "2000", maxValue: "6000", code: "#ffcc00" },
+        { minValue: "6000", maxValue: "10000", code: "#00E5FF" },
+      ],
+    },
+    dials: {
+      dial: [{ value: 0, color: "#ff0000" }],
+    },
+  };
+  
 
   splitLetters(text: string): string[] {
     return text.split("").map((c) => (c === " " ? "\u00A0" : c));
@@ -215,6 +228,8 @@ export class AreaComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initializeCharts();
     this.loadData();
+    this.getCob10Data();
+
   }
 
   createBlastVolumeClock(value: number) {
@@ -233,7 +248,7 @@ export class AreaComponent implements OnInit, OnDestroy {
           theme: "fusion",
           showTickMarks: "1",
           showTickValues: "1",
-          majorTMNumber: "12",  // Show 12 numbers like a clock
+          majorTMNumber: "12", // Show 12 numbers like a clock
           majorTMHeight: "20",
         },
         // colorRange: {
@@ -245,14 +260,14 @@ export class AreaComponent implements OnInit, OnDestroy {
         //     }
         //   ]
         // },
-         // ⭐ Color zones
-      colorRange: {
-        color: [
-          { minValue: "0",    maxValue: "2000",  code: "#00ff0a" }, // green
-          { minValue: "2000", maxValue: "6000",  code: "#ffcc00" }, // yellow
-          { minValue: "6000", maxValue: "10000", code: "#00E5FF" }  // red
-        ]
-      },
+        // ⭐ Color zones
+        colorRange: {
+          color: [
+            { minValue: "0", maxValue: "2000", code: "#00ff0a" }, // green
+            { minValue: "2000", maxValue: "6000", code: "#ffcc00" }, // yellow
+            { minValue: "6000", maxValue: "10000", code: "#00E5FF" }, // red
+          ],
+        },
         dials: {
           dial: [
             {
@@ -261,11 +276,11 @@ export class AreaComponent implements OnInit, OnDestroy {
               baseWidth: "6",
               topWidth: "1",
               radius: "90",
-               color: "#ff0000"
-            }
-          ]
-        }
-      }
+              color: "#ff0000",
+            },
+          ],
+        },
+      },
     };
   }
 
@@ -298,7 +313,6 @@ export class AreaComponent implements OnInit, OnDestroy {
       stroke: { lineCap: "round" },
     };
 
-    
     this.makeGauge1 = { ...baseGauge, labels: ["COB#10"] };
     // this.makeGauge2 = { ...baseGauge, labels: ["COB#11"] };
     this.makeGauge3 = { ...baseGauge, labels: ["BF#5 KALYANI"] };
@@ -350,7 +364,7 @@ export class AreaComponent implements OnInit, OnDestroy {
     this.cob10overview = this.sseService
       .getOverview()
       .subscribe((data: any) => {
-        console.log("Result", data);
+        // console.log("Result", data);
 
         this.animateValue(
           this.previouscob10Values.MAKE,
@@ -392,6 +406,7 @@ export class AreaComponent implements OnInit, OnDestroy {
           data.BLAST_VOLUME,
           800, // ms
           (val) => {
+            
             if (isNaN(val)) this.overview_res.BLAST_VOLUME = 0;
             else this.overview_res.BLAST_VOLUME = val;
 
@@ -421,7 +436,277 @@ export class AreaComponent implements OnInit, OnDestroy {
 
         this.previouscob10Values = { ...data };
       });
+
   }
+
+  getCob10Data() {
+    this.trendService
+      .cob10_trend({})
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe({
+        next: (response) => {
+          const data = JSON.parse(JSON.stringify(response));
+
+          this.responseData = JSON.parse(JSON.stringify(response));
+
+          if (data.length === 0) {
+            this.hasMake = false;
+            this.hasPressure = false;
+          } else {
+            // Prepare data for the chart
+            const chartData = response.map((data: any) => ({
+              date: new Date(data.datestamp).getTime(),
+              gasmake: data.benzol_scrubber_gasmake,
+              pressure: data.cogas_supply_pressure,
+              gasflow: data.cog_gasflow,
+            }));
+
+            // Create two charts
+            this.createGasMakeChart(chartData);
+          }
+        },
+        error: (err) => {
+          this._snackBar.open(err, "", {
+            duration: 3000,
+            panelClass: ["error-snackbar"],
+          });
+        },
+      });
+  }
+
+  
+
+  createGasMakeChart(chartData: any[]) {
+    let root = am5.Root.new("cob10gasmakeChart1");
+    root.setThemes([am5themes_Animated.new(root)]);
+
+    // ⭐ Get CSS variable color
+    let axisColor = getComputedStyle(document.body)
+      .getPropertyValue("--charttext")
+      .trim();
+
+      
+    let chart = root.container.children.push(
+      am5xy.XYChart.new(root, {
+        panX: true,
+        panY: false,
+        wheelX: "zoomX",
+        wheelY: "zoomX",
+        pinchZoomX: true,
+      })
+    );
+
+    chart.set(
+      "scrollbarX",
+      am5.Scrollbar.new(root, { orientation: "horizontal" })
+    );
+
+    let xAxis = chart.xAxes.push(
+      am5xy.DateAxis.new(root, {
+        baseInterval: { timeUnit: "minute", count: 1 },
+        renderer: am5xy.AxisRendererX.new(root, {}),
+        groupData: false,
+      })
+    );
+
+    // Format labels
+    xAxis.set("dateFormats", {
+      minute: "HH:mm",
+      hour: "HH:mm",
+    });
+
+    xAxis.set("tooltipDateFormats", {
+      minute: "HH:mm",
+      hour: "HH:mm",
+    });
+
+    // ⭐ Correct method
+    xAxis.get("renderer").set("minGridDistance", 40);
+
+    let yAxis = chart.yAxes.push(
+      am5xy.ValueAxis.new(root, {
+        renderer: am5xy.AxisRendererY.new(root, {}),
+      })
+    );
+
+    // ⭐ APPLY COLOR TO AXIS LABELS
+    xAxis.get("renderer").labels.template.setAll({
+      fill: am5.color(axisColor),
+    });
+    yAxis.get("renderer").labels.template.setAll({
+      fill: am5.color(axisColor),
+    });
+
+    // ⭐ Optional: color grid lines + ticks
+    xAxis
+      .get("renderer")
+      .grid.template.setAll({ stroke: am5.color(axisColor) });
+    yAxis
+      .get("renderer")
+      .grid.template.setAll({ stroke: am5.color(axisColor) });
+
+    let series = chart.series.push(
+      am5xy.LineSeries.new(root, {
+        name: "Gas Make",
+        xAxis,
+        yAxis,
+        valueYField: "gasmake",
+        valueXField: "date",
+        stroke: root.interfaceColors.get("primaryButton"),
+        tooltip: am5.Tooltip.new(root, {
+          labelText: "Gas Make: {valueY}",
+        }),
+      })
+    );
+
+    // ⭐ Make line bold
+    series.strokes.template.setAll({
+      strokeWidth: 3,
+    });
+
+    // ⭐ Add circle marker at each data point
+    series.bullets.push(() =>
+      am5.Bullet.new(root, {
+        sprite: am5.Circle.new(root, {
+          radius: 4,
+          fill: series.get("stroke"),
+          stroke: am5.color("#fff"),
+          strokeWidth: 1,
+        }),
+      })
+    );
+
+    series.data.setAll(chartData);
+
+    chart.set("cursor", am5xy.XYCursor.new(root, { behavior: "none" }));
+    this.hasMake = true;
+    this.loading = false;
+    // this.createPressureChart(chartData);
+  }
+
+  // createPressureChart(chartData: any[]) {
+  //   let root = am5.Root.new("cob10pressureChart1");
+  //   root.setThemes([am5themes_Animated.new(root)]);
+
+  //   // ⭐ Get CSS variable color
+  //   let axisColor = getComputedStyle(document.body)
+  //     .getPropertyValue("--charttext")
+  //     .trim();
+  //     console.log("axisColor =", axisColor);
+
+  //   let chart = root.container.children.push(
+  //     am5xy.XYChart.new(root, {
+  //       panX: true,
+  //       panY: false,
+  //       wheelX: "panX",
+  //       wheelY: "zoomX",
+  //       pinchZoomX: true,
+  //     })
+  //   );
+
+  //   // ⭐ Add Horizontal Scrollbar
+  //   chart.set(
+  //     "scrollbarX",
+  //     am5.Scrollbar.new(root, { orientation: "horizontal" })
+  //   );
+
+  //   let xAxis = chart.xAxes.push(
+  //     am5xy.DateAxis.new(root, {
+  //       baseInterval: { timeUnit: "minute", count: 1 },
+  //       renderer: am5xy.AxisRendererX.new(root, {}),
+  //       groupData: false,
+  //     })
+  //   );
+
+  //   // Format labels
+  //   xAxis.set("dateFormats", {
+  //     minute: "HH:mm",
+  //     hour: "HH:mm",
+  //   });
+
+  //   xAxis.set("tooltipDateFormats", {
+  //     minute: "HH:mm",
+  //     hour: "HH:mm",
+  //   });
+
+  //   // ⭐ Correct method
+  //   xAxis.get("renderer").set("minGridDistance", 40);
+
+  //   let yAxis = chart.yAxes.push(
+  //     am5xy.ValueAxis.new(root, {
+  //       renderer: am5xy.AxisRendererY.new(root, {}),
+  //     })
+  //   );
+
+  //   // ⭐ APPLY COLOR TO AXIS LABELS + GRID
+  //   xAxis.get("renderer").labels.template.setAll({
+  //     fill: am5.color(axisColor),
+  //   });
+  //   yAxis.get("renderer").labels.template.setAll({
+  //     fill: am5.color(axisColor),
+  //   });
+
+  //   xAxis
+  //     .get("renderer")
+  //     .grid.template.setAll({ stroke: am5.color(axisColor) });
+  //   yAxis
+  //     .get("renderer")
+  //     .grid.template.setAll({ stroke: am5.color(axisColor) });
+
+  //   xAxis
+  //     .get("renderer")
+  //     .ticks.template.setAll({ stroke: am5.color(axisColor) });
+  //   yAxis
+  //     .get("renderer")
+  //     .ticks.template.setAll({ stroke: am5.color(axisColor) });
+
+  //   // ⭐ SERIES
+  //   let series = chart.series.push(
+  //     am5xy.LineSeries.new(root, {
+  //       name: "Pressure",
+  //       xAxis,
+  //       yAxis,
+  //       valueYField: "pressure",
+  //       valueXField: "date",
+  //       stroke: root.interfaceColors.get("primaryButtonHover"),
+  //       tooltip: am5.Tooltip.new(root, {
+  //         labelText: "Pressure: {valueY}",
+  //       }),
+  //     })
+  //   );
+
+  //   // ⭐ Make line bold
+  //   series.strokes.template.setAll({
+  //     strokeWidth: 3,
+  //   });
+
+  //   // ⭐ Add circle marker at each value
+  //   series.bullets.push(() =>
+  //     am5.Bullet.new(root, {
+  //       sprite: am5.Circle.new(root, {
+  //         radius: 4,
+  //         fill: series.get("stroke"),
+  //         stroke: am5.color("#fff"),
+  //         strokeWidth: 1,
+  //       }),
+  //     })
+  //   );
+
+  //   series.data.setAll(chartData);
+
+  //   // Cursor
+  //   chart.set(
+  //     "cursor",
+  //     am5xy.XYCursor.new(root, {
+  //       behavior: "none",
+  //     })
+  //   );
+
+  //   this.hasPressure = true;
+  //   this.loading = false;
+  //   console.log(this.loading);
+    
+  // }
 
   // Helper method to update chart data
 
@@ -429,10 +714,8 @@ export class AreaComponent implements OnInit, OnDestroy {
     // Clean up subscription to prevent memory leaks
     if (this.sseoverview) this.sseoverview.unsubscribe();
     if (this.cob10overview) this.cob10overview.unsubscribe();
+    // am5.disposeAllRootElements();
+    this._unsubscribeAll.next(true);
+    this._unsubscribeAll.complete();
   }
-
-
-
-
-  
 }
