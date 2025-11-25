@@ -161,7 +161,7 @@ export class AreaComponent implements OnInit, OnDestroy {
   fusionMakeCOB11: any = {
     chart: {
       lowerLimit: "0",
-      upperLimit: "60000",   // Default
+      upperLimit: "60000", // Default
       theme: "fusion",
     },
     colorRange: {
@@ -175,7 +175,6 @@ export class AreaComponent implements OnInit, OnDestroy {
       dial: [{ value: 0, color: "#ff0000" }],
     },
   };
-  
 
   fusionPressureCOB11: any = {
     chart: {
@@ -194,7 +193,6 @@ export class AreaComponent implements OnInit, OnDestroy {
       dial: [{ value: 0, color: "#ff0000" }],
     },
   };
-  
 
   splitLetters(text: string): string[] {
     return text.split("").map((c) => (c === " " ? "\u00A0" : c));
@@ -229,7 +227,7 @@ export class AreaComponent implements OnInit, OnDestroy {
     this.initializeCharts();
     this.loadData();
     this.getCob10Data();
-
+    this.getCob11Data();
   }
 
   createBlastVolumeClock(value: number) {
@@ -406,7 +404,6 @@ export class AreaComponent implements OnInit, OnDestroy {
           data.BLAST_VOLUME,
           800, // ms
           (val) => {
-            
             if (isNaN(val)) this.overview_res.BLAST_VOLUME = 0;
             else this.overview_res.BLAST_VOLUME = val;
 
@@ -436,9 +433,9 @@ export class AreaComponent implements OnInit, OnDestroy {
 
         this.previouscob10Values = { ...data };
       });
-
   }
 
+  //*** COB#10  ***//
   getCob10Data() {
     this.trendService
       .cob10_trend({})
@@ -462,7 +459,7 @@ export class AreaComponent implements OnInit, OnDestroy {
             }));
 
             // Create two charts
-            this.createGasMakeChart(chartData);
+            this.createGasMakeChartCob10(chartData);
           }
         },
         error: (err) => {
@@ -474,9 +471,7 @@ export class AreaComponent implements OnInit, OnDestroy {
       });
   }
 
-  
-
-  createGasMakeChart(chartData: any[]) {
+  createGasMakeChartCob10(chartData: any[]) {
     let root = am5.Root.new("cob10gasmakeChart1");
     root.setThemes([am5themes_Animated.new(root)]);
 
@@ -485,7 +480,6 @@ export class AreaComponent implements OnInit, OnDestroy {
       .getPropertyValue("--charttext")
       .trim();
 
-      
     let chart = root.container.children.push(
       am5xy.XYChart.new(root, {
         panX: true,
@@ -581,132 +575,391 @@ export class AreaComponent implements OnInit, OnDestroy {
     chart.set("cursor", am5xy.XYCursor.new(root, { behavior: "none" }));
     this.hasMake = true;
     this.loading = false;
-    // this.createPressureChart(chartData);
+    this.createPressureChartCob10(chartData);
   }
 
-  // createPressureChart(chartData: any[]) {
-  //   let root = am5.Root.new("cob10pressureChart1");
-  //   root.setThemes([am5themes_Animated.new(root)]);
+  createPressureChartCob10(chartData: any[]) {
+    let root = am5.Root.new("cob10pressureChart1");
+    root.setThemes([am5themes_Animated.new(root)]);
 
-  //   // ⭐ Get CSS variable color
-  //   let axisColor = getComputedStyle(document.body)
-  //     .getPropertyValue("--charttext")
-  //     .trim();
-  //     console.log("axisColor =", axisColor);
+    // ⭐ Get CSS variable color
+    let axisColor = getComputedStyle(document.body)
+      .getPropertyValue("--charttext")
+      .trim();
+    console.log("axisColor =", axisColor);
 
-  //   let chart = root.container.children.push(
-  //     am5xy.XYChart.new(root, {
-  //       panX: true,
-  //       panY: false,
-  //       wheelX: "panX",
-  //       wheelY: "zoomX",
-  //       pinchZoomX: true,
-  //     })
-  //   );
+    let chart = root.container.children.push(
+      am5xy.XYChart.new(root, {
+        panX: true,
+        panY: false,
+        wheelX: "panX",
+        wheelY: "zoomX",
+        pinchZoomX: true,
+      })
+    );
 
-  //   // ⭐ Add Horizontal Scrollbar
-  //   chart.set(
-  //     "scrollbarX",
-  //     am5.Scrollbar.new(root, { orientation: "horizontal" })
-  //   );
+    // ⭐ Add Horizontal Scrollbar
+    chart.set(
+      "scrollbarX",
+      am5.Scrollbar.new(root, { orientation: "horizontal" })
+    );
 
-  //   let xAxis = chart.xAxes.push(
-  //     am5xy.DateAxis.new(root, {
-  //       baseInterval: { timeUnit: "minute", count: 1 },
-  //       renderer: am5xy.AxisRendererX.new(root, {}),
-  //       groupData: false,
-  //     })
-  //   );
+    let xAxis = chart.xAxes.push(
+      am5xy.DateAxis.new(root, {
+        baseInterval: { timeUnit: "minute", count: 1 },
+        renderer: am5xy.AxisRendererX.new(root, {}),
+        groupData: false,
+      })
+    );
 
-  //   // Format labels
-  //   xAxis.set("dateFormats", {
-  //     minute: "HH:mm",
-  //     hour: "HH:mm",
-  //   });
+    // Format labels
+    xAxis.set("dateFormats", {
+      minute: "HH:mm",
+      hour: "HH:mm",
+    });
 
-  //   xAxis.set("tooltipDateFormats", {
-  //     minute: "HH:mm",
-  //     hour: "HH:mm",
-  //   });
+    xAxis.set("tooltipDateFormats", {
+      minute: "HH:mm",
+      hour: "HH:mm",
+    });
 
-  //   // ⭐ Correct method
-  //   xAxis.get("renderer").set("minGridDistance", 40);
+    // ⭐ Correct method
+    xAxis.get("renderer").set("minGridDistance", 40);
 
-  //   let yAxis = chart.yAxes.push(
-  //     am5xy.ValueAxis.new(root, {
-  //       renderer: am5xy.AxisRendererY.new(root, {}),
-  //     })
-  //   );
+    let yAxis = chart.yAxes.push(
+      am5xy.ValueAxis.new(root, {
+        renderer: am5xy.AxisRendererY.new(root, {}),
+      })
+    );
 
-  //   // ⭐ APPLY COLOR TO AXIS LABELS + GRID
-  //   xAxis.get("renderer").labels.template.setAll({
-  //     fill: am5.color(axisColor),
-  //   });
-  //   yAxis.get("renderer").labels.template.setAll({
-  //     fill: am5.color(axisColor),
-  //   });
+    // ⭐ APPLY COLOR TO AXIS LABELS + GRID
+    xAxis.get("renderer").labels.template.setAll({
+      fill: am5.color(axisColor),
+    });
+    yAxis.get("renderer").labels.template.setAll({
+      fill: am5.color(axisColor),
+    });
 
-  //   xAxis
-  //     .get("renderer")
-  //     .grid.template.setAll({ stroke: am5.color(axisColor) });
-  //   yAxis
-  //     .get("renderer")
-  //     .grid.template.setAll({ stroke: am5.color(axisColor) });
+    xAxis
+      .get("renderer")
+      .grid.template.setAll({ stroke: am5.color(axisColor) });
+    yAxis
+      .get("renderer")
+      .grid.template.setAll({ stroke: am5.color(axisColor) });
 
-  //   xAxis
-  //     .get("renderer")
-  //     .ticks.template.setAll({ stroke: am5.color(axisColor) });
-  //   yAxis
-  //     .get("renderer")
-  //     .ticks.template.setAll({ stroke: am5.color(axisColor) });
+    xAxis
+      .get("renderer")
+      .ticks.template.setAll({ stroke: am5.color(axisColor) });
+    yAxis
+      .get("renderer")
+      .ticks.template.setAll({ stroke: am5.color(axisColor) });
 
-  //   // ⭐ SERIES
-  //   let series = chart.series.push(
-  //     am5xy.LineSeries.new(root, {
-  //       name: "Pressure",
-  //       xAxis,
-  //       yAxis,
-  //       valueYField: "pressure",
-  //       valueXField: "date",
-  //       stroke: root.interfaceColors.get("primaryButtonHover"),
-  //       tooltip: am5.Tooltip.new(root, {
-  //         labelText: "Pressure: {valueY}",
-  //       }),
-  //     })
-  //   );
+    // ⭐ SERIES
+    let series = chart.series.push(
+      am5xy.LineSeries.new(root, {
+        name: "Pressure",
+        xAxis,
+        yAxis,
+        valueYField: "pressure",
+        valueXField: "date",
+        stroke: root.interfaceColors.get("primaryButtonHover"),
+        tooltip: am5.Tooltip.new(root, {
+          labelText: "Pressure: {valueY}",
+        }),
+      })
+    );
 
-  //   // ⭐ Make line bold
-  //   series.strokes.template.setAll({
-  //     strokeWidth: 3,
-  //   });
+    // ⭐ Make line bold
+    series.strokes.template.setAll({
+      strokeWidth: 3,
+    });
 
-  //   // ⭐ Add circle marker at each value
-  //   series.bullets.push(() =>
-  //     am5.Bullet.new(root, {
-  //       sprite: am5.Circle.new(root, {
-  //         radius: 4,
-  //         fill: series.get("stroke"),
-  //         stroke: am5.color("#fff"),
-  //         strokeWidth: 1,
-  //       }),
-  //     })
-  //   );
+    // ⭐ Add circle marker at each value
+    series.bullets.push(() =>
+      am5.Bullet.new(root, {
+        sprite: am5.Circle.new(root, {
+          radius: 4,
+          fill: series.get("stroke"),
+          stroke: am5.color("#fff"),
+          strokeWidth: 1,
+        }),
+      })
+    );
 
-  //   series.data.setAll(chartData);
+    series.data.setAll(chartData);
 
-  //   // Cursor
-  //   chart.set(
-  //     "cursor",
-  //     am5xy.XYCursor.new(root, {
-  //       behavior: "none",
-  //     })
-  //   );
+    // Cursor
+    chart.set(
+      "cursor",
+      am5xy.XYCursor.new(root, {
+        behavior: "none",
+      })
+    );
 
-  //   this.hasPressure = true;
-  //   this.loading = false;
-  //   console.log(this.loading);
-    
-  // }
+    this.hasPressure = true;
+    this.loading = false;
+  }
+
+  //*** COB#11  ***//
+  getCob11Data() {
+    this.trendService
+      .cob11_trend({})
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe({
+        next: (response) => {
+          const data = JSON.parse(JSON.stringify(response));
+          console.log(data);
+          this.responseData = JSON.parse(JSON.stringify(response));
+
+          if (data.length === 0) {
+            this.hasMake = false;
+            this.hasPressure = false;
+          } else {
+            // Prepare data for the chart
+            const chartData = response.map((data: any) => ({
+              date: new Date(data.datestamp).getTime(),
+              gasmake: data.COGASMAKEPRESSURE,
+              pressure: data.FT0600F003_C,
+            }));
+
+            // Create two charts
+            this.createGasMakeChartCob11(chartData);
+          }
+        },
+        error: (err) => {
+          this._snackBar.open(err, "", {
+            duration: 3000,
+            panelClass: ["error-snackbar"],
+          });
+        },
+      });
+  }
+
+  createGasMakeChartCob11(chartData: any[]) {
+    let root = am5.Root.new("cob11gasmakeChart1");
+    root.setThemes([am5themes_Animated.new(root)]);
+
+    // ⭐ Get CSS variable color
+    let axisColor = getComputedStyle(document.documentElement)
+      .getPropertyValue("--charttext")
+      .trim();
+
+    let chart = root.container.children.push(
+      am5xy.XYChart.new(root, {
+        panX: true,
+        panY: false,
+        wheelX: "panX",
+        wheelY: "zoomX",
+        pinchZoomX: true,
+      })
+    );
+
+    chart.set(
+      "scrollbarX",
+      am5.Scrollbar.new(root, { orientation: "horizontal" })
+    );
+
+    let xAxis = chart.xAxes.push(
+      am5xy.DateAxis.new(root, {
+        baseInterval: { timeUnit: "minute", count: 1 },
+        renderer: am5xy.AxisRendererX.new(root, {}),
+        groupData: false,
+      })
+    );
+
+    // Format labels
+    xAxis.set("dateFormats", {
+      minute: "HH:mm",
+      hour: "HH:mm",
+    });
+
+    xAxis.set("tooltipDateFormats", {
+      minute: "HH:mm",
+      hour: "HH:mm",
+    });
+
+    // ⭐ Correct method
+    xAxis.get("renderer").set("minGridDistance", 40);
+    let yAxis = chart.yAxes.push(
+      am5xy.ValueAxis.new(root, {
+        renderer: am5xy.AxisRendererY.new(root, {}),
+      })
+    );
+
+    // ⭐ APPLY COLOR TO AXIS LABELS
+    xAxis.get("renderer").labels.template.setAll({
+      fill: am5.color(axisColor),
+    });
+    yAxis.get("renderer").labels.template.setAll({
+      fill: am5.color(axisColor),
+    });
+
+    // ⭐ Optional: color grid lines + ticks
+    xAxis
+      .get("renderer")
+      .grid.template.setAll({ stroke: am5.color(axisColor) });
+    yAxis
+      .get("renderer")
+      .grid.template.setAll({ stroke: am5.color(axisColor) });
+
+    let series = chart.series.push(
+      am5xy.LineSeries.new(root, {
+        name: "Gas Make",
+        xAxis,
+        yAxis,
+        valueYField: "gasmake",
+        valueXField: "date",
+        stroke: root.interfaceColors.get("primaryButton"),
+        tooltip: am5.Tooltip.new(root, {
+          labelText: "Gas Make: {valueY}",
+        }),
+      })
+    );
+
+    // ⭐ Make line bold
+    series.strokes.template.setAll({
+      strokeWidth: 3,
+    });
+
+    // ⭐ Add circle marker at each data point
+    series.bullets.push(() =>
+      am5.Bullet.new(root, {
+        sprite: am5.Circle.new(root, {
+          radius: 4,
+          fill: series.get("stroke"),
+          stroke: am5.color("#fff"),
+          strokeWidth: 1,
+        }),
+      })
+    );
+
+    series.data.setAll(chartData);
+
+    chart.set("cursor", am5xy.XYCursor.new(root, { behavior: "none" }));
+    this.hasMake = true;
+    this.createPressureChartCob11(chartData);
+  }
+
+  createPressureChartCob11(chartData: any[]) {
+    let root = am5.Root.new("cob11pressureChart1");
+    root.setThemes([am5themes_Animated.new(root)]);
+
+    // ⭐ Get CSS variable color
+    let axisColor = getComputedStyle(document.documentElement)
+      .getPropertyValue("--charttext")
+      .trim();
+
+    let chart = root.container.children.push(
+      am5xy.XYChart.new(root, {
+        panX: true,
+        panY: false,
+        wheelX: "panX",
+        wheelY: "zoomX",
+        pinchZoomX: true,
+      })
+    );
+
+    // ⭐ Add Horizontal Scrollbar
+    chart.set(
+      "scrollbarX",
+      am5.Scrollbar.new(root, { orientation: "horizontal" })
+    );
+
+    let xAxis = chart.xAxes.push(
+      am5xy.DateAxis.new(root, {
+        baseInterval: { timeUnit: "minute", count: 1 },
+        renderer: am5xy.AxisRendererX.new(root, {}),
+        groupData: false,
+      })
+    );
+
+    // Format labels
+    xAxis.set("dateFormats", {
+      minute: "HH:mm",
+      hour: "HH:mm",
+    });
+
+    xAxis.set("tooltipDateFormats", {
+      minute: "HH:mm",
+      hour: "HH:mm",
+    });
+
+    // ⭐ Correct method
+    xAxis.get("renderer").set("minGridDistance", 40);
+
+    let yAxis = chart.yAxes.push(
+      am5xy.ValueAxis.new(root, {
+        renderer: am5xy.AxisRendererY.new(root, {}),
+      })
+    );
+
+    // ⭐ APPLY COLOR TO AXIS LABELS + GRID
+    xAxis.get("renderer").labels.template.setAll({
+      fill: am5.color(axisColor),
+    });
+    yAxis.get("renderer").labels.template.setAll({
+      fill: am5.color(axisColor),
+    });
+
+    xAxis
+      .get("renderer")
+      .grid.template.setAll({ stroke: am5.color(axisColor) });
+    yAxis
+      .get("renderer")
+      .grid.template.setAll({ stroke: am5.color(axisColor) });
+
+    xAxis
+      .get("renderer")
+      .ticks.template.setAll({ stroke: am5.color(axisColor) });
+    yAxis
+      .get("renderer")
+      .ticks.template.setAll({ stroke: am5.color(axisColor) });
+
+    // ⭐ SERIES
+    let series = chart.series.push(
+      am5xy.LineSeries.new(root, {
+        name: "Pressure",
+        xAxis,
+        yAxis,
+        valueYField: "pressure",
+        valueXField: "date",
+        stroke: root.interfaceColors.get("primaryButtonHover"),
+        tooltip: am5.Tooltip.new(root, {
+          labelText: "Pressure: {valueY}",
+        }),
+      })
+    );
+
+    // ⭐ Make line bold
+    series.strokes.template.setAll({
+      strokeWidth: 3,
+    });
+
+    // ⭐ Add circle marker at each value
+    series.bullets.push(() =>
+      am5.Bullet.new(root, {
+        sprite: am5.Circle.new(root, {
+          radius: 4,
+          fill: series.get("stroke"),
+          stroke: am5.color("#fff"),
+          strokeWidth: 1,
+        }),
+      })
+    );
+
+    series.data.setAll(chartData);
+
+    // Cursor
+    chart.set(
+      "cursor",
+      am5xy.XYCursor.new(root, {
+        behavior: "none",
+      })
+    );
+
+    this.hasPressure = true;
+    this.loading = false;
+  }
 
   // Helper method to update chart data
 
