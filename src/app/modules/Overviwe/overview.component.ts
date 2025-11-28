@@ -144,7 +144,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sseoverview = this.sseService.getOverview().subscribe((data: any) => {
-      console.log('Result', data);
+      // console.log('Result', data);
       // console.log(this.bf5_res);
 
       // Animate each property
