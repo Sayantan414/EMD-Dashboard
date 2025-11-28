@@ -96,6 +96,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
     GASHOLDERLVL: 0,
     BOF_GASRECTOT: 0,
+
   };
 
   cob10_res = {
@@ -143,7 +144,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sseoverview = this.sseService.getOverview().subscribe((data: any) => {
-      // console.log('Result', data);
+      console.log('Result', data);
       // console.log(this.bf5_res);
 
       // Animate each property
@@ -281,33 +282,44 @@ export class OverviewComponent implements OnInit, OnDestroy {
         this.previousValues.MG_WRM_PRESSURE,
         data.MG_WRM_PRESSURE,
         800,
-        (val) => (this.overview_res.MG_WRM_PRESSURE = val),
-        2
+        (val) => {
+          this.overview_res.MG_WRM_PRESSURE =  parseFloat(val.toFixed(2));
+          this.updateMixGasPressure();
+        }
       );
 
       this.animateValue(
         this.previousValues.MG_BRM_PRESSURE,
         data.MG_BRM_PRESSURE,
         800,
-        (val) => (this.overview_res.MG_BRM_PRESSURE = val),
-        2
+        // (val) => (this.overview_res.MG_BRM_PRESSURE = val),
+        // 2
+
+        (val) => {
+          this.overview_res.MG_BRM_PRESSURE =  parseFloat(val.toFixed(2));
+          this.updateMixGasPressure();
+        }
       );
 
       this.animateValue(
         this.previousValues.MG_USM_PRESSURE,
         data.MG_USM_PRESSURE,
         800,
-        (val) => (this.overview_res.MG_USM_PRESSURE = val),
-        2
+        // (val) => (this.overview_res.MG_USM_PRESSURE = val),
+        // 2
+        (val) => {
+          this.overview_res.MG_USM_PRESSURE =  parseFloat(val.toFixed(2));
+          this.updateMixGasPressure();
+        }
       );
 
-      this.animateValue(
-        this.previousValues.MIX_GAS_PRESSURE,
-        data.MIX_GAS_PRESSURE,
-        800,
-        (val) => (this.overview_res.MIX_GAS_PRESSURE = val),
-        2
-      );
+      // this.animateValue(
+      //   this.previousValues.MIX_GAS_PRESSURE,
+      //   data.MIX_GAS_PRESSURE,
+      //   800,
+      //   (val) => (this.overview_res.MIX_GAS_PRESSURE = val),
+      //   2
+      // );
 
       this.animateValue(
         this.previousValues.CV,
@@ -687,6 +699,13 @@ export class OverviewComponent implements OnInit, OnDestroy {
     this.overview_res.TOTAL_FLOW_SINTER =
       (this.overview_res.SP1_MIXGASF || 0) +
       (this.overview_res.SP2_MIXGASF || 0);
+  }
+
+  updateMixGasPressure() {
+    this.overview_res.MIX_GAS_PRESSURE =
+      (this.overview_res.MG_WRM_PRESSURE || 0) +
+      (this.overview_res.MG_BRM_PRESSURE || 0) +
+      (this.overview_res.MG_USM_PRESSURE || 0);
   }
 
   onClickCOB10(){

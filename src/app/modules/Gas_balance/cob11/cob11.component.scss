@@ -189,7 +189,7 @@
       display: flex;
       align-items: center; // vertical center
       justify-content: center; // horizontal center
-      background: url("/assets/blue-strip.jpg");
+      // background: url("/assets/blue-strip.jpg");
       background-size: cover;
       border-bottom: 1px solid #ccc;
       color: var(--cogheader-text);
@@ -320,7 +320,7 @@
   }
 
   .top_header {
-    background: url("/assets/blue-strip.jpg");
+    // background: url("/assets/blue-strip.jpg");
     background-size: cover;
     border-bottom: 1px solid #ccc;
     color: #002b5c;
