@@ -71,13 +71,13 @@
       <!-- </div> -->
       <!-- <apx-chart [series]="makeGauge2.series" [chart]="makeGauge2.chart" [labels]="makeGauge2.labels" [plotOptions]="makeGauge2.plotOptions" [fill]="makeGauge2.fill" [stroke]="makeGauge2.stroke" > </apx-chart> -->
       <fusioncharts
-      *ngIf="fusionMakeCOB11"
-     width="250"
-      height="175"
-      type="angulargauge"
-      [dataSource]="fusionMakeCOB11"
-    ></fusioncharts>
-    
+        *ngIf="fusionMakeCOB11"
+        width="250"
+        height="175"
+        type="angulargauge"
+        [dataSource]="fusionMakeCOB11"
+      ></fusioncharts>
+
       <!-- Actual live value -->
       <div class="meter-value">{{ overview_res.MAKE | number : "1.2-2" }}</div>
     </div>
@@ -95,13 +95,13 @@
       <!-- </div> -->
       <!-- <apx-chart [series]="pressureGauge2.series" [chart]="pressureGauge2.chart" [labels]="pressureGauge2.labels" [plotOptions]="pressureGauge2.plotOptions" [fill]="pressureGauge2.fill" [stroke]="pressureGauge2.stroke" > </apx-chart> -->
       <fusioncharts
-      *ngIf="fusionPressureCOB11"
-     width="250"
-      height="175"
-      type="angulargauge"
-      [dataSource]="fusionPressureCOB11"
-    ></fusioncharts>
-    
+        *ngIf="fusionPressureCOB11"
+        width="250"
+        height="175"
+        type="angulargauge"
+        [dataSource]="fusionPressureCOB11"
+      ></fusioncharts>
+
       <div class="meter-value">
         {{ overview_res.PRESSURE | number : "1.2-2" }}
       </div>
@@ -120,13 +120,13 @@
       <!-- </div> -->
       <!-- <apx-chart [series]="makeGauge3.series" [chart]="makeGauge3.chart" [labels]="makeGauge3.labels" [plotOptions]="makeGauge3.plotOptions" [fill]="makeGauge3.fill" [stroke]="makeGauge3.stroke" > </apx-chart> -->
       <fusioncharts
-      *ngIf="volumeClockChart?.dataSource"
-     width="250"
-      height="175"
-      type="angulargauge"
-      [dataSource]="volumeClockChart.dataSource"
-    ></fusioncharts>
-    
+        *ngIf="volumeClockChart?.dataSource"
+        width="250"
+        height="175"
+        type="angulargauge"
+        [dataSource]="volumeClockChart.dataSource"
+      ></fusioncharts>
+
       <!-- Actual live value -->
       <div class="meter-value">{{ overview_res.BLAST_VOLUME }}</div>
     </div>
@@ -173,44 +173,28 @@
       *ngIf="responseData.length > 0 && hasMake && !loading"
       >C.O. GAS MAKE [Th. Nm³/hr]</span
     >
-    <div
-      id="cob10gasmakeChart1"
-      style="width: 100%; height: 300px"
-      
-    ></div>
+    <div id="cob10gasmakeChart1" style="width: 100%; height: 300px"></div>
     <!-- Chart 2 -->
     <span
       class="chart-header mt-8"
       *ngIf="responseData.length > 0 && hasPressure && !loading"
       >C.O. GAS PRESSURE [mmwc]</span
     >
-    <div
-      id="cob10pressureChart1"
-      style="width: 100%; height: 300px"
-      
-    ></div>
+    <div id="cob10pressureChart1" style="width: 100%; height: 300px"></div>
 
     <span
-    class="chart-header"
-    *ngIf="responseData.length > 0 && hasMake && !loading"
-    >C.O. GAS MAKE [Th. Nm³/hr]</span
-  >
-  <div
-    id="cob11gasmakeChart1"
-    style="width: 100%; height: 300px"
-    
-  ></div>
-  <!-- Chart 2 -->
-  <span
-    class="chart-header mt-8"
-    *ngIf="responseData.length > 0 && hasPressure && !loading"
-    >C.O. GAS PRESSURE [mmwc]</span
-  >
-  <div
-    id="cob11pressureChart1"
-    style="width: 100%; height: 300px"
-    
-  ></div>
+      class="chart-header"
+      *ngIf="responseData.length > 0 && hasMake && !loading"
+      >C.O. GAS MAKE [Th. Nm³/hr]</span
+    >
+    <div id="cob11gasmakeChart1" style="width: 100%; height: 300px"></div>
+    <!-- Chart 2 -->
+    <span
+      class="chart-header mt-8"
+      *ngIf="responseData.length > 0 && hasPressure && !loading"
+      >C.O. GAS PRESSURE [mmwc]</span
+    >
+    <div id="cob11pressureChart1" style="width: 100%; height: 300px"></div>
     <!-- If no data -->
     <div
       class="no-data"

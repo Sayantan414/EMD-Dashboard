@@ -91,12 +91,13 @@ export class Cob10Component implements OnInit {
   createGasMakeChart(chartData: any[]) {
     let root = am5.Root.new("cob10gasmakeChart");
     root.setThemes([am5themes_Animated.new(root)]);
+    root._logo.set("forceHidden", true);
 
     // ⭐ Get CSS variable color
     let axisColor = getComputedStyle(document.documentElement)
       .getPropertyValue("--charttext")
       .trim();
-      console.log("axisColor =", axisColor);
+    console.log("axisColor =", axisColor);
 
     let chart = root.container.children.push(
       am5xy.XYChart.new(root, {
@@ -198,6 +199,7 @@ export class Cob10Component implements OnInit {
   createPressureChart(chartData: any[]) {
     let root = am5.Root.new("cob10pressureChart");
     root.setThemes([am5themes_Animated.new(root)]);
+    root._logo.set("forceHidden", true);
 
     // ⭐ Get CSS variable color
     let axisColor = getComputedStyle(document.documentElement)
