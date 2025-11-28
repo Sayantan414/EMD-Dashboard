@@ -82,6 +82,8 @@ export class Cob11modalComponent implements OnInit {
     let root = am5.Root.new("cob11gasmakeChart");
     root.setThemes([am5themes_Animated.new(root)]);
 
+    root._logo.set("forceHidden", true);
+
     // ⭐ Get CSS variable color
     let axisColor = getComputedStyle(document.documentElement)
       .getPropertyValue("--charttext")
@@ -186,6 +188,8 @@ export class Cob11modalComponent implements OnInit {
   createPressureChart(chartData: any[]) {
     let root = am5.Root.new("cob11pressureChart");
     root.setThemes([am5themes_Animated.new(root)]);
+
+    root._logo.set("forceHidden", true);
 
     // ⭐ Get CSS variable color
     let axisColor = getComputedStyle(document.documentElement)

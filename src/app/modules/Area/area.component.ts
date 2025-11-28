@@ -294,7 +294,8 @@ export class AreaComponent implements OnInit, OnDestroy {
           dataLabels: {
             name: {
               show: true,
-              fontSize: "18px",
+              fontSize: "20px",
+              fontWeight: 600,
               color: "var(--header_active)",
               offsetY: 10,
             },
@@ -474,6 +475,7 @@ export class AreaComponent implements OnInit, OnDestroy {
   createGasMakeChartCob10(chartData: any[]) {
     let root = am5.Root.new("cob10gasmakeChart1");
     root.setThemes([am5themes_Animated.new(root)]);
+    root._logo.set("forceHidden", true);
 
     // ⭐ Get CSS variable color
     let axisColor = getComputedStyle(document.body)
@@ -581,6 +583,7 @@ export class AreaComponent implements OnInit, OnDestroy {
   createPressureChartCob10(chartData: any[]) {
     let root = am5.Root.new("cob10pressureChart1");
     root.setThemes([am5themes_Animated.new(root)]);
+    root._logo.set("forceHidden", true);
 
     // ⭐ Get CSS variable color
     let axisColor = getComputedStyle(document.body)
@@ -738,6 +741,7 @@ export class AreaComponent implements OnInit, OnDestroy {
   createGasMakeChartCob11(chartData: any[]) {
     let root = am5.Root.new("cob11gasmakeChart1");
     root.setThemes([am5themes_Animated.new(root)]);
+    root._logo.set("forceHidden", true);
 
     // ⭐ Get CSS variable color
     let axisColor = getComputedStyle(document.documentElement)
@@ -748,7 +752,7 @@ export class AreaComponent implements OnInit, OnDestroy {
       am5xy.XYChart.new(root, {
         panX: true,
         panY: false,
-        wheelX: "panX",
+        wheelX: "zoomX",
         wheelY: "zoomX",
         pinchZoomX: true,
       })
@@ -843,6 +847,7 @@ export class AreaComponent implements OnInit, OnDestroy {
   createPressureChartCob11(chartData: any[]) {
     let root = am5.Root.new("cob11pressureChart1");
     root.setThemes([am5themes_Animated.new(root)]);
+    root._logo.set("forceHidden", true);
 
     // ⭐ Get CSS variable color
     let axisColor = getComputedStyle(document.documentElement)
