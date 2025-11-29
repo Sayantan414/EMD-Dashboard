@@ -342,6 +342,7 @@
   width: 120px;
   height: 4px;
   background: linear-gradient(to right, #0099cc, #33ccff);
+  // background: linear-gradient(to right, var(--cobheader-text), var(--cobheader-text));
   position: absolute;
   bottom: -8px;
   left: 50%;
@@ -482,7 +483,7 @@
 .chart-box {
   width: 97%;
   margin: 2%;
-  background: var(--chart-background);
+  // background: var(--chart-background);
   padding: 20px;
   border-radius: 12px;
   border: 1px solid var(--color-border-medium);
@@ -505,3 +506,38 @@
   justify-content: center;
   z-index: 10;
 }
+
+// .chart-red {
+//   background: linear-gradient(135deg, #ff4d4d, #ff1a1a);
+// }
+
+// .chart-yellow {
+//   background: linear-gradient(135deg, #facc15, #f59e0b);
+// }
+
+// .chart-green {
+//   background: linear-gradient(135deg, #10b981, #059669);
+// }
+
+// .chart-pink {
+//   background: linear-gradient(135deg, #ec4899, #db2777);
+// }
+
+.chart-red {
+  background: linear-gradient(135deg, #ffe5e5, #ffb3b3);
+}
+
+.chart-yellow {
+  background: linear-gradient(135deg, #fff9d6, #ffe9a9);
+}
+
+
+.chart-green {
+  background: linear-gradient(135deg, #e0ffe8, #b3ffd1);
+}
+
+
+.chart-pink {
+  background: linear-gradient(135deg, #ffe4f2, #ffb8d9);
+}
+

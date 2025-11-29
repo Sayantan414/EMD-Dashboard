@@ -479,9 +479,12 @@ export class AreaComponent implements OnInit, OnDestroy {
     root._logo.set("forceHidden", true);
 
     // ⭐ Get CSS variable color
-    let axisColor = getComputedStyle(document.body)
-      .getPropertyValue("--charttext")
-      .trim();
+    // let axisColor = getComputedStyle(document.body)
+    //   .getPropertyValue("--charttext")
+    //   .trim();
+
+    let axisColor = "#000000";
+
 
     let chart = root.container.children.push(
       am5xy.XYChart.new(root, {
@@ -577,7 +580,7 @@ export class AreaComponent implements OnInit, OnDestroy {
 
     chart.set("cursor", am5xy.XYCursor.new(root, { behavior: "none" }));
     this.hasMake = true;
-    this.loading = false;
+    // this.loading = false;
     this.createPressureChartCob10(chartData);
   }
 
@@ -587,10 +590,11 @@ export class AreaComponent implements OnInit, OnDestroy {
     root._logo.set("forceHidden", true);
 
     // ⭐ Get CSS variable color
-    let axisColor = getComputedStyle(document.body)
-      .getPropertyValue("--charttext")
-      .trim();
-    console.log("axisColor =", axisColor);
+    // let axisColor = getComputedStyle(document.body)
+    //   .getPropertyValue("--charttext")
+    //   .trim();
+    // console.log("axisColor =", axisColor);
+    let axisColor = "#000000";
 
     let chart = root.container.children.push(
       am5xy.XYChart.new(root, {
@@ -701,7 +705,7 @@ export class AreaComponent implements OnInit, OnDestroy {
     );
 
     this.hasPressure = true;
-    this.loading = false;
+    // this.loading = false;
   }
 
   //*** COB#11  ***//
@@ -745,9 +749,11 @@ export class AreaComponent implements OnInit, OnDestroy {
     root._logo.set("forceHidden", true);
 
     // ⭐ Get CSS variable color
-    let axisColor = getComputedStyle(document.documentElement)
-      .getPropertyValue("--charttext")
-      .trim();
+    // let axisColor = getComputedStyle(document.documentElement)
+    //   .getPropertyValue("--charttext")
+    //   .trim();
+
+    let axisColor = "#000000";
 
     let chart = root.container.children.push(
       am5xy.XYChart.new(root, {
@@ -851,9 +857,11 @@ export class AreaComponent implements OnInit, OnDestroy {
     root._logo.set("forceHidden", true);
 
     // ⭐ Get CSS variable color
-    let axisColor = getComputedStyle(document.documentElement)
-      .getPropertyValue("--charttext")
-      .trim();
+    // let axisColor = getComputedStyle(document.documentElement)
+    //   .getPropertyValue("--charttext")
+    //   .trim();
+
+    let axisColor = "#000000";
 
     let chart = root.container.children.push(
       am5xy.XYChart.new(root, {
