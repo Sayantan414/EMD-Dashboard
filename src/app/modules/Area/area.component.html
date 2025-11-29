@@ -160,47 +160,81 @@
   <!-- GRAPH SECTION (BELOW METERS) -->
   <!-- ============================ -->
   <div class="graph-row">
-    <div
+    <!-- If data exists -->
+    <!-- 2×2 GRID WRAPPER -->
+    <div class="charts-grid">
+      <!-- <div
       *ngIf="loading"
       class="absolute inset-0 z-50 flex items-center justify-center mt-50"
     >
       <mat-spinner color="primary" [diameter]="100"></mat-spinner>
-    </div>
-    <!-- If data exists -->
-    <!-- Chart 1 -->
-    <span
-      class="chart-header"
-      *ngIf="responseData.length > 0 && hasMake && !loading"
-      >C.O. GAS MAKE [Th. Nm³/hr]</span
-    >
-    <div id="cob10gasmakeChart1" style="width: 100%; height: 300px"></div>
-    <!-- Chart 2 -->
-    <span
-      class="chart-header mt-8"
-      *ngIf="responseData.length > 0 && hasPressure && !loading"
-      >C.O. GAS PRESSURE [mmwc]</span
-    >
-    <div id="cob10pressureChart1" style="width: 100%; height: 300px"></div>
+    </div> -->
 
-    <span
-      class="chart-header"
-      *ngIf="responseData.length > 0 && hasMake && !loading"
-      >C.O. GAS MAKE [Th. Nm³/hr]</span
-    >
-    <div id="cob11gasmakeChart1" style="width: 100%; height: 300px"></div>
-    <!-- Chart 2 -->
-    <span
-      class="chart-header mt-8"
-      *ngIf="responseData.length > 0 && hasPressure && !loading"
-      >C.O. GAS PRESSURE [mmwc]</span
-    >
-    <div id="cob11pressureChart1" style="width: 100%; height: 300px"></div>
-    <!-- If no data -->
-    <div
-      class="no-data"
-      *ngIf="responseData.length === 0 && !hasMake && !hasPressure && !loading"
-    >
-      <p class="no-data">No data available<span class="dots"></span></p>
+      <!-- COB#10 HEADER -->
+      <div class="chart-group-header cob-header">COB#10</div>
+
+      <!-- Chart 1 -->
+      <div class="chart-box">
+        <!-- Loader Overlay -->
+        <div class="chart-loader" *ngIf="loading">
+          <mat-spinner color="primary" [diameter]="60"></mat-spinner>
+        </div>
+        <span class="chart-header" *ngIf="responseData.length > 0 && hasMake"
+          >C.O. GAS MAKE [Th. Nm³/hr]</span
+        >
+        <div id="cob10gasmakeChart1" style="width: 100%; height: 300px"></div>
+      </div>
+
+      <!-- Chart 2 -->
+      <div class="chart-box">
+        <!-- Loader Overlay -->
+        <div class="chart-loader" *ngIf="loading">
+          <mat-spinner color="primary" [diameter]="60"></mat-spinner>
+        </div>
+        <span
+          class="chart-header"
+          *ngIf="responseData.length > 0 && hasPressure"
+          >C.O. GAS PRESSURE [mmwc]</span
+        >
+        <div id="cob10pressureChart1" style="width: 100%; height: 300px"></div>
+      </div>
+
+      <!-- COB#11 HEADER -->
+      <div class="chart-group-header cob-header">COB#11</div>
+
+      <!-- Chart 3 -->
+      <div class="chart-box">
+        <!-- Loader Overlay -->
+        <div class="chart-loader" *ngIf="loading">
+          <mat-spinner color="primary" [diameter]="60"></mat-spinner>
+        </div>
+        <span class="chart-header" *ngIf="responseData.length > 0 && hasMake"
+          >C.O. GAS MAKE [Th. Nm³/hr]</span
+        >
+        <div id="cob11gasmakeChart1" style="width: 100%; height: 300px"></div>
+      </div>
+
+      <!-- Chart 4 -->
+      <div class="chart-box">
+        <!-- Loader Overlay -->
+        <div class="chart-loader" *ngIf="loading">
+          <mat-spinner color="primary" [diameter]="60"></mat-spinner>
+        </div>
+        <span
+          class="chart-header"
+          *ngIf="responseData.length > 0 && hasPressure"
+          >C.O. GAS PRESSURE [mmwc]</span
+        >
+        <div id="cob11pressureChart1" style="width: 100%; height: 300px"></div>
+      </div>
+
+      <!-- If no data -->
+      <div
+        class="no-data"
+        *ngIf="responseData.length === 0 && !hasMake && !hasPressure"
+      >
+        <p class="no-data">No data available<span class="dots"></span></p>
+      </div>
     </div>
   </div>
 </div>

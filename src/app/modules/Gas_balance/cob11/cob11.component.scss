@@ -14,6 +14,7 @@
   width: max-content;
   overflow-x: auto;
   height: calc(100vh - 130px);
+  // height: calc(100vh - 100px);
   overflow-y: auto;
 }
 
@@ -44,12 +45,13 @@
 
 .detail-view {
   width: 0%;
-  min-width: 300px;
+  min-width: 278px;
   /* height: 200px; ❌ remove this */
   min-height: 200px; /* ✅ optional: ensures at least some height */
   backdrop-filter: blur(8px);
   background: rgba(255, 255, 255, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  // border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--header-text);
   border-radius: 14px;
   padding: 25px 20px;
   margin: 3%;
@@ -61,7 +63,9 @@
 
 .detail-view:hover {
   background: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+  // box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 12px 28px  var(--header-text);
+
 }
 
 .detail-view h3 {
@@ -74,7 +78,9 @@
 
 .gasflow-container {
   text-align: center;
-  min-height: 160vh;
+  // min-height: 160vh;
+  min-height: 125vh;
+
   // padding: 20px;
 
   .title {
@@ -112,7 +118,6 @@
     position: relative;
     margin-top: 80px;
     z-index: 1;
-
     /* horizontal connector between left & right nodes */
     &::before {
       content: "";
@@ -157,7 +162,9 @@
   }
 
   .node {
-    width: 250px;
+    // width: 250px;
+    width: 222px;
+    height: 164px;
     background: var(--box-bg);
     // background: linear-gradient(180deg, #80deea, #e0f7fa);
     border: 1px solid #0277bd;
@@ -194,16 +201,19 @@
       border-bottom: 1px solid #ccc;
       color: var(--cogheader-text);
       font-weight: bold;
-      font-size: 20px;
-      height: 40px; // fixed height
+      // font-size: 20px;
+      // height: 40px; // fixed height
+      font-size: 15px;
+      height: 20px; // fixed height
     }
 
     .sub-title {
       display: inline-block;
       color: #b30000;
       font-weight: 700;
-      font-size: 12px;
+      // font-size: 12px;
       letter-spacing: 1px;
+      font-size: 8px;
       border: 1px solid #b30000;
       border-radius: 6px;
       padding: 2px;
@@ -226,7 +236,9 @@
     .labels {
       display: flex;
       justify-content: space-around;
-      font-size: 15px;
+      // font-size: 15px;
+
+      font-size: 10px;
       color: #b30000;
       font-weight: 600;
     }
@@ -245,7 +257,9 @@
     }
 
     .unique {
-      font-size: 15px;
+      // font-size: 15px;
+
+      font-size: 10px;
       color: #b30000;
       font-weight: 600;
       margin-bottom: 4px;
@@ -277,12 +291,14 @@
         background: #fff;
         border: 1px solid #ccc;
         border-radius: 4px;
-        padding: 3px 6px;
+        // padding: 3px 6px;
         font-weight: bold;
-        font-size: 20px;
+        // font-size: 20px;
+        font-size: 10px;
         min-width: 60px;
         text-align: center;
         color: #0d0d0d;
+        height: 18px;
       }
 
       .unit {
@@ -317,6 +333,8 @@
 
   .gen {
     background: var(--box-bg-gen);
+    height: 130px;
+
   }
 
   .top_header {
@@ -326,7 +344,8 @@
     color: #002b5c;
     font-weight: 600;
     font-weight: bold;
-    font-size: 20px;
+    // font-size: 20px;
+    font-size: 15px;
     padding: 3px 0;
   }
 
@@ -359,7 +378,8 @@
   .branch.single {
     width: auto;
     justify-content: center;
-    margin-top: 50px;
+    // margin-top: 50px;
+    margin-top: 20px;
     font-weight: bold;
 
     &::before {
@@ -379,15 +399,18 @@
     }
 
     .node.center {
+      height: 130px;
+
       margin: 0 auto;
     }
   }
 
-  .branch.single-left {
+  .branch.UfTotalFlow {
     width: 600px;
     /* same as your normal branch width */
     position: relative;
-    margin-top: -50px;
+    // margin-top: -50px;
+    margin-top: 90px;
     display: flex;
     justify-content: flex-start;
     /* keep node on left side */
@@ -424,6 +447,59 @@
     }
 
     .node.left {
+
+      transform: none;
+      /* keep natural position */
+      margin-left: 0;
+      /* left side */
+    }
+  }
+
+
+  .branch.single-left {
+    width: 600px;
+    /* same as your normal branch width */
+    position: relative;
+    margin-top: -50px;
+    // margin-top: -90px;
+    display: flex;
+    justify-content: flex-start;
+    /* keep node on left side */
+    z-index: 1;
+    font-weight: bold;
+
+    /* Horizontal connector from main vertical line to left node */
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      /* from center main line */
+      width: 40%;
+      /* half of branch width (connects to left) */
+      height: 3px;
+      background: gray;
+      transform: translateX(-100%);
+      /* draw line from center toward left */
+      z-index: 0;
+    }
+
+    /* Vertical connector from main line to horizontal line */
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 3px;
+      height: 60px;
+      background: gray;
+      transform: translate(-50%, -100%);
+      z-index: 0;
+    }
+
+    .node.left {
+      height: 130px;
+
       transform: none;
       /* keep natural position */
       margin-left: 0;
@@ -435,6 +511,7 @@
     width: 600px;
     /* same as your normal branch width */
     position: relative;
+    // margin-top: -50px;
     margin-top: -50px;
     display: flex;
     justify-content: flex-end;
@@ -472,6 +549,7 @@
     }
 
     .node.right {
+      height: 130px;
       transform: none;
       /* keep natural position */
       margin-right: 0;

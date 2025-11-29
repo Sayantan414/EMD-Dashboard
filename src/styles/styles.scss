@@ -286,6 +286,11 @@
 
         --chart-background: linear-gradient(180deg, #e3f2fd, #bbdefb);
         --chart-value: #0d47a1;
+
+        --cobheader-bg: linear-gradient(90deg, #3b82f6, #06b6d4);
+--cobheader-text: white;  
+
+        
 }
 
 
@@ -508,7 +513,9 @@
 );
 
 --chart-value: #68d391;
+--cobheader-bg: linear-gradient(90deg, #f59e0b, #facc15);
 
+--cobheader-text: black;  
 }
 
 // th {

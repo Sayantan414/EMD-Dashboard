@@ -55,6 +55,7 @@ export class AreaComponent implements OnInit, OnDestroy {
   bv = "BLAST VOLUME [Nm³/min]";
   bp = "BLAST PRESSURE [Kg/cm²]";
 
+  COB10 = "COB#10";
   max_gasmake_cob10 = 80000;
   max_gasmake_cob11 = 60000;
   max_gasmake_bf5 = 10000;
