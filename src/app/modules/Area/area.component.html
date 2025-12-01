@@ -21,16 +21,16 @@
       </h2>
       <!-- </div> -->
       <apx-chart
-        [series]="makeGauge1.series"
-        [chart]="makeGauge1.chart"
-        [labels]="makeGauge1.labels"
-        [plotOptions]="makeGauge1.plotOptions"
-        [fill]="makeGauge1.fill"
-        [stroke]="makeGauge1.stroke"
+        [series]="chartOptions.series"
+        [chart]="chartOptions.chart"
+        [labels]="chartOptions.labels"
+        [plotOptions]="chartOptions.plotOptions"
+        [fill]="chartOptions.fill"
+        [stroke]="chartOptions.stroke"
       >
       </apx-chart>
       <!-- Actual live value -->
-      <div class="meter-value">{{ cob10_res.benzol_scrubber_gasmake }}</div>
+      <!-- <div class="meter-value">{{ cob10_res.benzol_scrubber_gasmake }}</div> -->
     </div>
     <!-- Gauge 2 -->
     <div class="meter-card">
@@ -174,25 +174,25 @@
       <div class="chart-group-header cob-header">COB#10</div>
 
       <!-- Chart 1 -->
-      <div class="chart-box chart-red">
+      <div class="chart-box chart-make">
         <!-- Loader Overlay -->
         <div class="chart-loader" *ngIf="loading">
           <mat-spinner color="primary" [diameter]="90"></mat-spinner>
         </div>
-        <span class="chart-header" *ngIf="responseData.length > 0 && hasMake"
+        <span class="chart-header_make" *ngIf="responseData.length > 0 && hasMake"
           >C.O. GAS MAKE [Th. Nm³/hr]</span
         >
         <div id="cob10gasmakeChart1" style="width: 100%; height: 300px"></div>
       </div>
 
       <!-- Chart 2 -->
-      <div class="chart-box chart-yellow">
+      <div class="chart-box chart-pressure">
         <!-- Loader Overlay -->
         <div class="chart-loader" *ngIf="loading">
           <mat-spinner color="primary" [diameter]="90"></mat-spinner>
         </div>
         <span
-          class="chart-header"
+          class="chart-header_pressure"
           *ngIf="responseData.length > 0 && hasPressure"
           >C.O. GAS PRESSURE [mmwc]</span
         >
@@ -203,25 +203,25 @@
       <div class="chart-group-header cob-header">COB#11</div>
 
       <!-- Chart 3 -->
-      <div class="chart-box chart-green">
+      <div class="chart-box chart-make">
         <!-- Loader Overlay -->
         <div class="chart-loader" *ngIf="loading">
           <mat-spinner color="primary" [diameter]="90"></mat-spinner>
         </div>
-        <span class="chart-header" *ngIf="responseData.length > 0 && hasMake"
+        <span class="chart-header_make" *ngIf="responseData.length > 0 && hasMake"
           >C.O. GAS MAKE [Th. Nm³/hr]</span
         >
         <div id="cob11gasmakeChart1" style="width: 100%; height: 300px"></div>
       </div>
 
       <!-- Chart 4 -->
-      <div class="chart-box chart-pink">
+      <div class="chart-box chart-pressure">
         <!-- Loader Overlay -->
         <div class="chart-loader" *ngIf="loading">
           <mat-spinner color="primary" [diameter]="90"></mat-spinner>
         </div>
         <span
-          class="chart-header"
+          class="chart-header_pressure"
           *ngIf="responseData.length > 0 && hasPressure"
           >C.O. GAS PRESSURE [mmwc]</span
         >

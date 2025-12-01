@@ -327,21 +327,47 @@
   /* Magenta */
 }
 
-.chart-header {
+.chart-header_make {
   display: block;
   text-align: center;
   font-size: 18px;
   font-weight: 600;
-  color: var(--text);
+  // color: var(--text);
+  color: #ffffff;
   // margin: 10px 0 10px 0;
   position: relative;
 }
 
-.chart-header::after {
+.chart-header_make::after {
   content: "";
   width: 120px;
   height: 4px;
   background: linear-gradient(to right, #0099cc, #33ccff);
+  // background: linear-gradient(to right, var(--cobheader-text), var(--cobheader-text));
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 20px;
+}
+
+
+.chart-header_pressure {
+  display: block;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  // color: var(--text);
+  color: #ffffff;
+  // margin: 10px 0 10px 0;
+  position: relative;
+}
+
+.chart-header_pressure::after {
+  content: "";
+  width: 120px;
+  height: 4px;
+  background: linear-gradient(to right, #FFA500, #f8cd7e);
   // background: linear-gradient(to right, var(--cobheader-text), var(--cobheader-text));
   position: absolute;
   bottom: -8px;
@@ -523,21 +549,18 @@
 //   background: linear-gradient(135deg, #ec4899, #db2777);
 // }
 
-.chart-red {
-  background: linear-gradient(135deg, #ffe5e5, #ffb3b3);
-}
 
-.chart-yellow {
-  background: linear-gradient(135deg, #fff9d6, #ffe9a9);
-}
+.chart-make {
+  background: linear-gradient(135deg, #C33764,#1D2671);
 
-
-.chart-green {
-  background: linear-gradient(135deg, #e0ffe8, #b3ffd1);
 }
 
 
-.chart-pink {
-  background: linear-gradient(135deg, #ffe4f2, #ffb8d9);
+.chart-pressure {
+  background: linear-gradient(135deg, #159957,#155799);
 }
+
+
+
+
 

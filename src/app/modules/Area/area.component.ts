@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { Component, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ProjectCommonModule } from "app/core/project-common-modules/project-common.module";
 import { SseService } from "app/services/sse.servece";
 import { Subject, Subscription, takeUntil } from "rxjs";
@@ -18,6 +18,7 @@ import {
   ApexStroke,
   ApexFill,
   ApexTooltip,
+  ChartComponent,
 } from "ng-apexcharts";
 import { TrendService } from "app/services/trend.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -149,6 +150,10 @@ export class AreaComponent implements OnInit, OnDestroy {
   hasPressure: boolean = true;
   loading: boolean = true;
 
+  @ViewChild("chart") chart!: ChartComponent;
+  @Input() value: number = 0;  // 🔥 dynamic value from API
+  public chartOptions: Partial<ChartOptions>;
+
   private _unsubscribeAll: Subject<any> = new Subject();
 
   constructor(
@@ -157,7 +162,73 @@ export class AreaComponent implements OnInit, OnDestroy {
     private _snackBar: MatSnackBar
   ) {
     FusionChartsModule.fcRoot(FusionCharts, Widgets, FusionTheme);
+    this.chartOptions = {
+      series: [0],
+    
+      chart: {
+        height: 330,
+        type: "radialBar",
+        offsetY: -10
+      },
+    
+      plotOptions: {
+        radialBar: {
+          startAngle: -135,
+          endAngle: 135,
+          hollow: {
+            size: "65%"
+          },
+          track: {
+            background: "#f0f0f0",
+            strokeWidth: "90%"
+          },
+          dataLabels: {
+            name: {
+              fontSize: "16px",
+              offsetY: 90
+            },
+            value: {
+              fontSize: "26px",
+              offsetY: 5,
+    
+              // 🎉 Show REAL API value here
+              formatter: () => `${this.cob10_res.benzol_scrubber_gasmake}`
+            }
+          }
+        }
+      },
+    
+      fill: {
+        type: "gradient",
+        gradient: {
+          shade: "light",
+          type: "horizontal",
+          gradientToColors: ["#33ccff"],
+          stops: [0, 50, 100]
+        }
+      },
+    
+      stroke: {
+        dashArray: 4
+      },
+    
+      labels: ["COB#10 Gas Make"]
+    };
+    
+  
+
+
   }
+
+    // 🔥 Call this after API response
+    updateGauge(newValue: number) {
+      this.value = newValue;
+      this.chartOptions.series = [newValue];
+  
+      if (this.chart) {
+        this.chart.updateSeries([newValue], true);
+      }
+    }
 
   fusionMakeCOB11: any = {
     chart: {
@@ -313,7 +384,7 @@ export class AreaComponent implements OnInit, OnDestroy {
       stroke: { lineCap: "round" },
     };
 
-    this.makeGauge1 = { ...baseGauge, labels: ["COB#10"] };
+    // this.makeGauge1 = { ...baseGauge, labels: ["COB#10"] };
     // this.makeGauge2 = { ...baseGauge, labels: ["COB#11"] };
     this.makeGauge3 = { ...baseGauge, labels: ["BF#5 KALYANI"] };
     this.pressureGauge1 = { ...baseGauge, labels: ["COB#10"] };
@@ -337,7 +408,8 @@ export class AreaComponent implements OnInit, OnDestroy {
           // ✅ Update gauge
           const maxGasMake = this.max_gasmake_cob10 || 80000; // fallback if API doesn't send
           const percent = Math.min((val / maxGasMake) * 100, 100);
-          this.makeGauge1.series = [percent];
+          // this.makeGauge1.series = [percent];
+          this.chartOptions.series = [percent];
         }
       );
 
@@ -483,7 +555,7 @@ export class AreaComponent implements OnInit, OnDestroy {
     //   .getPropertyValue("--charttext")
     //   .trim();
 
-    let axisColor = "#000000";
+    let axisColor = "#ffffff";
 
 
     let chart = root.container.children.push(
@@ -552,7 +624,7 @@ export class AreaComponent implements OnInit, OnDestroy {
         yAxis,
         valueYField: "gasmake",
         valueXField: "date",
-        stroke: root.interfaceColors.get("primaryButton"),
+        stroke: am5.color("#00CED1"), // Change to Cyan
         tooltip: am5.Tooltip.new(root, {
           labelText: "Gas Make: {valueY}",
         }),
@@ -561,7 +633,7 @@ export class AreaComponent implements OnInit, OnDestroy {
 
     // ⭐ Make line bold
     series.strokes.template.setAll({
-      strokeWidth: 3,
+      strokeWidth: 4,
     });
 
     // ⭐ Add circle marker at each data point
@@ -594,7 +666,7 @@ export class AreaComponent implements OnInit, OnDestroy {
     //   .getPropertyValue("--charttext")
     //   .trim();
     // console.log("axisColor =", axisColor);
-    let axisColor = "#000000";
+    let axisColor = "#ffffff";
 
     let chart = root.container.children.push(
       am5xy.XYChart.new(root, {
@@ -670,7 +742,7 @@ export class AreaComponent implements OnInit, OnDestroy {
         yAxis,
         valueYField: "pressure",
         valueXField: "date",
-        stroke: root.interfaceColors.get("primaryButtonHover"),
+        stroke: am5.color("#FFA500"), // Change to Orange
         tooltip: am5.Tooltip.new(root, {
           labelText: "Pressure: {valueY}",
         }),
@@ -679,7 +751,7 @@ export class AreaComponent implements OnInit, OnDestroy {
 
     // ⭐ Make line bold
     series.strokes.template.setAll({
-      strokeWidth: 3,
+      strokeWidth: 4,
     });
 
     // ⭐ Add circle marker at each value
@@ -753,7 +825,7 @@ export class AreaComponent implements OnInit, OnDestroy {
     //   .getPropertyValue("--charttext")
     //   .trim();
 
-    let axisColor = "#000000";
+    let axisColor = "#ffffff";
 
     let chart = root.container.children.push(
       am5xy.XYChart.new(root, {
@@ -820,7 +892,7 @@ export class AreaComponent implements OnInit, OnDestroy {
         yAxis,
         valueYField: "gasmake",
         valueXField: "date",
-        stroke: root.interfaceColors.get("primaryButton"),
+        stroke: am5.color("#00CED1"), // Change to Cyan
         tooltip: am5.Tooltip.new(root, {
           labelText: "Gas Make: {valueY}",
         }),
@@ -829,7 +901,7 @@ export class AreaComponent implements OnInit, OnDestroy {
 
     // ⭐ Make line bold
     series.strokes.template.setAll({
-      strokeWidth: 3,
+      strokeWidth: 4,
     });
 
     // ⭐ Add circle marker at each data point
@@ -861,7 +933,7 @@ export class AreaComponent implements OnInit, OnDestroy {
     //   .getPropertyValue("--charttext")
     //   .trim();
 
-    let axisColor = "#000000";
+    let axisColor = "#ffffff";
 
     let chart = root.container.children.push(
       am5xy.XYChart.new(root, {
@@ -937,7 +1009,7 @@ export class AreaComponent implements OnInit, OnDestroy {
         yAxis,
         valueYField: "pressure",
         valueXField: "date",
-        stroke: root.interfaceColors.get("primaryButtonHover"),
+        stroke: am5.color("#FFA500"), // Change to Orange
         tooltip: am5.Tooltip.new(root, {
           labelText: "Pressure: {valueY}",
         }),
@@ -946,7 +1018,7 @@ export class AreaComponent implements OnInit, OnDestroy {
 
     // ⭐ Make line bold
     series.strokes.template.setAll({
-      strokeWidth: 3,
+      strokeWidth: 4,
     });
 
     // ⭐ Add circle marker at each value
