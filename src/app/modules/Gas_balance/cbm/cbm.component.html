@@ -1,26 +1,132 @@
-<!-- <p>cbm works!</p> -->
-<div class="container">
-    <div class="detail-view">
-        <div class="detail-card">
-            <h3>Detail View</h3>
-            <div *ngIf="selectedNode; else noSelection">
-                <h4>{{ selectedNode.name }}</h4>
-                <p><strong>Type:</strong> {{ selectedNode.cssClass }}</p>
-                <p *ngIf="selectedNode.childs">
-                    <strong>Children:</strong> {{ selectedNode.childs.length }}
-                </p>
-            </div>
-            <ng-template #noSelection>
-                <p>
-                    Select a node to view its details. You can expand/collapse nodes to explore
-                    the CBM hierarchy.
-                </p>
-            </ng-template>
-        </div>
-    </div>
+<div class="layout-container">
+  <div class="detail-view">
+    <h3 class="animated-underline">CBM FLOW</h3>
+    <!-- <div class="detail-content"> -->
+    <!-- <p>
+        Carbon monoxide (CO) is a colorless, odorless, and tasteless gas
+        generated during the incomplete combustion of carbon-based fuels. In
+        steel plants, CO serves two contrasting roles. On one hand, it is an
+        important process gas used for energy generation and reduction
+        reactions. On the other, it is a significant safety hazard that requires
+        continuous monitoring and strict control measures. The gas has a
+        calorific value of approximately 3,014 kcal per normal cubic meter (Nm³)
+        or 2,411 kcal per kilogram (kg). Although its energy content is lower
+        than that of natural gas or hydrogen, CO remains a valuable industrial
+        fuel due to its availability within integrated steelmaking processes.
+      </p> -->
+    <!-- </div> -->
+  </div>
 
-    <div class="chart-container">
-        <ngx-org-chart class="tree" [nodes]="nodes" direction="vertical" (clicked)="onNodeClick($event)">
-        </ngx-org-chart>
+  <div class="gasflow-container m-10">
+    <h2 class="title animated-underline">CBM</h2>
+
+    <div class="tree">
+      <!-- Continuous main vertical line -->
+      <div class="main-line"></div>
+
+      <!-- Top Node -->
+      <div class="node generation gen">
+        <div class="top_header">CBM</div>
+        <div class="sub-title red">Generation</div>
+        <div class="labels unique"><span>Flow</span><span>Pressure</span></div>
+        <div class="values unique">
+          <div>
+            <div class="value">xxxx</div>
+            <div class="unit">Nm³/hr</div>
+          </div>
+          <div>
+            <div class="value">xxxx</div>
+            <div class="unit">mmwc</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEVEL 1 -->
+      <div class="branch UfTotalFlow" style="margin-top: 2%">
+        <div class="node consumption left flow-box">
+          <div class="header">GEECL FLOW</div>
+          <div class="sub-title green">Consumption</div>
+          <!-- <div class="labels"><span>Total Flow</span></div> -->
+          <div class="values">
+            <div>
+              <div class="value">xxxx</div>
+              <div class="unit">SCM/hr</div>
+            </div>
+          </div>
+          <div class="labels"><span>M1</span><span>M2</span></div>
+          <div class="values">
+            <div>
+              <div class="value">xxxx</div>
+              <div class="unit">Nm³/hr</div>
+            </div>
+            <div>
+              <div class="value">xxxx</div>
+              <div class="unit">mmwc</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Example: Single right-side node -->
+      <div class="branch single-right">
+        <div class="node consumption right flow-box">
+          <div class="header">Pressure</div>
+          <div class="sub-title green">Consumption</div>
+          <div class="labels unique"><span>Inlet</span><span>Outlet</span></div>
+          <div class="values">
+            <div>
+              <div class="value">xxxx</div>
+              <div class="unit">Nm³/hr</div>
+            </div>
+            <div>
+              <div class="value">xxxx</div>
+              <div class="unit">mmwc</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEVEL 1 -->
+      <div class="branch single-left">
+        <div class="node consumption left flow-box">
+          <div class="header">MRS FLOW</div>
+          <div class="sub-title green">Consumption</div>
+          <div class="labels unique"><span>M1</span><span>M2</span></div>
+          <div class="values">
+            <div>
+              <div class="value">xxxx</div>
+              <div class="unit">Nm³/hr</div>
+            </div>
+            <div>
+              <div class="value">xxxx</div>
+              <div class="unit">mmwc</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEVEL 5 -->
+      <div class="branch single">
+        <div class="node consumption center flow-box">
+          <div class="header">FLARE</div>
+          <div class="sub-title green">Consumption</div>
+          <div class="labels unique">
+            <span>Flow</span><span>Pressure</span>
+          </div>
+          <div class="values">
+            <div>
+              <div class="value">xxxx</div>
+              <div class="unit">Nm³/hr</div>
+            </div>
+            <div>
+              <div class="value">xxxx</div>
+              <div class="unit">mmwc</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- </div> -->
     </div>
+  </div>
 </div>

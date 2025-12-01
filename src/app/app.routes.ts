@@ -98,10 +98,10 @@ export const appRoutes: Route[] = [
           //   path: 'mills',
           //   loadChildren: () => import('app/modules/Gas_balance/mills/mills.routes'),
           // },
-          // {
-          //   path: 'cbm',
-          //   loadChildren: () => import('app/modules/Gas_balance/cbm/cbm.routes'),
-          // },
+          {
+            path: 'cbm',
+            loadChildren: () => import('app/modules/Gas_balance/cbm/cbm.routes'),
+          },
           // {
           //   path: 'agbs',
           //   loadChildren: () => import('app/modules/Gas_balance/agbs/agbs.routes'),
