@@ -1,7 +1,7 @@
-<div class="container ">
+<div class="container">
   <div class="flex">
     <div class="col">
-      <div class="box" (click)="onClickCOB10()" style="cursor: pointer;">
+      <div class="box" (click)="onClickCOB10()" style="cursor: pointer">
         <h2 class="overview_header">
           <span
             *ngFor="let letter of splitLetters(cob10); let i = index"
@@ -44,7 +44,7 @@
           <div class="td">N/A</div>
         </div>
       </div>
-      <div class="box" (click)="onClickCOB11()" style="cursor: pointer;">
+      <div class="box" (click)="onClickCOB11()" style="cursor: pointer">
         <h2 class="overview_header">
           <span
             *ngFor="let letter of splitLetters(cob11); let i = index"
@@ -351,7 +351,7 @@
         </div>
         <div class="tr">
           <div class="td">MIX GAS PRESSURE</div>
-          <div class="td">{{overview_res.MIX_GAS_PRESSURE}}</div>
+          <div class="td">{{ overview_res.MIX_GAS_PRESSURE }}</div>
         </div>
         <div class="tr">
           <div class="td">CV</div>
