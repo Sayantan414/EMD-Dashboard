@@ -211,9 +211,9 @@
       display: inline-block;
       color: #b30000;
       font-weight: 700;
-      // font-size: 12px;
+      font-size: 12px;
       letter-spacing: 1px;
-      font-size: 8px;
+      // font-size: 8px;
       border: 1px solid #b30000;
       border-radius: 6px;
       padding: 2px;
@@ -236,9 +236,8 @@
     .labels {
       display: flex;
       justify-content: space-around;
-      // font-size: 15px;
-
-      font-size: 10px;
+      font-size: 15px;
+      // font-size: 10px;
       color: #b30000;
       font-weight: 600;
     }
@@ -257,9 +256,8 @@
     }
 
     .unique {
-      // font-size: 15px;
-
-      font-size: 10px;
+      font-size: 15px;
+      // font-size: 10px;
       color: #b30000;
       font-weight: 600;
       margin-bottom: 4px;
@@ -294,11 +292,11 @@
         // padding: 3px 6px;
         font-weight: bold;
         // font-size: 20px;
-        font-size: 10px;
+        font-size: 15px;
         min-width: 60px;
         text-align: center;
         color: #0d0d0d;
-        height: 18px;
+        height: 22px;
       }
 
       .unit {
@@ -333,7 +331,7 @@
 
   .gen {
     background: var(--box-bg-gen);
-    height: 130px;
+    height: 150px;
 
   }
 
@@ -399,8 +397,7 @@
     }
 
     .node.center {
-      height: 130px;
-
+      height: 135px;
       margin: 0 auto;
     }
   }
@@ -447,7 +444,7 @@
     }
 
     .node.left {
-
+      height: 200px;
       transform: none;
       /* keep natural position */
       margin-left: 0;
@@ -498,7 +495,7 @@
     }
 
     .node.left {
-      height: 130px;
+      height: 135px;
 
       transform: none;
       /* keep natural position */
@@ -549,7 +546,7 @@
     }
 
     .node.right {
-      height: 130px;
+      height: 135px;
       transform: none;
       /* keep natural position */
       margin-right: 0;
