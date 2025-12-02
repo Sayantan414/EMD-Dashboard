@@ -164,13 +164,14 @@ export class AreaComponent implements OnInit, OnDestroy {
     FusionChartsModule.fcRoot(FusionCharts, Widgets, FusionTheme);
     this.chartOptions = {
       series: [0],
-    
+
       chart: {
-        height: 330,
+        height: 245,
+        width: 280,        // <-- width added
         type: "radialBar",
         offsetY: -10
       },
-    
+
       plotOptions: {
         radialBar: {
           startAngle: -135,
@@ -184,20 +185,19 @@ export class AreaComponent implements OnInit, OnDestroy {
           },
           dataLabels: {
             name: {
-              fontSize: "16px",
-              offsetY: 90
+              show: false
             },
             value: {
-              fontSize: "26px",
-              offsetY: 5,
-    
-              // 🎉 Show REAL API value here
-              formatter: () => `${this.cob10_res.benzol_scrubber_gasmake}`
+              fontSize: "20px",
+              offsetY: 10,
+              color: "#000",      // <-- Set color here, this is allowed
+              fontWeight: "600",  // <-- This is allowed too
+              formatter: () => `COB#10`
             }
           }
         }
       },
-    
+
       fill: {
         type: "gradient",
         gradient: {
@@ -207,28 +207,24 @@ export class AreaComponent implements OnInit, OnDestroy {
           stops: [0, 50, 100]
         }
       },
-    
+
       stroke: {
         dashArray: 4
       },
-    
-      labels: ["COB#10 Gas Make"]
+
+      labels: [""]
     };
-    
-  
-
-
   }
 
-    // 🔥 Call this after API response
-    updateGauge(newValue: number) {
-      this.value = newValue;
-      this.chartOptions.series = [newValue];
-  
-      if (this.chart) {
-        this.chart.updateSeries([newValue], true);
-      }
+  // 🔥 Call this after API response
+  updateGauge(newValue: number) {
+    this.value = newValue;
+    this.chartOptions.series = [newValue];
+
+    if (this.chart) {
+      this.chart.updateSeries([newValue], true);
     }
+  }
 
   fusionMakeCOB11: any = {
     chart: {
