@@ -4,6 +4,10 @@
 //   overflow-y: hidden;
 // }
 
+.mainDiv {
+  width: 100%;
+}
+
 /* Left detail panel */
 .layout-container {
   display: flex;
@@ -14,11 +18,10 @@
   // width: max-content;
   width: 100%;
   overflow-x: auto;
-  height: calc(100vh - 130px);
+  height: calc(100vh - 180px);
   // height: calc(100vh - 100px);
   overflow-y: auto;
 }
-
 
 /* Glass morphism scrollbar */
 .layout-container::-webkit-scrollbar {
@@ -65,8 +68,7 @@
 .detail-view:hover {
   background: rgba(255, 255, 255, 0.4);
   // box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
-  box-shadow: 0 12px 28px  var(--header-text);
-
+  box-shadow: 0 12px 28px var(--header-text);
 }
 
 .detail-view h3 {
@@ -332,7 +334,6 @@
   .gen {
     background: var(--box-bg-gen);
     height: 150px;
-
   }
 
   .top_header {
@@ -452,7 +453,6 @@
     }
   }
 
-
   .branch.single-left {
     width: 600px;
     /* same as your normal branch width */
@@ -553,4 +553,36 @@
       /* right side alignment */
     }
   }
+}
+
+.radio-buttons-container {
+  background-color: #ffffff;
+}
+
+.mode-switch {
+  display: flex; /* make labels align horizontally */
+  justify-content: center; /* center them horizontally */
+  align-items: center; /* vertically center the text */
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8px 16px;
+  border-radius: 12px;
+  margin-bottom: 2px;
+  gap: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.switch-option {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--header-text);
+  transition: color 0.3s ease;
+}
+
+.switch-option input:checked ~ .custom-radio {
+  border-color: #00e676;
+  box-shadow: 0 0 10px #00e676;
+}
+
+.switch-option input:checked ~ .custom-radio::after {
+  background: #00e676;
 }
