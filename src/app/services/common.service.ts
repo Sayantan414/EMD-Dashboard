@@ -18,9 +18,9 @@ export class CommonService {
     throw new Error("Method not implemented.");
   }
 
-  private apiUrl = "http://localhost:4020/api"; //Local API
+  // private apiUrl = "http://localhost:4050/api"; //Local API
   // private apiUrl = "http://10.150.50.22:4020/api"; //Dev API
-  // private apiUrl = "http://10.150.6.15:4060/api"; //Dev API
+  private apiUrl = "http://10.150.6.15:4060/api"; //Dev API
   // private apiUrl = "http://59.97.132.209:4060/api";
   // private apiUrl = 'https://web.iroms.in/irtmaapi/api';//Prod API
   private authorization = "Bearer c2lzeFVQVkF1dGg6aUk1YzAkUzE5TA==";
