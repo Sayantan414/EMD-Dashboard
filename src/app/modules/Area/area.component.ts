@@ -389,7 +389,7 @@ export class AreaComponent implements OnInit, OnDestroy {
   }
 
   loadData() {
-    this.sseoverview = this.sseService.getcob10().subscribe((data: any) => {
+    this.sseoverview = this.sseService.getOverview().subscribe((data: any) => {
       // console.log('Result', data);
       // console.log(this.bf5_res);
       // Animate each property

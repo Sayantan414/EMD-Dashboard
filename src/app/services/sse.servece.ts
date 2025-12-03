@@ -38,50 +38,6 @@ export class SseService {
 
   getOverview(): Observable<any> {
     return new Observable((observer) => {
-      const eventSource = new EventSource(baseURL + 'emd/overview');
-
-      eventSource.onmessage = (event) => {
-        this.zone.run(() => {
-          observer.next(JSON.parse(event.data));
-        });
-      };
-
-      eventSource.onerror = (error) => {
-        this.zone.run(() => {
-          observer.error(error);
-        });
-      };
-
-      return () => {
-        eventSource.close();
-      };
-    });
-  }
-
-  getcogasflow(): Observable<any> {
-    return new Observable((observer) => {
-      const eventSource = new EventSource(baseURL + 'emd/cogasflow');
-
-      eventSource.onmessage = (event) => {
-        this.zone.run(() => {
-          observer.next(JSON.parse(event.data));
-        });
-      };
-
-      eventSource.onerror = (error) => {
-        this.zone.run(() => {
-          observer.error(error);
-        });
-      };
-
-      return () => {
-        eventSource.close();
-      };
-    });
-  }
-
-  getcob10(): Observable<any> {
-    return new Observable((observer) => {
       const eventSource = new EventSource(baseURL + 'emd/cob10');
 
       eventSource.onmessage = (event) => {
@@ -101,6 +57,50 @@ export class SseService {
       };
     });
   }
+
+  // getcogasflow(): Observable<any> {
+  //   return new Observable((observer) => {
+  //     const eventSource = new EventSource(baseURL + 'emd/cob10');
+
+  //     eventSource.onmessage = (event) => {
+  //       this.zone.run(() => {
+  //         observer.next(JSON.parse(event.data));
+  //       });
+  //     };
+
+  //     eventSource.onerror = (error) => {
+  //       this.zone.run(() => {
+  //         observer.error(error);
+  //       });
+  //     };
+
+  //     return () => {
+  //       eventSource.close();
+  //     };
+  //   });
+  // }
+
+  // getcob10(): Observable<any> {
+  //   return new Observable((observer) => {
+  //     const eventSource = new EventSource(baseURL + 'emd/cob10');
+
+  //     eventSource.onmessage = (event) => {
+  //       this.zone.run(() => {
+  //         observer.next(JSON.parse(event.data));
+  //       });
+  //     };
+
+  //     eventSource.onerror = (error) => {
+  //       this.zone.run(() => {
+  //         observer.error(error);
+  //       });
+  //     };
+
+  //     return () => {
+  //       eventSource.close();
+  //     };
+  //   });
+  // }
 
   getBooster(): Observable<any> {
     return new Observable((observer) => {

@@ -54,7 +54,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     STOVE_2_BF_GAS: 0,
     STOVE_3_BF_GAS: 0,
     STOVE_4_BF_GAS: 0,
-    TOTAL_BF_GAS_CONS_STOVE:0,
+    TOTAL_BF_GAS_CONS_STOVE: 0,
     CO_GAS_CONSUMPTION: 0,
     CDI_COG_CONSUMPTION: 0,
     COG123: 0,
@@ -67,10 +67,10 @@ export class OverviewComponent implements OnInit, OnDestroy {
     K_4_FLOW: 0,
     INLET_PRESSURE: 0,
     TOTAL_CONSUMPTION: 0,
-    MAKE: 0,
-    PRESSURE: 0,
-    FLARE_FLOW: 0,
-    FLARE_PRESSURE: 0,
+    FT0600F003_C: 0,
+    COGASMAKEPRESSURE: 0,
+    COFLARESTACKFLOW: 0,
+    COFLARESTACKPRESSURE: 0,
     U_F_N_1_BLOCK_COG: 0,
     U_F_N_1_BLOCK_BFG: 0,
     U_F_N_2_BLOCK_COG: 0,
@@ -93,25 +93,19 @@ export class OverviewComponent implements OnInit, OnDestroy {
     SP2_MIXGASPRESS: 0,
     SP2_MIXGASF: 0,
     BF_COF: 0,
-
     GASHOLDERLVL: 0,
     BOF_GASRECTOT: 0,
-
-  };
-
-  cob10_res = {
     benzol_scrubber_gasmake: 0,
     cogas_supply_pressure: 0,
     cog_gasflow: 0,
   };
 
   previousValues: any = { ...this.overview_res };
-  previouscob10Values: any = { ...this.cob10_res };
 
   private sseoverview?: Subscription;
   private cob10overview?: Subscription;
 
-  constructor(private sseService: SseService, private _matDialog: MatDialog) {}
+  constructor(private sseService: SseService, private _matDialog: MatDialog) { }
 
   splitLetters(text: string): string[] {
     return text.split("").map((c) => (c === " " ? "\u00A0" : c));
@@ -183,7 +177,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
         // (val) => (this.overview_res.SP2_MIXGASF = val),
         // 2
         (val) => {
-          this.overview_res.SP2_MIXGASF =  parseFloat(val.toFixed(2));
+          this.overview_res.SP2_MIXGASF = parseFloat(val.toFixed(2));
           this.updateTotalFlowSinter();
         }
       );
@@ -283,7 +277,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
         data.MG_WRM_PRESSURE,
         800,
         (val) => {
-          this.overview_res.MG_WRM_PRESSURE =  parseFloat(val.toFixed(2));
+          this.overview_res.MG_WRM_PRESSURE = parseFloat(val.toFixed(2));
           this.updateMixGasPressure();
         }
       );
@@ -296,7 +290,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
         // 2
 
         (val) => {
-          this.overview_res.MG_BRM_PRESSURE =  parseFloat(val.toFixed(2));
+          this.overview_res.MG_BRM_PRESSURE = parseFloat(val.toFixed(2));
           this.updateMixGasPressure();
         }
       );
@@ -308,7 +302,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
         // (val) => (this.overview_res.MG_USM_PRESSURE = val),
         // 2
         (val) => {
-          this.overview_res.MG_USM_PRESSURE =  parseFloat(val.toFixed(2));
+          this.overview_res.MG_USM_PRESSURE = parseFloat(val.toFixed(2));
           this.updateMixGasPressure();
         }
       );
@@ -352,7 +346,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
         // (val) => (this.overview_res.STOVE_1_BF_GAS = val),
         // 2
         (val) => {
-          this.overview_res.STOVE_1_BF_GAS =  parseFloat(val.toFixed(2));
+          this.overview_res.STOVE_1_BF_GAS = parseFloat(val.toFixed(2));
           this.updateTotalFlowStove();
         }
       );
@@ -365,7 +359,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
         // 2
 
         (val) => {
-          this.overview_res.STOVE_2_BF_GAS =  parseFloat(val.toFixed(2));
+          this.overview_res.STOVE_2_BF_GAS = parseFloat(val.toFixed(2));
           this.updateTotalFlowStove();
         }
       );
@@ -378,7 +372,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
         // (val) => (this.overview_res.STOVE_3_BF_GAS = val),
         // 2
         (val) => {
-          this.overview_res.STOVE_3_BF_GAS =  parseFloat(val.toFixed(2));
+          this.overview_res.STOVE_3_BF_GAS = parseFloat(val.toFixed(2));
           this.updateTotalFlowStove();
         }
       );
@@ -390,7 +384,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
         // (val) => (this.overview_res.STOVE_4_BF_GAS = val),
         // 2
         (val) => {
-          this.overview_res.STOVE_4_BF_GAS =  parseFloat(val.toFixed(2));
+          this.overview_res.STOVE_4_BF_GAS = parseFloat(val.toFixed(2));
           this.updateTotalFlowStove();
         }
       );
@@ -443,34 +437,34 @@ export class OverviewComponent implements OnInit, OnDestroy {
       );
 
       this.animateValue(
-        this.previousValues.MAKE,
-        data.MAKE,
+        this.previousValues.FT0600F003_C,
+        data.FT0600F003_C,
         800, // ms
-        (val) => (this.overview_res.MAKE = val),
+        (val) => (this.overview_res.FT0600F003_C = val),
         2
       );
 
       this.animateValue(
-        this.previousValues.PRESSURE,
-        data.PRESSURE,
+        this.previousValues.COGASMAKEPRESSURE,
+        data.COGASMAKEPRESSURE,
         800,
-        (val) => (this.overview_res.PRESSURE = val),
+        (val) => (this.overview_res.COGASMAKEPRESSURE = val),
         2
       );
 
       // repeat for other props
       this.animateValue(
-        this.previousValues.FLARE_FLOW,
-        data.FLARE_FLOW,
+        this.previousValues.COFLARESTACKFLOW,
+        data.COFLARESTACKFLOW,
         800,
-        (val) => (this.overview_res.FLARE_FLOW = val),
+        (val) => (this.overview_res.COFLARESTACKFLOW = val),
         2
       );
       this.animateValue(
-        this.previousValues.FLARE_PRESSURE,
-        data.FLARE_PRESSURE,
+        this.previousValues.COFLARESTACKPRESSURE,
+        data.COFLARESTACKPRESSURE,
         800,
-        (val) => (this.overview_res.FLARE_PRESSURE = val),
+        (val) => (this.overview_res.COFLARESTACKPRESSURE = val),
         2
       );
       this.animateValue(
@@ -651,48 +645,42 @@ export class OverviewComponent implements OnInit, OnDestroy {
         2
       );
 
+      this.animateValue(
+        this.previousValues.benzol_scrubber_gasmake,
+        data.benzol_scrubber_gasmake,
+        800, // ms
+        (val) => (this.overview_res.benzol_scrubber_gasmake = val)
+      );
+
+      this.animateValue(
+        this.previousValues.cogas_supply_pressure,
+        data.cogas_supply_pressure,
+        800,
+        (val) => (this.overview_res.cogas_supply_pressure = val),
+        2
+      );
+
+      this.animateValue(
+        this.previousValues.cog_gasflow,
+        data.cog_gasflow,
+        800,
+        (val) => (this.overview_res.cog_gasflow = val),
+        2
+      );
+
       //sourav code
 
       // Update previous values for next round
       this.previousValues = { ...data };
     });
-
-    this.cob10overview = this.sseService.getcob10().subscribe((data: any) => {
-      // console.log('Result', data);
-
-      this.animateValue(
-        this.previouscob10Values.benzol_scrubber_gasmake,
-        data.benzol_scrubber_gasmake,
-        800, // ms
-        (val) => (this.cob10_res.benzol_scrubber_gasmake = val)
-      );
-
-      this.animateValue(
-        this.previouscob10Values.cogas_supply_pressure,
-        data.cogas_supply_pressure,
-        800,
-        (val) => (this.cob10_res.cogas_supply_pressure = val),
-        2
-      );
-
-      this.animateValue(
-        this.previouscob10Values.cog_gasflow,
-        data.cog_gasflow,
-        800,
-        (val) => (this.cob10_res.cog_gasflow = val),
-        2
-      );
-
-      this.previouscob10Values = { ...data };
-    });
   }
 
-  updateTotalFlowStove(){
+  updateTotalFlowStove() {
     this.overview_res.TOTAL_BF_GAS_CONS_STOVE =
-    (this.overview_res.STOVE_1_BF_GAS || 0) +
-    (this.overview_res.STOVE_2_BF_GAS || 0) +
-    (this.overview_res.STOVE_3_BF_GAS || 0) +
-    (this.overview_res.STOVE_4_BF_GAS || 0);
+      (this.overview_res.STOVE_1_BF_GAS || 0) +
+      (this.overview_res.STOVE_2_BF_GAS || 0) +
+      (this.overview_res.STOVE_3_BF_GAS || 0) +
+      (this.overview_res.STOVE_4_BF_GAS || 0);
   }
 
   updateTotalFlowSinter() {
@@ -708,7 +696,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
       (this.overview_res.MG_USM_PRESSURE || 0);
   }
 
-  onClickCOB10(){
+  onClickCOB10() {
     let dialogRef = this._matDialog.open(Cob10Component, {
       width: "90vw",
       maxWidth: "100vw",
@@ -726,11 +714,11 @@ export class OverviewComponent implements OnInit, OnDestroy {
         return;
       }
     });
-    
+
   }
 
 
-  onClickCOB11(){
+  onClickCOB11() {
     let dialogRef = this._matDialog.open(Cob11modalComponent, {
       width: "90vw",
       maxWidth: "100vw",
@@ -748,7 +736,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
         return;
       }
     });
-    
+
   }
 
   ngOnDestroy(): void {

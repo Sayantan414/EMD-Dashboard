@@ -77,7 +77,7 @@ export class CbmComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sseoverview = this.sseService.getcogasflow().subscribe((data: any) => {
+    this.sseoverview = this.sseService.getOverview().subscribe((data: any) => {
       // console.log('es', data);
       // console.log(this.bf5_res);
 
