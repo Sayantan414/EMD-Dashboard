@@ -2,19 +2,22 @@
   <div class="radio-buttons-container">
     <div class="mode-switch">
       <label class="switch-option">
-        <input type="radio" name="viewMode" value="flow" checked />
+        <input type="radio" name="viewMode" value="flow"
+               [(ngModel)]="viewMode" />
         <span class="custom-radio"></span>
         CO Gas Flow
       </label>
-
+    
       <label class="switch-option">
-        <input type="radio" name="viewMode" value="report" />
+        <input type="radio" name="viewMode" value="report"
+               [(ngModel)]="viewMode" />
         <span class="custom-radio"></span>
         Report
       </label>
     </div>
+    
   </div>
-
+  <div *ngIf="viewMode === 'flow'">
   <div class="layout-container">
     <div class="detail-view">
       <h3 class="animated-underline">CO GAS FLOW</h3>
@@ -383,4 +386,13 @@
       </div>
     </div>
   </div>
+  </div>
+
+  <div *ngIf="viewMode === 'report'">
+    <div class="report-content">
+      <!-- Your Report UI here -->
+      <h2>Report Section</h2>
+    </div>
+  </div>
+  
 </div>

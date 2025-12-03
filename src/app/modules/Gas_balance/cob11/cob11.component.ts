@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProjectCommonModule } from 'app/core/project-common-modules/project-common.module';
 import { SseService } from 'app/services/sse.servece';
-import { Subscription } from 'rxjs';
+import { TrendService } from 'app/services/trend.service';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-cob11',
@@ -45,7 +47,15 @@ export class Cob11Component implements OnInit {
   private sseoverview?: Subscription;
   private ssebooster?: Subscription;
 
-  constructor(private sseService: SseService) { }
+  viewMode: string = 'flow';   // default selected: CO Gas Flow
+  private _unsubscribeAll: Subject<any> = new Subject();
+
+  constructor(private sseService: SseService,
+    private trendService: TrendService,
+    private _snackBar: MatSnackBar
+  ) {
+    this._unsubscribeAll = new Subject();
+   }
 
   splitLetters(text: string): string[] {
     return text.split('').map((c) => (c === ' ' ? '\u00A0' : c));
@@ -77,6 +87,24 @@ export class Cob11Component implements OnInit {
   }
 
   ngOnInit(): void {
+    this.trendService
+      .cob11_cog_trend({})
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe({
+        next: (response) => {
+          const data = JSON.parse(JSON.stringify(response));
+          console.log(data);
+         
+        },
+        error: (err) => {
+          this._snackBar.open(err, "", {
+            duration: 3000,
+            panelClass: ["error-snackbar"],
+          });
+        },
+      });
+
+
     this.sseoverview = this.sseService.getOverview().subscribe((data: any) => {
       // console.log('es', data);
       // console.log(this.bf5_res);
@@ -284,6 +312,9 @@ export class Cob11Component implements OnInit {
     if (this.ssebooster) {
       this.ssebooster.unsubscribe();
     }
-  }
 
+    this._unsubscribeAll.next(true);
+    this._unsubscribeAll.complete();
+  }
+  
 }

@@ -8,7 +8,8 @@
   width: 100%;
 }
 
-/* Left detail panel */
+
+/* CO Gas Flow Section */
 .layout-container {
   display: flex;
   align-items: flex-start;
@@ -556,8 +557,48 @@
 }
 
 .radio-buttons-container {
-  background-color: #ffffff;
+  background: var(--backg-clr);
+
 }
+
+
+
+
+.switch-option input[type="radio"] {
+  display: none;
+}
+
+.custom-radio {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--radio-accent);   /* ✅ dynamic border */
+  margin-right: 8px;
+  display: inline-block;
+  position: relative;
+}
+
+.switch-option input[type="radio"]:checked + .custom-radio::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: var(--radio-accent); /* ✅ dynamic fill */
+  border-radius: 50%;
+  position: absolute;
+  top: 50%; /* Adjusted to center vertically */
+  left: 50%; /* Adjusted to center horizontally */
+  transform: translate(-50%, -50%); /* Center the inner circle */
+}
+
+
+
+
+
+
+
+
+
+
 
 .mode-switch {
   display: flex; /* make labels align horizontally */
@@ -574,15 +615,63 @@
 .switch-option {
   font-size: 20px;
   font-weight: 600;
+  cursor: pointer;
   color: var(--header-text);
   transition: color 0.3s ease;
 }
 
-.switch-option input:checked ~ .custom-radio {
-  border-color: #00e676;
-  box-shadow: 0 0 10px #00e676;
+.switch-option input {
+  cursor: pointer;
 }
 
-.switch-option input:checked ~ .custom-radio::after {
-  background: #00e676;
+
+// .switch-option input:checked ~ .custom-radio {
+//   border-color: var(--radio-accent);
+//   box-shadow: 0 0 10px var(--radio-accent);
+// }
+
+// .switch-option input:checked ~ .custom-radio::after {
+//   background: var(--radio-accent);
+// }
+
+
+
+
+/* Report Section */
+.report-content {
+  display: flex;
+  align-items: flex-start;
+  // gap: 50px;
+  // padding: 2px;
+  background: var(--backg-clr);
+  // width: max-content;
+  width: 100%;
+  overflow-x: auto;
+  height: calc(100vh - 180px);
+  // height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+
+/* Glass morphism scrollbar */
+.report-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.report-content::-webkit-scrollbar-track {
+  background: rgba(10, 31, 31, 0.8);
+  border-radius: 3px;
+}
+
+.report-content::-webkit-scrollbar-thumb {
+  background: var(--gradient-accent);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-primary);
+}
+
+.report-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    to bottom,
+    var(--color-green-300),
+    var(--color-green-400)
+  );
 }
