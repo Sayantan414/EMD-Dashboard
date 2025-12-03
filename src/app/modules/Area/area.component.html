@@ -79,7 +79,9 @@
       ></fusioncharts>
 
       <!-- Actual live value -->
-      <div class="meter-value">{{ overview_res.MAKE | number : "1.2-2" }}</div>
+      <div class="meter-value">
+        {{ overview_res.FT0600F003_C | number : "1.2-2" }}
+      </div>
     </div>
     <!-- Gauge 4 -->
     <div class="meter-card">
@@ -103,7 +105,7 @@
       ></fusioncharts>
 
       <div class="meter-value">
-        {{ overview_res.PRESSURE | number : "1.2-2" }}
+        {{ overview_res.COGASMAKEPRESSURE | number : "1.2-2" }}
       </div>
     </div>
     <!-- Gauge 5 -->
