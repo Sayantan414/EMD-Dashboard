@@ -37,7 +37,7 @@ export class Cob11modalComponent implements OnInit {
   splitLetters(text: string): string[] {
     return text.split("").map((c) => (c === " " ? "\u00A0" : c));
   }
-  ngOnInit() {}
+  ngOnInit() { }
   ngOnDestroy() {
     am5.disposeAllRootElements();
     this._unsubscribeAll.next(true);
@@ -46,7 +46,7 @@ export class Cob11modalComponent implements OnInit {
 
   getCob11Data() {
     this.trendService
-      .cob11_trend({})
+      .cob_trend({})
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe({
         next: (response) => {

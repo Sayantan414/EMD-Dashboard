@@ -40,7 +40,7 @@ export class Cob10Component implements OnInit {
     return text.split("").map((c) => (c === " " ? "\u00A0" : c));
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
   ngOnDestroy() {
     am5.disposeAllRootElements();
     this._unsubscribeAll.next(true);
@@ -54,7 +54,7 @@ export class Cob10Component implements OnInit {
 
   getCob10Data() {
     this.trendService
-      .cob10_trend({})
+      .cob_trend({})
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe({
         next: (response) => {

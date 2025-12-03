@@ -16,7 +16,7 @@ export class TrendService {
     this.authorization = this.commonService.getAuthorization();
   }
 
- 
+
 
   private getHttpOptions() {
     return {
@@ -28,27 +28,11 @@ export class TrendService {
   }
 
 
-  cob10_trend(emd: any): Observable<any> {
+  cob_trend(emd: any): Observable<any> {
 
     return this.http
       .get<any>(
-        `${this.baseUrl}/emd/cob10_trend`,
-        {
-          headers: new HttpHeaders({
-            "Content-Type": "application/json",
-            Authorization: this.authorization,
-          }),
-          params: emd    // 👈 send emd values as query params
-        }
-      )
-      .pipe(retry(1), catchError(this.errorHandler));
-  }
-  
-  cob11_trend(emd: any): Observable<any> {
-
-    return this.http
-      .get<any>(
-        `${this.baseUrl}/emd/cob11_trend`,
+        `${this.baseUrl}/emd/cob_trend`,
         {
           headers: new HttpHeaders({
             "Content-Type": "application/json",

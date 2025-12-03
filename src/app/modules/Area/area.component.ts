@@ -508,7 +508,7 @@ export class AreaComponent implements OnInit, OnDestroy {
   //*** COB#10  ***//
   getCob10Data() {
     this.trendService
-      .cob10_trend({})
+      .cob_trend({})
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe({
         next: (response) => {
@@ -779,7 +779,7 @@ export class AreaComponent implements OnInit, OnDestroy {
   //*** COB#11  ***//
   getCob11Data() {
     this.trendService
-      .cob11_trend({})
+      .cob_trend({})
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe({
         next: (response) => {
