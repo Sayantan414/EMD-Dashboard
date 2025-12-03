@@ -104,8 +104,8 @@ export class AreaComponent implements OnInit, OnDestroy {
     K_4_FLOW: 0,
     INLET_PRESSURE: 0,
     TOTAL_CONSUMPTION: 0,
-    MAKE: 0,
-    PRESSURE: 0,
+    FT0600F003_C: 0,
+    COGASMAKEPRESSURE: 0,
     FLARE_FLOW: 0,
     FLARE_PRESSURE: 0,
     U_F_N_1_BLOCK_COG: 0,
@@ -435,12 +435,12 @@ export class AreaComponent implements OnInit, OnDestroy {
         // console.log("Result", data);
 
         this.animateValue(
-          this.previouscob10Values.MAKE,
-          data.MAKE,
+          this.previouscob10Values.FT0600F003_C,
+          data.FT0600F003_C,
           800, // ms
           (val) => {
-            if (isNaN(val)) this.overview_res.MAKE = 0;
-            else this.overview_res.MAKE = val;
+            if (isNaN(val)) this.overview_res.FT0600F003_C = 0;
+            else this.overview_res.FT0600F003_C = val;
 
             // ✅ Update gauge
             const maxGasMake = this.max_gasmake_cob11 || 60000; // fallback if API doesn't send
@@ -452,12 +452,12 @@ export class AreaComponent implements OnInit, OnDestroy {
         );
 
         this.animateValue(
-          this.previouscob10Values.PRESSURE,
-          data.PRESSURE,
+          this.previouscob10Values.COGASMAKEPRESSURE,
+          data.COGASMAKEPRESSURE,
           800,
           (val) => {
-            if (isNaN(val)) this.overview_res.PRESSURE = 0;
-            else this.overview_res.PRESSURE = val;
+            if (isNaN(val)) this.overview_res.COGASMAKEPRESSURE = 0;
+            else this.overview_res.COGASMAKEPRESSURE = val;
 
             // ✅ Update pressure gauge
             const maxPressure = this.max_pressure_cob11 || 3500;
