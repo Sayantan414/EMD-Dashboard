@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDrawer } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProjectCommonModule } from 'app/core/project-common-modules/project-common.module';
 import { SseService } from 'app/services/sse.servece';
@@ -48,6 +49,9 @@ export class Cob11Component implements OnInit {
   private ssebooster?: Subscription;
 
   viewMode: string = 'flow';   // default selected: CO Gas Flow
+  reportData: any[] = [];
+  @ViewChild("matDrawer", { static: true }) matDrawer: MatDrawer;
+  drawerOpened: boolean = false;
   private _unsubscribeAll: Subject<any> = new Subject();
 
   constructor(private sseService: SseService,
@@ -91,11 +95,10 @@ export class Cob11Component implements OnInit {
       .cob11_cog_trend({})
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe({
-        next: (response) => {
-          const data = JSON.parse(JSON.stringify(response));
-          console.log(data);
+        next: ((res:any[]) => {
+          this.prepareReportTable(res);
          
-        },
+        }),
         error: (err) => {
           this._snackBar.open(err, "", {
             duration: 3000,
@@ -303,6 +306,51 @@ export class Cob11Component implements OnInit {
       this.previousboosterValues = { ...data };
     });
   }
+
+
+
+  prepareReportTable(data: any[]) {
+    this.reportData = data.map(item => ({
+      date: new Date(item.datestamp).toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+      }),
+      
+      time: new Date(item.datestamp).toLocaleTimeString("en-IN", {
+        hour: "2-digit",
+        minute: "2-digit"
+      }),
+      bppFlow: item.FT0600F003_C,
+      bppPressure: item.COGASMAKEPRESSURE,
+      uftotal: item.CO_GAS1_F + item.CO_GAS2_F, // OR + item.CO_GAS2_F (you tell me)
+      pbsFlow: item.PBS_BCOGF,
+      bf5Flow: item.BF_COF,
+      bf5Pressure: "N/A",
+  
+      millsFlow: "N/A",
+      millsPressure: "N/A",
+  
+      sinterFlow: item.SP_CO_GAS,
+      sinterPressure: "N/A",
+  
+      bofFlow: "N/A",
+      bofPressure: "N/A",
+  
+      ccpFlow: "N/A",
+      ccpPressure: "N/A",
+  
+      ldcpFlow: item.COG_FLOW_GMS,
+      ldcpPressure: "N/A",
+  
+      flareFlow: item.COFLARESTACKFLOW,
+      flarePressure: item.COFLARESTACKPRESSURE,
+
+      lossesFlow: "N/A",
+      lossesPressure: "N/A",
+    }));
+  }
+
 
   ngOnDestroy(): void {
     // Clean up subscription to prevent memory leaks

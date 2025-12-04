@@ -389,9 +389,133 @@
   </div>
 
   <div *ngIf="viewMode === 'report'">
-    <div class="report-content">
-      <!-- Your Report UI here -->
-      <h2>Report Section</h2>
+    <div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden report-wrapper">
+    
+      <mat-drawer-container class="flex-auto h-full" [hasBackdrop]="false">
+    
+        <!-- Drawer content -->
+        <mat-drawer-content class="flex overflow-hidden h-full report-bg">
+          <div class="flex-auto w-full overflow-y-auto border-l h-full">
+            <div class="relative p-10 w-full border-l h-full">
+              <div class="table-users w-full">
+                <table class="w-full border bg-card mt-2" cellspacing="0">
+                  <thead class="bg-blue-200 sticky top-10 z-10">
+                    <tr>
+                      <th class="text-center p-3" rowspan="2">Sl. No.</th>
+                      <th class="text-center p-3" rowspan="2">Date</th>
+                      <th class="text-center p-3" rowspan="2">Time</th>
+                      <th class="text-center p-3" colspan="2">Generation</th>
+                      <th class="text-center p-3" colspan="19">Consumption</th>
+                    </tr>
+
+                    <tr>
+                      <th  class="text-center p-3">BPP (Flow)</th>
+                      <th  class="text-center p-3">BPP (Pressure)</th>
+                      <th class="text-center p-3" >U/F (Total Flow)</th>
+                      <th  class="text-center p-3">PBS (Flow)</th>
+                      <th  class="text-center p-3">PBS (Pressure)</th>
+                      <th  class="text-center p-3">BF-5 (Flow)</th>
+                      <th  class="text-center p-3">BF-5 (Pressure)</th>
+                      <th  class="text-center p-3">Mills (Flow)</th>
+                      <th  class="text-center p-3">Mills (Pressure)</th>
+                      <th  class="text-center p-3">Sinter (Flow)</th>
+                      <th  class="text-center p-3">Sinter (Pressure)</th>
+                      <th  class="text-center p-3">BOF (Flow)</th>
+                      <th  class="text-center p-3">BOF (Pressure)</th>
+                      <th  class="text-center p-3">CCP (Flow)</th>
+                      <th  class="text-center p-3">CCP (Pressure)</th>
+                      <th  class="text-center p-3">LDCP (Flow)</th>
+                      <th  class="text-center p-3">LDCP (Pressure)</th>
+                      <th  class="text-center p-3">Flare Stack (Flow)</th>
+                      <th  class="text-center p-3">Flare Stack (Pressure)</th>
+                      <th  class="text-center p-3">Losses (Flow)</th>
+                      <th  class="text-center p-3">Losses (Pressure)</th>
+                    </tr>
+                  </thead>
+    
+                  
+                  <tr *ngFor="let row of reportData; let rindex = index" class="border hover:bg-blue-200">
+                    <td class="text-center p-3">
+                      {{ rindex + 1 }}
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.date }}
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.time }}
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.bppFlow }}
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.bppPressure }}
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.uftotal }}
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.pbsFlow }}
+                    </td>
+                    <td class="text-center p-3">
+                      N/A
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.bf5Flow }}
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.bf5Pressure }}
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.millsFlow }}
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.millsPressure }}
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.sinterFlow }}
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.sinterPressure }}
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.bofFlow }}
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.bofPressure }}
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.ccpFlow }}
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.ccpPressure }}
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.ldcpFlow }}
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.ldcpPressure }}
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.flareFlow }}
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.flarePressure }}
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.lossesFlow }}
+                    </td>
+                    <td class="text-center p-3">
+                      {{ row.lossesPressure }}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+    
+
+            </div>
+          </div>
+        </mat-drawer-content>
+      </mat-drawer-container>
     </div>
   </div>
   

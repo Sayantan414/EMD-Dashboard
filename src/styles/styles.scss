@@ -1049,3 +1049,43 @@ tr:nth-child(even) {
     
   }
   
+
+//   Table
+th {
+    background: #4e067e;
+    color: #fff;
+    text-align: center !important;
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #fff;
+    padding: 10px 5px;
+  }
+  
+  td {
+    text-align: center !important;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 5px;
+    border: 1px solid #524f4f;
+
+  }
+  
+  thead {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+// .report-wrapper,
+// .report-bg,
+// .report-wrapper .flex-auto,
+// .report-wrapper .w-full,
+// .report-wrapper mat-drawer-content {
+//   background: var(--backg-clr) !important;
+// }
+
+  
