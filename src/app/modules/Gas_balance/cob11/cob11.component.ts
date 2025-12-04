@@ -59,7 +59,7 @@ export class Cob11Component implements OnInit {
     private _snackBar: MatSnackBar
   ) {
     this._unsubscribeAll = new Subject();
-   }
+  }
 
   splitLetters(text: string): string[] {
     return text.split('').map((c) => (c === ' ' ? '\u00A0' : c));
@@ -95,9 +95,9 @@ export class Cob11Component implements OnInit {
       .cob11_cog_trend({})
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe({
-        next: ((res:any[]) => {
+        next: ((res: any[]) => {
           this.prepareReportTable(res);
-         
+
         }),
         error: (err) => {
           this._snackBar.open(err, "", {
@@ -310,46 +310,55 @@ export class Cob11Component implements OnInit {
 
 
   prepareReportTable(data: any[]) {
-    this.reportData = data.map(item => ({
-      date: new Date(item.datestamp).toLocaleDateString("en-IN", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric"
-      }),
-      
-      time: new Date(item.datestamp).toLocaleTimeString("en-IN", {
-        hour: "2-digit",
-        minute: "2-digit"
-      }),
-      bppFlow: item.FT0600F003_C,
-      bppPressure: item.COGASMAKEPRESSURE,
-      uftotal: item.CO_GAS1_F + item.CO_GAS2_F, // OR + item.CO_GAS2_F (you tell me)
-      pbsFlow: item.PBS_BCOGF,
-      bf5Flow: item.BF_COF,
-      bf5Pressure: "N/A",
-  
-      millsFlow: "N/A",
-      millsPressure: "N/A",
-  
-      sinterFlow: item.SP_CO_GAS,
-      sinterPressure: "N/A",
-  
-      bofFlow: "N/A",
-      bofPressure: "N/A",
-  
-      ccpFlow: "N/A",
-      ccpPressure: "N/A",
-  
-      ldcpFlow: item.COG_FLOW_GMS,
-      ldcpPressure: "N/A",
-  
-      flareFlow: item.COFLARESTACKFLOW,
-      flarePressure: item.COFLARESTACKPRESSURE,
+    this.reportData = data.map(item => {
+      // Force JS to treat the timestamp as LOCAL (not UTC)
+      const d = new Date(item.datestamp.replace('Z', ''));
 
-      lossesFlow: "N/A",
-      lossesPressure: "N/A",
-    }));
+      return {
+        date: d.toLocaleDateString("en-IN", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric"
+        }),
+
+        time: d.toLocaleTimeString("en-IN", {
+          hour: "2-digit",
+          minute: "2-digit"
+        }),
+
+        bppFlow: item.FT0600F003_C,
+        bppPressure: item.COGASMAKEPRESSURE,
+
+        uftotal: (item.CO_GAS1_F ?? 0) + (item.CO_GAS2_F ?? 0),
+
+        pbsFlow: item.PBS_BCOGF,
+        bf5Flow: item.BF_COF,
+        bf5Pressure: "N/A",
+
+        millsFlow: "N/A",
+        millsPressure: "N/A",
+
+        sinterFlow: item.SP_CO_GAS,
+        sinterPressure: "N/A",
+
+        bofFlow: "N/A",
+        bofPressure: "N/A",
+
+        ccpFlow: "N/A",
+        ccpPressure: "N/A",
+
+        ldcpFlow: item.COG_FLOW_GMS,
+        ldcpPressure: "N/A",
+
+        flareFlow: item.COFLARESTACKFLOW,
+        flarePressure: item.COFLARESTACKPRESSURE,
+
+        lossesFlow: "N/A",
+        lossesPressure: "N/A",
+      };
+    });
   }
+
 
 
   ngOnDestroy(): void {
@@ -364,5 +373,5 @@ export class Cob11Component implements OnInit {
     this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
   }
-  
+
 }

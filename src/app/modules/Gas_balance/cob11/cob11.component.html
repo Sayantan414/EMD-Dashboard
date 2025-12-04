@@ -2,27 +2,34 @@
   <div class="radio-buttons-container">
     <div class="mode-switch">
       <label class="switch-option">
-        <input type="radio" name="viewMode" value="flow"
-               [(ngModel)]="viewMode" />
+        <input
+          type="radio"
+          name="viewMode"
+          value="flow"
+          [(ngModel)]="viewMode"
+        />
         <span class="custom-radio"></span>
         CO Gas Flow
       </label>
-    
+
       <label class="switch-option">
-        <input type="radio" name="viewMode" value="report"
-               [(ngModel)]="viewMode" />
+        <input
+          type="radio"
+          name="viewMode"
+          value="report"
+          [(ngModel)]="viewMode"
+        />
         <span class="custom-radio"></span>
         Report
       </label>
     </div>
-    
   </div>
   <div *ngIf="viewMode === 'flow'">
-  <div class="layout-container">
-    <div class="detail-view">
-      <h3 class="animated-underline">CO GAS FLOW</h3>
-      <!-- <div class="detail-content"> -->
-      <!-- <p>
+    <div class="layout-container">
+      <div class="detail-view">
+        <h3 class="animated-underline">CO GAS FLOW</h3>
+        <!-- <div class="detail-content"> -->
+        <!-- <p>
         Carbon monoxide (CO) is a colorless, odorless, and tasteless gas
         generated during the incomplete combustion of carbon-based fuels. In
         steel plants, CO serves two contrasting roles. On one hand, it is an
@@ -34,337 +41,338 @@
         than that of natural gas or hydrogen, CO remains a valuable industrial
         fuel due to its availability within integrated steelmaking processes.
       </p> -->
-      <!-- </div> -->
-    </div>
-
-    <div class="gasflow-container m-10">
-      <h2 class="title animated-underline">COB11</h2>
-
-      <div class="tree">
-        <!-- Continuous main vertical line -->
-        <div class="main-line"></div>
-
-        <!-- Top Node -->
-        <div class="node generation gen">
-          <div class="top_header">BPP</div>
-          <div class="sub-title red">Generation</div>
-          <div class="labels unique">
-            <span>Flow</span><span>Pressure</span>
-          </div>
-          <div class="values unique">
-            <div>
-              <div class="value">{{ cogasflow_res.FT0600F003_C }}</div>
-              <div class="unit">Nm³/hr</div>
-            </div>
-            <div>
-              <div class="value">{{ cogasflow_res.COGASMAKEPRESSURE }}</div>
-              <div class="unit">mmwc</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- LEVEL 1 -->
-        <div class="branch UfTotalFlow" style="margin-top: 2%">
-          <div class="node consumption left flow-box">
-            <div class="header">U/F Total Flow</div>
-            <div class="sub-title green">Consumption</div>
-            <div class="labels"><span>Total Flow</span></div>
-            <div class="values">
-              <div>
-                <div class="value">
-                  {{ cogasflow_res.CO_GAS1_F + cogasflow_res.CO_GAS2_F }}
-                </div>
-                <div class="unit">Nm³/hr</div>
-              </div>
-            </div>
-            <div class="labels"><span>N1</span><span>N2</span></div>
-            <div class="values">
-              <div>
-                <div class="value">{{ cogasflow_res.CO_GAS1_F }}</div>
-                <div class="unit">Nm³/hr</div>
-              </div>
-              <div>
-                <div class="value">{{ cogasflow_res.CO_GAS2_F }}</div>
-                <div class="unit">mmwc</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Example: Single right-side node -->
-        <div class="branch single-right">
-          <div class="node consumption right flow-box">
-            <div class="header">PBS</div>
-            <div class="sub-title green">Consumption</div>
-            <div class="labels unique">
-              <span>Flow</span><span>Pressure</span>
-            </div>
-            <div class="values">
-              <div>
-                <div class="value">{{ cogasflow_res.PBS_BCOGF }}</div>
-                <div class="unit">Nm³/hr</div>
-              </div>
-              <div>
-                <div class="value">xxxx</div>
-                <div class="unit">mmwc</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- LEVEL 1 -->
-        <div class="branch single-left">
-          <div class="node consumption left flow-box">
-            <div class="header">BF-5</div>
-            <div class="sub-title green">Consumption</div>
-            <div class="labels unique">
-              <span>Flow</span><span>Pressure</span>
-            </div>
-            <div class="values">
-              <div>
-                <div class="value">{{ cogasflow_res.BF_COF }}</div>
-                <div class="unit">Nm³/hr</div>
-              </div>
-              <div>
-                <div class="value">xxxx</div>
-                <div class="unit">mmwc</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Example: Single right-side node -->
-        <div class="branch single-right">
-          <div class="node consumption right flow-box">
-            <div class="header">Mills</div>
-            <div class="sub-title green">Consumption</div>
-            <div class="labels unique">
-              <span>Flow</span><span>Pressure</span>
-            </div>
-            <div class="values">
-              <div>
-                <div class="value">xxxx</div>
-                <div class="unit">Nm³/hr</div>
-              </div>
-              <div>
-                <div class="value">xxxx</div>
-                <div class="unit">mmwc</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- LEVEL 1 -->
-        <div class="branch single-left">
-          <div class="node consumption left flow-box">
-            <div class="header">Sinter</div>
-            <div class="sub-title green">Consumption</div>
-            <div class="labels unique">
-              <span>Flow</span><span>Pressure</span>
-            </div>
-            <div class="values">
-              <div>
-                <div class="value">{{ cogasflow_res.SP_CO_GAS }}</div>
-                <div class="unit">Nm³/hr</div>
-              </div>
-              <div>
-                <div class="value">xxxx</div>
-                <div class="unit">mmwc</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Example: Single right-side node -->
-        <div class="branch single-right">
-          <div class="node consumption right flow-box">
-            <div class="header">BOF</div>
-            <div class="sub-title green">Consumption</div>
-            <div class="labels unique">
-              <span>Flow</span><span>Pressure</span>
-            </div>
-            <div class="values">
-              <div>
-                <div class="value">xxxx</div>
-                <div class="unit">Nm³/hr</div>
-              </div>
-              <div>
-                <div class="value">xxxx</div>
-                <div class="unit">mmwc</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- LEVEL 1 -->
-        <div class="branch single-left">
-          <div class="node consumption left flow-box">
-            <div class="header">CCP</div>
-            <div class="sub-title green">Consumption</div>
-            <div class="labels unique">
-              <span>Flow</span><span>Pressure</span>
-            </div>
-            <div class="values">
-              <div>
-                <div class="value">xxxx</div>
-                <div class="unit">Nm³/hr</div>
-              </div>
-              <div>
-                <div class="value">xxxx</div>
-                <div class="unit">mmwc</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Example: Single right-side node -->
-        <div class="branch single-right">
-          <div class="node consumption right flow-box">
-            <div class="header">LDCP</div>
-            <div class="sub-title green">Consumption</div>
-            <div class="labels unique">
-              <span>Flow</span><span>Pressure</span>
-            </div>
-            <div class="values">
-              <div>
-                <div class="value">{{ cogasflow_res.COG_FLOW_GMS }}</div>
-                <div class="unit">Nm³/hr</div>
-              </div>
-              <div>
-                <div class="value">xxxx</div>
-                <div class="unit">mmwc</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- LEVEL 1 -->
-        <div class="branch single-left">
-          <div class="node consumption left flow-box">
-            <div class="header">Flare Stack</div>
-            <div class="sub-title green">Consumption</div>
-            <div class="labels unique">
-              <span>Flow</span><span>Pressure</span>
-            </div>
-            <div class="values">
-              <div>
-                <div class="value">{{ cogasflow_res.COFLARESTACKFLOW }}</div>
-                <div class="unit">Nm³/hr</div>
-              </div>
-              <div>
-                <div class="value">
-                  {{ cogasflow_res.COFLARESTACKPRESSURE }}
-                </div>
-                <div class="unit">mmwc</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- LEVEL 5 -->
-        <div class="branch single">
-          <div class="node consumption center flow-box">
-            <div class="header">Losses</div>
-            <div class="sub-title green">Consumption</div>
-            <div class="labels unique">
-              <span>Flow</span><span>Pressure</span>
-            </div>
-            <div class="values">
-              <div>
-                <div class="value">xxxx</div>
-                <div class="unit">Nm³/hr</div>
-              </div>
-              <div>
-                <div class="value">xxxx</div>
-                <div class="unit">mmwc</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <!-- </div> -->
       </div>
-    </div>
 
-    <div class="gasflow-container m-10 ml-50">
-      <h2 class="title animated-underline">COB10</h2>
+      <div class="gasflow-container m-10">
+        <h2 class="title animated-underline">COB11</h2>
 
-      <div class="tree">
-        <!-- Continuous main vertical line -->
-        <div class="main-line"></div>
+        <div class="tree">
+          <!-- Continuous main vertical line -->
+          <div class="main-line"></div>
 
-        <!-- Top Node -->
-        <div class="node generation gen">
-          <div class="top_header">BPP</div>
-          <div class="sub-title red">Generation</div>
-          <div class="labels unique">
-            <span>Flow</span><span>Pressure</span>
-          </div>
-          <div class="values unique">
-            <div>
-              <div class="value">{{ cogasflow_res.COB10_GASMAKEF }}</div>
-              <div class="unit">Nm³/hr</div>
-            </div>
-            <div>
-              <div class="value">{{ cogasflow_res.COB10_COGSUPPLY }}</div>
-              <div class="unit">mmwc</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- LEVEL 1 -->
-        <div class="branch UfTotalFlow" style="margin-top: 2%">
-          <div class="node consumption left flow-box">
-            <div class="header">U/F Total Flow</div>
-            <div class="sub-title green">Consumption</div>
-            <div class="labels"><span>Total Flow</span></div>
-            <div class="values">
-              <div>
-                <div class="value">xxxx</div>
-                <div class="unit">Nm³/hr</div>
-              </div>
-            </div>
-            <div class="labels"><span>N1</span><span>N2</span></div>
-            <div class="values">
-              <div>
-                <div class="value">xxxx</div>
-                <div class="unit">Nm³/hr</div>
-              </div>
-              <div>
-                <div class="value">xxxx</div>
-                <div class="unit">mmwc</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Example: Single right-side node -->
-        <div class="branch single-right">
-          <div class="node consumption right flow-box">
-            <div class="header">Mills</div>
-            <div class="sub-title green">Consumption</div>
+          <!-- Top Node -->
+          <div class="node generation gen">
+            <div class="top_header">BPP</div>
+            <div class="sub-title red">Generation</div>
             <div class="labels unique">
               <span>Flow</span><span>Pressure</span>
             </div>
-            <div class="values">
+            <div class="values unique">
               <div>
-                <div class="value">{{ boosterValue.AGBS_outletF }}</div>
+                <div class="value">{{ cogasflow_res.FT0600F003_C }}</div>
                 <div class="unit">Nm³/hr</div>
               </div>
               <div>
-                <div class="value">
-                  {{
-                    boosterValue.AGBS_outletP_b1 + boosterValue.AGBS_outletP_b2
-                  }}
-                </div>
+                <div class="value">{{ cogasflow_res.COGASMAKEPRESSURE }}</div>
                 <div class="unit">mmwc</div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- LEVEL 1 -->
-        <!-- <div class="branch single-left">
+          <!-- LEVEL 1 -->
+          <div class="branch UfTotalFlow" style="margin-top: 2%">
+            <div class="node consumption left flow-box">
+              <div class="header">U/F Total Flow</div>
+              <div class="sub-title green">Consumption</div>
+              <div class="labels"><span>Total Flow</span></div>
+              <div class="values">
+                <div>
+                  <div class="value">
+                    {{ cogasflow_res.CO_GAS1_F + cogasflow_res.CO_GAS2_F }}
+                  </div>
+                  <div class="unit">Nm³/hr</div>
+                </div>
+              </div>
+              <div class="labels"><span>N1</span><span>N2</span></div>
+              <div class="values">
+                <div>
+                  <div class="value">{{ cogasflow_res.CO_GAS1_F }}</div>
+                  <div class="unit">Nm³/hr</div>
+                </div>
+                <div>
+                  <div class="value">{{ cogasflow_res.CO_GAS2_F }}</div>
+                  <div class="unit">mmwc</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Example: Single right-side node -->
+          <div class="branch single-right">
+            <div class="node consumption right flow-box">
+              <div class="header">PBS</div>
+              <div class="sub-title green">Consumption</div>
+              <div class="labels unique">
+                <span>Flow</span><span>Pressure</span>
+              </div>
+              <div class="values">
+                <div>
+                  <div class="value">{{ cogasflow_res.PBS_BCOGF }}</div>
+                  <div class="unit">Nm³/hr</div>
+                </div>
+                <div>
+                  <div class="value">xxxx</div>
+                  <div class="unit">mmwc</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEVEL 1 -->
+          <div class="branch single-left">
+            <div class="node consumption left flow-box">
+              <div class="header">BF-5</div>
+              <div class="sub-title green">Consumption</div>
+              <div class="labels unique">
+                <span>Flow</span><span>Pressure</span>
+              </div>
+              <div class="values">
+                <div>
+                  <div class="value">{{ cogasflow_res.BF_COF }}</div>
+                  <div class="unit">Nm³/hr</div>
+                </div>
+                <div>
+                  <div class="value">xxxx</div>
+                  <div class="unit">mmwc</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Example: Single right-side node -->
+          <div class="branch single-right">
+            <div class="node consumption right flow-box">
+              <div class="header">Mills</div>
+              <div class="sub-title green">Consumption</div>
+              <div class="labels unique">
+                <span>Flow</span><span>Pressure</span>
+              </div>
+              <div class="values">
+                <div>
+                  <div class="value">xxxx</div>
+                  <div class="unit">Nm³/hr</div>
+                </div>
+                <div>
+                  <div class="value">xxxx</div>
+                  <div class="unit">mmwc</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEVEL 1 -->
+          <div class="branch single-left">
+            <div class="node consumption left flow-box">
+              <div class="header">Sinter</div>
+              <div class="sub-title green">Consumption</div>
+              <div class="labels unique">
+                <span>Flow</span><span>Pressure</span>
+              </div>
+              <div class="values">
+                <div>
+                  <div class="value">{{ cogasflow_res.SP_CO_GAS }}</div>
+                  <div class="unit">Nm³/hr</div>
+                </div>
+                <div>
+                  <div class="value">xxxx</div>
+                  <div class="unit">mmwc</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Example: Single right-side node -->
+          <div class="branch single-right">
+            <div class="node consumption right flow-box">
+              <div class="header">BOF</div>
+              <div class="sub-title green">Consumption</div>
+              <div class="labels unique">
+                <span>Flow</span><span>Pressure</span>
+              </div>
+              <div class="values">
+                <div>
+                  <div class="value">xxxx</div>
+                  <div class="unit">Nm³/hr</div>
+                </div>
+                <div>
+                  <div class="value">xxxx</div>
+                  <div class="unit">mmwc</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEVEL 1 -->
+          <div class="branch single-left">
+            <div class="node consumption left flow-box">
+              <div class="header">CCP</div>
+              <div class="sub-title green">Consumption</div>
+              <div class="labels unique">
+                <span>Flow</span><span>Pressure</span>
+              </div>
+              <div class="values">
+                <div>
+                  <div class="value">xxxx</div>
+                  <div class="unit">Nm³/hr</div>
+                </div>
+                <div>
+                  <div class="value">xxxx</div>
+                  <div class="unit">mmwc</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Example: Single right-side node -->
+          <div class="branch single-right">
+            <div class="node consumption right flow-box">
+              <div class="header">LDCP</div>
+              <div class="sub-title green">Consumption</div>
+              <div class="labels unique">
+                <span>Flow</span><span>Pressure</span>
+              </div>
+              <div class="values">
+                <div>
+                  <div class="value">{{ cogasflow_res.COG_FLOW_GMS }}</div>
+                  <div class="unit">Nm³/hr</div>
+                </div>
+                <div>
+                  <div class="value">xxxx</div>
+                  <div class="unit">mmwc</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEVEL 1 -->
+          <div class="branch single-left">
+            <div class="node consumption left flow-box">
+              <div class="header">Flare Stack</div>
+              <div class="sub-title green">Consumption</div>
+              <div class="labels unique">
+                <span>Flow</span><span>Pressure</span>
+              </div>
+              <div class="values">
+                <div>
+                  <div class="value">{{ cogasflow_res.COFLARESTACKFLOW }}</div>
+                  <div class="unit">Nm³/hr</div>
+                </div>
+                <div>
+                  <div class="value">
+                    {{ cogasflow_res.COFLARESTACKPRESSURE }}
+                  </div>
+                  <div class="unit">mmwc</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEVEL 5 -->
+          <div class="branch single">
+            <div class="node consumption center flow-box">
+              <div class="header">Losses</div>
+              <div class="sub-title green">Consumption</div>
+              <div class="labels unique">
+                <span>Flow</span><span>Pressure</span>
+              </div>
+              <div class="values">
+                <div>
+                  <div class="value">xxxx</div>
+                  <div class="unit">Nm³/hr</div>
+                </div>
+                <div>
+                  <div class="value">xxxx</div>
+                  <div class="unit">mmwc</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- </div> -->
+        </div>
+      </div>
+
+      <div class="gasflow-container m-10 ml-50">
+        <h2 class="title animated-underline">COB10</h2>
+
+        <div class="tree">
+          <!-- Continuous main vertical line -->
+          <div class="main-line"></div>
+
+          <!-- Top Node -->
+          <div class="node generation gen">
+            <div class="top_header">BPP</div>
+            <div class="sub-title red">Generation</div>
+            <div class="labels unique">
+              <span>Flow</span><span>Pressure</span>
+            </div>
+            <div class="values unique">
+              <div>
+                <div class="value">{{ cogasflow_res.COB10_GASMAKEF }}</div>
+                <div class="unit">Nm³/hr</div>
+              </div>
+              <div>
+                <div class="value">{{ cogasflow_res.COB10_COGSUPPLY }}</div>
+                <div class="unit">mmwc</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEVEL 1 -->
+          <div class="branch UfTotalFlow" style="margin-top: 2%">
+            <div class="node consumption left flow-box">
+              <div class="header">U/F Total Flow</div>
+              <div class="sub-title green">Consumption</div>
+              <div class="labels"><span>Total Flow</span></div>
+              <div class="values">
+                <div>
+                  <div class="value">xxxx</div>
+                  <div class="unit">Nm³/hr</div>
+                </div>
+              </div>
+              <div class="labels"><span>N1</span><span>N2</span></div>
+              <div class="values">
+                <div>
+                  <div class="value">xxxx</div>
+                  <div class="unit">Nm³/hr</div>
+                </div>
+                <div>
+                  <div class="value">xxxx</div>
+                  <div class="unit">mmwc</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Example: Single right-side node -->
+          <div class="branch single-right">
+            <div class="node consumption right flow-box">
+              <div class="header">Mills</div>
+              <div class="sub-title green">Consumption</div>
+              <div class="labels unique">
+                <span>Flow</span><span>Pressure</span>
+              </div>
+              <div class="values">
+                <div>
+                  <div class="value">{{ boosterValue.AGBS_outletF }}</div>
+                  <div class="unit">Nm³/hr</div>
+                </div>
+                <div>
+                  <div class="value">
+                    {{
+                      boosterValue.AGBS_outletP_b1 +
+                        boosterValue.AGBS_outletP_b2
+                    }}
+                  </div>
+                  <div class="unit">mmwc</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEVEL 1 -->
+          <!-- <div class="branch single-left">
         <div class="node consumption left flow-box">
           <div class="header">Mills</div>
           <div class="sub-title green">Consumption</div>
@@ -383,17 +391,16 @@
           </div>
         </div>
       </div> -->
+        </div>
       </div>
     </div>
   </div>
-  </div>
 
   <div *ngIf="viewMode === 'report'">
-    <div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden ">
+    <div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
       <!-- report-wrapper -->
-    
+
       <mat-drawer-container class="flex-auto h-full" [hasBackdrop]="false">
-    
         <!-- Drawer content -->
         <mat-drawer-content class="flex overflow-hidden h-full report-bg">
           <div class="flex-auto w-full overflow-y-auto border-l h-full">
@@ -410,114 +417,111 @@
                     </tr>
 
                     <tr>
-                      <th  class="text-center p-3">BPP (Flow)</th>
-                      <th  class="text-center p-3">BPP (Pressure)</th>
-                      <th class="text-center p-3" >U/F (Total Flow)</th>
-                      <th  class="text-center p-3">PBS (Flow)</th>
-                      <th  class="text-center p-3">PBS (Pressure)</th>
-                      <th  class="text-center p-3">BF-5 (Flow)</th>
-                      <th  class="text-center p-3">BF-5 (Pressure)</th>
-                      <th  class="text-center p-3">Mills (Flow)</th>
-                      <th  class="text-center p-3">Mills (Pressure)</th>
-                      <th  class="text-center p-3">Sinter (Flow)</th>
-                      <th  class="text-center p-3">Sinter (Pressure)</th>
-                      <th  class="text-center p-3">BOF (Flow)</th>
-                      <th  class="text-center p-3">BOF (Pressure)</th>
-                      <th  class="text-center p-3">CCP (Flow)</th>
-                      <th  class="text-center p-3">CCP (Pressure)</th>
-                      <th  class="text-center p-3">LDCP (Flow)</th>
-                      <th  class="text-center p-3">LDCP (Pressure)</th>
-                      <th  class="text-center p-3">Flare Stack (Flow)</th>
-                      <th  class="text-center p-3">Flare Stack (Pressure)</th>
-                      <th  class="text-center p-3">Losses (Flow)</th>
-                      <th  class="text-center p-3">Losses (Pressure)</th>
+                      <th class="text-center p-3">BPP (Flow)</th>
+                      <th class="text-center p-3">BPP (Pressure)</th>
+                      <th class="text-center p-3">U/F (Total Flow)</th>
+                      <th class="text-center p-3">PBS (Flow)</th>
+                      <th class="text-center p-3">PBS (Pressure)</th>
+                      <th class="text-center p-3">BF-5 (Flow)</th>
+                      <th class="text-center p-3">BF-5 (Pressure)</th>
+                      <th class="text-center p-3">Mills (Flow)</th>
+                      <th class="text-center p-3">Mills (Pressure)</th>
+                      <th class="text-center p-3">Sinter (Flow)</th>
+                      <th class="text-center p-3">Sinter (Pressure)</th>
+                      <th class="text-center p-3">BOF (Flow)</th>
+                      <th class="text-center p-3">BOF (Pressure)</th>
+                      <th class="text-center p-3">CCP (Flow)</th>
+                      <th class="text-center p-3">CCP (Pressure)</th>
+                      <th class="text-center p-3">LDCP (Flow)</th>
+                      <th class="text-center p-3">LDCP (Pressure)</th>
+                      <th class="text-center p-3">Flare Stack (Flow)</th>
+                      <th class="text-center p-3">Flare Stack (Pressure)</th>
+                      <th class="text-center p-3">Losses (Flow)</th>
+                      <th class="text-center p-3">Losses (Pressure)</th>
                     </tr>
                   </thead>
-    
-                  
-                  <tr *ngFor="let row of reportData; let rindex = index" class="border hover:bg-blue-200 tr">
+
+                  <tr
+                    *ngFor="let row of reportData; let rindex = index"
+                    class="border hover:bg-blue-200 tr"
+                  >
                     <td class="text-center p-3 td">
                       {{ rindex + 1 }}
                     </td>
-                    <td class="text-center p-3">
+                    <td class="text-center p-3 td">
                       {{ row.date }}
                     </td>
-                    <td class="text-center p-3">
+                    <td class="text-center p-3 td">
                       {{ row.time }}
                     </td>
-                    <td class="text-center p-3">
-                      {{ row.bppFlow }}
+                    <td class="text-center p-3 td">
+                      {{ row.bppFlow | number : "1.2-2" }}
                     </td>
-                    <td class="text-center p-3">
-                      {{ row.bppPressure }}
+                    <td class="text-center p-3 td">
+                      {{ row.bppPressure | number : "1.2-2" }}
                     </td>
-                    <td class="text-center p-3">
-                      {{ row.uftotal }}
+                    <td class="text-center p-3 td">
+                      {{ row.uftotal | number : "1.2-2" }}
                     </td>
-                    <td class="text-center p-3">
+                    <td class="text-center p-3 td">
                       {{ row.pbsFlow }}
                     </td>
-                    <td class="text-center p-3">
-                      N/A
-                    </td>
-                    <td class="text-center p-3">
+                    <td class="text-center p-3 td">N/A</td>
+                    <td class="text-center p-3 td">
                       {{ row.bf5Flow }}
                     </td>
-                    <td class="text-center p-3">
+                    <td class="text-center p-3 td">
                       {{ row.bf5Pressure }}
                     </td>
-                    <td class="text-center p-3">
+                    <td class="text-center p-3 td">
                       {{ row.millsFlow }}
                     </td>
-                    <td class="text-center p-3">
+                    <td class="text-center p-3 td">
                       {{ row.millsPressure }}
                     </td>
-                    <td class="text-center p-3">
+                    <td class="text-center p-3 td">
                       {{ row.sinterFlow }}
                     </td>
-                    <td class="text-center p-3">
+                    <td class="text-center p-3 td">
                       {{ row.sinterPressure }}
                     </td>
-                    <td class="text-center p-3">
+                    <td class="text-center p-3 td">
                       {{ row.bofFlow }}
                     </td>
-                    <td class="text-center p-3">
+                    <td class="text-center p-3 td">
                       {{ row.bofPressure }}
                     </td>
-                    <td class="text-center p-3">
+                    <td class="text-center p-3 td">
                       {{ row.ccpFlow }}
                     </td>
-                    <td class="text-center p-3">
+                    <td class="text-center p-3 td">
                       {{ row.ccpPressure }}
                     </td>
-                    <td class="text-center p-3">
+                    <td class="text-center p-3 td">
                       {{ row.ldcpFlow }}
                     </td>
-                    <td class="text-center p-3">
+                    <td class="text-center p-3 td">
                       {{ row.ldcpPressure }}
                     </td>
-                    <td class="text-center p-3">
-                      {{ row.flareFlow }}
+                    <td class="text-center p-3 td">
+                      {{ row.flareFlow | number : "1.2-2" }}
                     </td>
-                    <td class="text-center p-3">
-                      {{ row.flarePressure }}
+                    <td class="text-center p-3 td">
+                      {{ row.flarePressure | number : "1.2-2" }}
                     </td>
-                    <td class="text-center p-3">
+                    <td class="text-center p-3 td">
                       {{ row.lossesFlow }}
                     </td>
-                    <td class="text-center p-3">
+                    <td class="text-center p-3 td">
                       {{ row.lossesPressure }}
                     </td>
                   </tr>
                 </table>
               </div>
-    
-
             </div>
           </div>
         </mat-drawer-content>
       </mat-drawer-container>
     </div>
   </div>
-  
 </div>
