@@ -180,7 +180,7 @@ export class AreaComponent implements OnInit, OnDestroy {
             size: "65%"
           },
           track: {
-            background: "#f0f0f0",
+            background: "#ffffff",
             strokeWidth: "90%"
           },
           dataLabels: {
@@ -190,7 +190,7 @@ export class AreaComponent implements OnInit, OnDestroy {
             value: {
               fontSize: "20px",
               offsetY: 10,
-              color: "#000",      // <-- Set color here, this is allowed
+              color: "var(--gauge-text)",      // <-- Set color here, this is allowed
               fontWeight: "600",  // <-- This is allowed too
               formatter: () => `COB#10`
             }
@@ -200,10 +200,11 @@ export class AreaComponent implements OnInit, OnDestroy {
 
       fill: {
         type: "gradient",
+        colors: ["#ff4d4d"], 
         gradient: {
           shade: "light",
           type: "horizontal",
-          gradientToColors: ["#33ccff"],
+          gradientToColors: ["#ff0000"],
           stops: [0, 50, 100]
         }
       },
