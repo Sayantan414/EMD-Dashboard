@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProjectCommonModule } from 'app/core/project-common-modules/project-common.module';
 import { SseService } from 'app/services/sse.servece';
 import { TrendService } from 'app/services/trend.service';
-import { Subject, Subscription, takeUntil } from 'rxjs';
+import { interval, startWith, Subject, Subscription, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-cob11',
@@ -91,23 +91,14 @@ export class Cob11Component implements OnInit {
   }
 
   ngOnInit(): void {
-    this.trendService
-      .cob11_cog_trend({})
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe({
-        next: ((res: any[]) => {
-          this.prepareReportTable(res);
-
-        }),
-        error: (err) => {
-          this._snackBar.open(err, "", {
-            duration: 3000,
-            panelClass: ["error-snackbar"],
-          });
-        },
+    interval(60000)   // 1 minute
+      .pipe(
+        startWith(0), // call immediately on load
+        takeUntil(this._unsubscribeAll)
+      )
+      .subscribe(() => {
+        this.getReportData();
       });
-
-
     this.sseoverview = this.sseService.getOverview().subscribe((data: any) => {
       // console.log('es', data);
       // console.log(this.bf5_res);
@@ -307,7 +298,23 @@ export class Cob11Component implements OnInit {
     });
   }
 
+  getReportData() {
+    this.trendService
+      .cob11_cog_trend({})
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe({
+        next: ((res: any[]) => {
+          this.prepareReportTable(res);
 
+        }),
+        error: (err) => {
+          this._snackBar.open(err, "", {
+            duration: 3000,
+            panelClass: ["error-snackbar"],
+          });
+        },
+      });
+  }
 
   prepareReportTable(data: any[]) {
     this.reportData = data.map(item => {
