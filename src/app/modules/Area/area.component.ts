@@ -51,6 +51,57 @@ export class AreaComponent implements OnInit, OnDestroy {
   pressureGauge2!: Partial<ChartOptions>;
   pressureGauge3!: Partial<ChartOptions>;
 
+  topPressureGauge: any = {
+    series: [2.29],   // live value here
+  
+    chart: {
+      type: "radialBar",
+      height: 300
+    },
+  
+    plotOptions: {
+      radialBar: {
+        startAngle: -90,
+        endAngle: 90,
+        track: {
+          background: "#f0f0f0",
+          strokeWidth: "100%"
+        },
+        dataLabels: {
+          name: {
+            show: true,
+            offsetY: -10,
+            color: "var(--gauge-text)",
+            fontSize: "20px",
+            formatter: () => "COB#11" 
+          },
+          value: {
+            show: false                 
+          }
+        }
+      }
+    },
+  
+    fill: {
+      type: "gradient",
+      gradient: {
+        shade: "light",
+        type: "horizontal",
+        gradientToColors: ["#ff99ff"],  // 💗 pink right side
+        stops: [0, 100]
+      },
+      colors: ["#000066"]                // 🔵 dark blue left side
+    },
+  
+    stroke: {
+      lineCap: "round"
+    },
+  
+    labels: ["COB#11"]
+  };
+  
+
+
   make = "C.O. GAS MAKE [Th. Nm³/hr]";
   pressure = "C.O. GAS PRESSURE [mmwc]";
   bv = "BLAST VOLUME [Nm³/min]";
@@ -166,7 +217,7 @@ export class AreaComponent implements OnInit, OnDestroy {
       series: [0],
 
       chart: {
-        height: 245,
+        height: 228,
         width: 280,        // <-- width added
         type: "radialBar",
         offsetY: -10
@@ -448,7 +499,9 @@ export class AreaComponent implements OnInit, OnDestroy {
             const percent = Math.min((val / maxGasMake) * 100, 100);
             // this.makeGauge2.series = [percent];
             // Update FusionCharts gauge
-            this.fusionMakeCOB11.dials.dial[0].value = val;
+            // this.fusionMakeCOB11.dials.dial[0].value = val;
+            this.topPressureGauge.series = [percent];
+
           }
         );
 

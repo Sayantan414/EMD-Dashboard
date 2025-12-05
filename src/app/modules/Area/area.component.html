@@ -68,15 +68,15 @@
           {{ letter }}
         </span>
       </h2>
-      <!-- </div> -->
-      <!-- <apx-chart [series]="makeGauge2.series" [chart]="makeGauge2.chart" [labels]="makeGauge2.labels" [plotOptions]="makeGauge2.plotOptions" [fill]="makeGauge2.fill" [stroke]="makeGauge2.stroke" > </apx-chart> -->
-      <fusioncharts
-        *ngIf="fusionMakeCOB11"
-        width="250"
-        height="175"
-        type="angulargauge"
-        [dataSource]="fusionMakeCOB11"
-      ></fusioncharts>
+
+      <apx-chart
+        [series]="topPressureGauge.series"
+        [chart]="topPressureGauge.chart"
+        [plotOptions]="topPressureGauge.plotOptions"
+        [fill]="topPressureGauge.fill"
+        [stroke]="topPressureGauge.stroke"
+        [labels]="topPressureGauge.labels"
+      ></apx-chart>
 
       <!-- Actual live value -->
       <div class="meter-value">
@@ -95,14 +95,14 @@
         </span>
       </h2>
       <!-- </div> -->
-      <!-- <apx-chart [series]="pressureGauge2.series" [chart]="pressureGauge2.chart" [labels]="pressureGauge2.labels" [plotOptions]="pressureGauge2.plotOptions" [fill]="pressureGauge2.fill" [stroke]="pressureGauge2.stroke" > </apx-chart> -->
-      <fusioncharts
-        *ngIf="fusionPressureCOB11"
-        width="250"
-        height="175"
-        type="angulargauge"
-        [dataSource]="fusionPressureCOB11"
-      ></fusioncharts>
+      <apx-chart
+        [series]="topPressureGauge.series"
+        [chart]="topPressureGauge.chart"
+        [plotOptions]="topPressureGauge.plotOptions"
+        [fill]="topPressureGauge.fill"
+        [stroke]="topPressureGauge.stroke"
+        [labels]="topPressureGauge.labels"
+      ></apx-chart>
 
       <div class="meter-value">
         {{ overview_res.COGASMAKEPRESSURE | number : "1.2-2" }}
