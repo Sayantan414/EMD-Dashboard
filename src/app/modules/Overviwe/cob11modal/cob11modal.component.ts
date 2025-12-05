@@ -156,7 +156,7 @@ export class Cob11modalComponent implements OnInit {
         yAxis,
         valueYField: "gasmake",
         valueXField: "date",
-        stroke: root.interfaceColors.get("primaryButton"),
+        stroke: am5.color("#00CED1"),
         tooltip: am5.Tooltip.new(root, {
           labelText: "Gas Make: {valueY}",
         }),
@@ -174,7 +174,7 @@ export class Cob11modalComponent implements OnInit {
         sprite: am5.Circle.new(root, {
           radius: 4,
           fill: series.get("stroke"),
-          stroke: am5.color("#fff"),
+          stroke: am5.color("#00CED1"),
           strokeWidth: 1,
         }),
       })
@@ -272,7 +272,7 @@ export class Cob11modalComponent implements OnInit {
         yAxis,
         valueYField: "pressure",
         valueXField: "date",
-        stroke: root.interfaceColors.get("primaryButtonHover"),
+        stroke: am5.color("#FFA500"),
         tooltip: am5.Tooltip.new(root, {
           labelText: "Pressure: {valueY}",
         }),
@@ -290,7 +290,7 @@ export class Cob11modalComponent implements OnInit {
         sprite: am5.Circle.new(root, {
           radius: 4,
           fill: series.get("stroke"),
-          stroke: am5.color("#fff"),
+          stroke: am5.color("#FFA500"),
           strokeWidth: 1,
         }),
       })
