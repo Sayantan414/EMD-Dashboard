@@ -6,6 +6,7 @@ import { Subscription } from "rxjs";
 import { Cob10Component } from "./cob10/cob10.component";
 import { MatDialog } from "@angular/material/dialog";
 import { Cob11modalComponent } from "./cob11modal/cob11modal.component";
+import { Bf5Component } from "./bf5/bf5.component";
 
 @Component({
   selector: "app-overview",
@@ -727,6 +728,27 @@ export class OverviewComponent implements OnInit, OnDestroy {
       panelClass: "full-screen-dialog",
       data: {
         action: "viewCOB11",
+      },
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((response: any) => {
+      if (!response) {
+        return;
+      }
+    });
+
+  }
+
+  onClickBF5() {
+    let dialogRef = this._matDialog.open(Bf5Component, {
+      width: "90vw",
+      maxWidth: "100vw",
+      height: "100vh",
+      maxHeight: "100vh",
+      panelClass: "full-screen-dialog",
+      data: {
+        action: "viewBF5",
       },
       disableClose: true,
     });

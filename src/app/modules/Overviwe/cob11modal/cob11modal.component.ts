@@ -46,7 +46,7 @@ export class Cob11modalComponent implements OnInit {
 
   getCob11Data() {
     this.trendService
-      .cob_trend({})
+      .fourhourtrend({})
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe({
         next: (response) => {
@@ -66,7 +66,9 @@ export class Cob11modalComponent implements OnInit {
             }));
 
             // Create two charts
-            this.createGasMakeChart(chartData);
+            setTimeout(() => {
+              this.createGasMakeChart(chartData);
+            }, 200);
           }
         },
         error: (err) => {

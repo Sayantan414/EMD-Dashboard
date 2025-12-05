@@ -28,11 +28,11 @@ export class TrendService {
   }
 
 
-  cob_trend(emd: any): Observable<any> {
+  fourhourtrend(emd: any): Observable<any> {
 
     return this.http
       .get<any>(
-        `${this.baseUrl}/emd/cob_trend`,
+        `${this.baseUrl}/emd/fourhourtrend`,
         {
           headers: new HttpHeaders({
             "Content-Type": "application/json",

@@ -1,25 +1,23 @@
-import { CommonModule } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { MatDialogRef } from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
-// import { Router } from "@angular/router";
-import { ProjectCommonModule } from "app/core/project-common-modules/project-common.module";
-import { TrendService } from "app/services/trend.service";
-import { Subject, takeUntil } from "rxjs";
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ProjectCommonModule } from 'app/core/project-common-modules/project-common.module';
+import { TrendService } from 'app/services/trend.service';
+import { Subject, takeUntil } from 'rxjs';
 import * as am5 from "@amcharts/amcharts5";
 import * as am5xy from "@amcharts/amcharts5/xy";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 
 @Component({
-  selector: "app-cob10",
-  templateUrl: "./cob10.component.html",
-  styleUrls: ["./cob10.component.css"],
+  selector: 'app-bf5',
   standalone: true,
   imports: [ProjectCommonModule, CommonModule],
+  templateUrl: './bf5.component.html',
+  styleUrl: './bf5.component.scss'
 })
-export class Cob10Component implements OnInit {
-  cob10 = "COB#10";
+export class Bf5Component {
+  bf = "BF#5 KALYANI";
   private root!: am5.Root;
   responseData: any = [];
   hasMake: boolean = true;
@@ -27,19 +25,18 @@ export class Cob10Component implements OnInit {
   loading: boolean = true;
 
   private _unsubscribeAll: Subject<any> = new Subject();
+
   constructor(
-    //  private router: Router,
-    public matDialogRef: MatDialogRef<Cob10Component>,
+    public matDialogRef: MatDialogRef<Bf5Component>,
     private trendService: TrendService,
     private _snackBar: MatSnackBar
   ) {
     this._unsubscribeAll = new Subject();
-    this.getCob10Data();
+    this.getbf5Data();
   }
   splitLetters(text: string): string[] {
     return text.split("").map((c) => (c === " " ? "\u00A0" : c));
   }
-
   ngOnInit() { }
   ngOnDestroy() {
     am5.disposeAllRootElements();
@@ -47,12 +44,7 @@ export class Cob10Component implements OnInit {
     this._unsubscribeAll.complete();
   }
 
-  // goBack() {
-  //   // this.router.navigate(['/overview']);
-
-  // }a
-
-  getCob10Data() {
+  getbf5Data() {
     this.trendService
       .fourhourtrend({})
       .pipe(takeUntil(this._unsubscribeAll))
@@ -60,7 +52,6 @@ export class Cob10Component implements OnInit {
         next: (response) => {
           const data = JSON.parse(JSON.stringify(response));
           console.log(data);
-
           this.responseData = JSON.parse(JSON.stringify(response));
 
           if (data.length === 0) {
@@ -70,12 +61,12 @@ export class Cob10Component implements OnInit {
             // Prepare data for the chart
             const chartData = response.map((data: any) => ({
               date: new Date(data.datestamp).getTime(),
-              gasmake: data.benzol_scrubber_gasmake,
-              pressure: data.cogas_supply_pressure,
-              gasflow: data.cog_gasflow,
+              volume: data.BLAST_VOLUME,
+              pressure: data.BLAST_PRESSURE,
             }));
 
             // Create two charts
+
             setTimeout(() => {
               this.createGasMakeChart(chartData);
             }, 200);
@@ -91,15 +82,15 @@ export class Cob10Component implements OnInit {
   }
 
   createGasMakeChart(chartData: any[]) {
-    let root = am5.Root.new("cob10gasmakeChart");
+    let root = am5.Root.new("bf5volumeChart");
     root.setThemes([am5themes_Animated.new(root)]);
+
     root._logo.set("forceHidden", true);
 
     // ⭐ Get CSS variable color
     let axisColor = getComputedStyle(document.documentElement)
       .getPropertyValue("--charttext")
       .trim();
-    console.log("axisColor =", axisColor);
 
     let chart = root.container.children.push(
       am5xy.XYChart.new(root, {
@@ -137,7 +128,6 @@ export class Cob10Component implements OnInit {
 
     // ⭐ Correct method
     xAxis.get("renderer").set("minGridDistance", 40);
-
     let yAxis = chart.yAxes.push(
       am5xy.ValueAxis.new(root, {
         renderer: am5xy.AxisRendererY.new(root, {}),
@@ -162,14 +152,14 @@ export class Cob10Component implements OnInit {
 
     let series = chart.series.push(
       am5xy.LineSeries.new(root, {
-        name: "Gas Make",
+        name: "Blast Volume",
         xAxis,
         yAxis,
-        valueYField: "gasmake",
+        valueYField: "volume",
         valueXField: "date",
-        stroke: root.interfaceColors.get("primaryButton"),
+        stroke: am5.color(0xffa500),
         tooltip: am5.Tooltip.new(root, {
-          labelText: "Gas Make: {valueY}",
+          labelText: "Blast Volume: {valueY}",
         }),
       })
     );
@@ -185,7 +175,7 @@ export class Cob10Component implements OnInit {
         sprite: am5.Circle.new(root, {
           radius: 4,
           fill: series.get("stroke"),
-          stroke: am5.color("#fff"),
+          stroke: am5.color("#f7d600ff"),
           strokeWidth: 1,
         }),
       })
@@ -199,8 +189,9 @@ export class Cob10Component implements OnInit {
   }
 
   createPressureChart(chartData: any[]) {
-    let root = am5.Root.new("cob10pressureChart");
+    let root = am5.Root.new("bf5pressureChart");
     root.setThemes([am5themes_Animated.new(root)]);
+
     root._logo.set("forceHidden", true);
 
     // ⭐ Get CSS variable color
@@ -282,7 +273,7 @@ export class Cob10Component implements OnInit {
         yAxis,
         valueYField: "pressure",
         valueXField: "date",
-        stroke: root.interfaceColors.get("primaryButtonHover"),
+        stroke: am5.color(0x90007af6),
         tooltip: am5.Tooltip.new(root, {
           labelText: "Pressure: {valueY}",
         }),
@@ -300,7 +291,7 @@ export class Cob10Component implements OnInit {
         sprite: am5.Circle.new(root, {
           radius: 4,
           fill: series.get("stroke"),
-          stroke: am5.color("#fff"),
+          stroke: am5.color("#5a014df6"),
           strokeWidth: 1,
         }),
       })
