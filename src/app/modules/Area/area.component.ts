@@ -332,7 +332,7 @@ export class AreaComponent implements OnInit, OnDestroy {
       const value = start + (end - start) * progress;
 
       // keep decimals
-      const formattedValue = parseFloat(value.toFixed(decimals));
+      const formattedValue = parseFloat(value.toFixed(decimals));      
       callback(formattedValue);
 
       if (progress < 1) {
@@ -443,7 +443,6 @@ export class AreaComponent implements OnInit, OnDestroy {
   loadData() {
     this.sseoverview = this.sseService.getOverview().subscribe((data: any) => {
       // console.log('Result', data);
-      // console.log(this.bf5_res);
       // Animate each property
       this.animateValue(
         this.previousValues.benzol_scrubber_gasmake,
@@ -484,15 +483,18 @@ export class AreaComponent implements OnInit, OnDestroy {
     this.cob10overview = this.sseService
       .getOverview()
       .subscribe((data: any) => {
-        // console.log("Result", data);
+        console.log("Result", data);
 
         this.animateValue(
           this.previouscob10Values.FT0600F003_C,
           data.FT0600F003_C,
           800, // ms
           (val) => {
+            console.log('value in animate=', val);
+            
             if (isNaN(val)) this.overview_res.FT0600F003_C = 0;
             else this.overview_res.FT0600F003_C = val;
+            console.log(this.overview_res.FT0600F003_C);
 
             // ✅ Update gauge
             const maxGasMake = this.max_gasmake_cob11 || 60000; // fallback if API doesn't send
@@ -502,7 +504,8 @@ export class AreaComponent implements OnInit, OnDestroy {
             // this.fusionMakeCOB11.dials.dial[0].value = val;
             this.topPressureGauge.series = [percent];
 
-          }
+          },
+          2
         );
 
         this.animateValue(
