@@ -101,6 +101,88 @@ export class AreaComponent implements OnInit, OnDestroy {
   };
   
 
+  volumeGauge: Partial<ChartOptions> = {
+    series: [0],
+    chart: {
+      height: 250,
+      type: "radialBar",
+    },
+    plotOptions: {
+      radialBar: {
+        startAngle: -135,
+        endAngle: 135,
+        hollow: {
+          size: "70%",
+        },
+        dataLabels: {
+          name: {
+            show: true,
+            fontSize: "20px",
+            fontWeight: 600,
+            color: "var(--header_active)",
+            offsetY: 10,
+          },
+          value: {
+            show: false,
+          },
+        },
+      },
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        shade: "light",
+        type: "horizontal",
+        stops: [0, 100],
+      },
+    },
+    stroke: {
+      lineCap: "round",
+    },
+    labels: ["BLAST VOLUME"],
+  };
+
+  blastPressureGauge: Partial<ChartOptions> = {
+    series: [0],
+    chart: {
+      height: 250,
+      type: "radialBar",
+    },
+    plotOptions: {
+      radialBar: {
+        startAngle: -135,
+        endAngle: 135,
+        hollow: {
+          size: "70%",
+        },
+        dataLabels: {
+          name: {
+            show: true,
+            fontSize: "20px",
+            fontWeight: 600,
+            color: "var(--header_active)",
+            offsetY: 10,
+          },
+          value: {
+            show: false,
+          },
+        },
+      },
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        shade: "light",
+        type: "horizontal",
+        stops: [0, 100],
+      },
+    },
+    stroke: {
+      lineCap: "round",
+    },
+    labels: ["BLAST PRESSURE"],
+  };
+
 
   make = "C.O. GAS MAKE [Th. Nm³/hr]";
   pressure = "C.O. GAS PRESSURE [mmwc]";
@@ -537,8 +619,10 @@ export class AreaComponent implements OnInit, OnDestroy {
             // ✅ Update gauge
             const maxGasMake = this.max_gasmake_bf5 || 50000; // fallback if API doesn't send
             const percent = Math.min((val / maxGasMake) * 100, 100);
-            this.makeGauge3.series = [percent];
-            this.createBlastVolumeClock(val);
+            // this.makeGauge3.series = [percent];
+            // this.createBlastVolumeClock(val);
+            this.volumeGauge.series = [percent];
+
           }
         );
 
@@ -553,7 +637,9 @@ export class AreaComponent implements OnInit, OnDestroy {
             // ✅ Update pressure gauge
             const maxPressure = this.max_pressure_bf5 || 10;
             const percent = Math.min((val / maxPressure) * 100, 100);
-            this.pressureGauge3.series = [percent];
+            // this.pressureGauge3.series = [percent];
+            this.blastPressureGauge.series = [percent];
+
           },
           2
         );

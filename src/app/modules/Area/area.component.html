@@ -110,7 +110,6 @@
     </div>
     <!-- Gauge 5 -->
     <div class="meter-card">
-      <!-- <div class="box"> -->
       <h2 class="area_header">
         <span
           *ngFor="let letter of splitLetters(bv); let i = index"
@@ -119,22 +118,18 @@
           {{ letter }}
         </span>
       </h2>
-      <!-- </div> -->
-      <!-- <apx-chart [series]="makeGauge3.series" [chart]="makeGauge3.chart" [labels]="makeGauge3.labels" [plotOptions]="makeGauge3.plotOptions" [fill]="makeGauge3.fill" [stroke]="makeGauge3.stroke" > </apx-chart> -->
-      <fusioncharts
-        *ngIf="volumeClockChart?.dataSource"
-        width="250"
-        height="175"
-        type="angulargauge"
-        [dataSource]="volumeClockChart.dataSource"
-      ></fusioncharts>
-
-      <!-- Actual live value -->
+      <apx-chart
+        [series]="volumeGauge.series"
+        [chart]="volumeGauge.chart"
+        [labels]="volumeGauge.labels"
+        [plotOptions]="volumeGauge.plotOptions"
+        [fill]="volumeGauge.fill"
+        [stroke]="volumeGauge.stroke"
+      ></apx-chart>
       <div class="meter-value">{{ overview_res.BLAST_VOLUME }}</div>
     </div>
     <!-- Gauge 6 -->
     <div class="meter-card">
-      <!-- <div class="box"> -->
       <h2 class="area_header">
         <span
           *ngFor="let letter of splitLetters(bp); let i = index"
@@ -143,19 +138,15 @@
           {{ letter }}
         </span>
       </h2>
-      <!-- </div> -->
       <apx-chart
-        [series]="pressureGauge3.series"
-        [chart]="pressureGauge3.chart"
-        [labels]="pressureGauge3.labels"
-        [plotOptions]="pressureGauge3.plotOptions"
-        [fill]="pressureGauge3.fill"
-        [stroke]="pressureGauge3.stroke"
-      >
-      </apx-chart>
-      <div class="meter-value">
-        {{ overview_res.BLAST_PRESSURE | number : "1.2-2" }}
-      </div>
+        [series]="blastPressureGauge.series"
+        [chart]="blastPressureGauge.chart"
+        [labels]="blastPressureGauge.labels"
+        [plotOptions]="blastPressureGauge.plotOptions"
+        [fill]="blastPressureGauge.fill"
+        [stroke]="blastPressureGauge.stroke"
+      ></apx-chart>
+      <div class="meter-value">{{ overview_res.BLAST_PRESSURE | number : "1.2-2" }}</div>
     </div>
   </div>
   <!-- ============================ -->
