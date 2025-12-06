@@ -64,8 +64,8 @@ export class AreaComponent implements OnInit, OnDestroy {
         startAngle: -90,
         endAngle: 90,
         track: {
-          background: "#f0f0f0",
-          strokeWidth: "100%"
+          background: "#ffffff",
+          strokeWidth: "90%"
         },
         dataLabels: {
           name: {
@@ -104,7 +104,7 @@ export class AreaComponent implements OnInit, OnDestroy {
   volumeGauge: Partial<ChartOptions> = {
     series: [0],
     chart: {
-      height: 250,
+      height: 230,
       type: "radialBar",
     },
     plotOptions: {
@@ -114,12 +114,16 @@ export class AreaComponent implements OnInit, OnDestroy {
         hollow: {
           size: "70%",
         },
+        track: {
+          background: "#ffffff",
+          strokeWidth: "90%"
+        },
         dataLabels: {
           name: {
             show: true,
-            fontSize: "20px",
+            fontSize: "18px",
             fontWeight: 600,
-            color: "var(--header_active)",
+            color: "var(--gauge-text)", 
             offsetY: 10,
           },
           value: {
@@ -139,13 +143,13 @@ export class AreaComponent implements OnInit, OnDestroy {
     stroke: {
       lineCap: "round",
     },
-    labels: ["BLAST VOLUME"],
+    labels: ["BLAST VOL."],
   };
 
   blastPressureGauge: Partial<ChartOptions> = {
     series: [0],
     chart: {
-      height: 250,
+      height: 230,
       type: "radialBar",
     },
     plotOptions: {
@@ -155,12 +159,16 @@ export class AreaComponent implements OnInit, OnDestroy {
         hollow: {
           size: "70%",
         },
+        track: {
+          background: "#ffffff",
+          strokeWidth: "90%"
+        },
         dataLabels: {
           name: {
             show: true,
-            fontSize: "20px",
+            fontSize: "18px",
             fontWeight: 600,
-            color: "var(--header_active)",
+            color: "var(--gauge-text)", 
             offsetY: 10,
           },
           value: {
@@ -180,7 +188,7 @@ export class AreaComponent implements OnInit, OnDestroy {
     stroke: {
       lineCap: "round",
     },
-    labels: ["BLAST PRESSURE"],
+    labels: ["BLAST PRESS."],
   };
 
 
