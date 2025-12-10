@@ -5,6 +5,9 @@ import { ProjectCommonModule } from 'app/core/project-common-modules/project-com
 import { SseService } from 'app/services/sse.servece';
 import { TrendService } from 'app/services/trend.service';
 import { interval, startWith, Subject, Subscription, takeUntil } from 'rxjs';
+import * as am5 from "@amcharts/amcharts5";
+import * as am5xy from "@amcharts/amcharts5/xy";
+import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 
 @Component({
   selector: 'app-cob11',
@@ -50,6 +53,10 @@ export class Cob11Component implements OnInit {
 
   viewMode: string = 'flow';   // default selected: CO Gas Flow
   reportData: any[] = [];
+  chartSeries: any[] = [];
+chartOptions: any = {};
+loading: boolean = true;
+
   @ViewChild("matDrawer", { static: true }) matDrawer: MatDrawer;
   drawerOpened: boolean = false;
   private _unsubscribeAll: Subject<any> = new Subject();
@@ -89,7 +96,14 @@ export class Cob11Component implements OnInit {
 
     requestAnimationFrame(step);
   }
+  onViewModeChange() {
+    if (this.viewMode === 'trends') {
+      this.loading = true;
+      this.getReportData();
+    }
+  }
 
+  
   ngOnInit(): void {
     interval(60000)   // 1 minute
       .pipe(
@@ -306,6 +320,22 @@ export class Cob11Component implements OnInit {
         next: ((res: any[]) => {
           this.prepareReportTable(res);
 
+          // Prepare data for the chart
+          const chartData = res.map((d: any) => ({
+            date: new Date(d.datestamp).getTime(),
+          
+            FT0600F003_C: d.FT0600F003_C,
+            UFGasFlow: d.CO_GAS1_F + d.CO_GAS2_F,
+            PBS_BCOGF: d.PBS_BCOGF,
+            BF_COF: d.BF_COF,
+            SP_CO_GAS: d.SP_CO_GAS,
+            COG_FLOW_GMS: d.COG_FLOW_GMS,
+            COFLARESTACKFLOW: d.COFLARESTACKFLOW
+          }));
+          
+          setTimeout(() => {
+            this.prepareChart(chartData);
+          }, 50);
         }),
         error: (err) => {
           this._snackBar.open(err, "", {
@@ -366,8 +396,115 @@ export class Cob11Component implements OnInit {
     });
   }
 
+  prepareChart(chartData: any[]) {
+    let root = am5.Root.new("trend");
+    root.setThemes([am5themes_Animated.new(root)]);
+    root._logo.set("forceHidden", true);
+  
+    let axisColor = "#ffffff";
+  
+    let chart = root.container.children.push(
+      am5xy.XYChart.new(root, {
+        panX: true,
+        panY: false,
+        wheelX: "zoomX",
+        wheelY: "zoomX",
+        pinchZoomX: true,
+      })
+    );
+  
+    chart.set(
+      "scrollbarX",
+      am5.Scrollbar.new(root, { orientation: "horizontal" })
+    );
+  
+    let xAxis = chart.xAxes.push(
+      am5xy.DateAxis.new(root, {
+        baseInterval: { timeUnit: "minute", count: 1 },
+        groupData: false,
+        renderer: am5xy.AxisRendererX.new(root, {}),
+      })
+    );
+  
+    xAxis.set("dateFormats", {
+      minute: "HH:mm",
+      hour: "HH:mm",
+    });
+  
+    xAxis.set("tooltipDateFormats", {
+      minute: "HH:mm",
+      hour: "HH:mm",
+    });
+  
+    xAxis.get("renderer").set("minGridDistance", 40);
+  
+    let yAxis = chart.yAxes.push(
+      am5xy.ValueAxis.new(root, {
+        renderer: am5xy.AxisRendererY.new(root, {}),
+      })
+    );
+  
+    // Axis colors
+    xAxis.get("renderer").labels.template.setAll({
+      fill: am5.color(axisColor),
+    });
+    yAxis.get("renderer").labels.template.setAll({
+      fill: am5.color(axisColor),
+    });
+  
+    xAxis.get("renderer").grid.template.setAll({ stroke: am5.color(axisColor) });
+    yAxis.get("renderer").grid.template.setAll({ stroke: am5.color(axisColor) });
+  
+    // 🔥 SERIES CONFIG FUNCTION (to avoid repeating code)
+    const createSeries = (name: string, field: string, color: string) => {
+      let series = chart.series.push(
+        am5xy.LineSeries.new(root, {
+          name,
+          xAxis,
+          yAxis,
+          valueYField: field,
+          valueXField: "date",
+          stroke: am5.color(color),
+          tooltip: am5.Tooltip.new(root, {
+            labelText: `${name}: {valueY}`,
+          }),
+        })
+      );
+  
+      series.strokes.template.setAll({
+        strokeWidth: 3,
+      });
+  
+      series.bullets.push(() =>
+        am5.Bullet.new(root, {
+          sprite: am5.Circle.new(root, {
+            radius: 3,
+            fill: series.get("stroke"),
+            stroke: am5.color("#fff"),
+            strokeWidth: 1,
+          }),
+        })
+      );
+  
+      series.data.setAll(chartData);
+    };
+  
+    // 🔥 NOW CREATE ALL 7 SERIES
+    createSeries("FT0600F003_C", "FT0600F003_C", "#00CED1");    
+    createSeries("UF Total Gas Flow", "UFGasFlow", "#FF5733");  
+    createSeries("PBS_BCOGF", "PBS_BCOGF", "#FFC300");
+    createSeries("BF_COF", "BF_COF", "#8E44AD");
+    createSeries("SP_CO_GAS", "SP_CO_GAS", "#2ECC71");
+    createSeries("COG_FLOW_GMS", "COG_FLOW_GMS", "#3498DB");
+    createSeries("COFLARESTACKFLOW", "COFLARESTACKFLOW", "#E74C3C");
+  
+    chart.set("cursor", am5xy.XYCursor.new(root, { behavior: "none" }));
+  this.loading = false;
+  }
+  
 
 
+  
   ngOnDestroy(): void {
     // Clean up subscription to prevent memory leaks
     if (this.sseoverview) {

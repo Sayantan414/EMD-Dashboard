@@ -22,6 +22,18 @@
         <span class="custom-radio"></span>
         Report
       </label>
+
+      <label class="switch-option">
+        <input
+          type="radio"
+          name="viewMode"
+          value="trends"
+          [(ngModel)]="viewMode"
+          (change)="onViewModeChange()"
+        />
+        <span class="custom-radio"></span>
+        Trends
+      </label>
     </div>
   </div>
   <div *ngIf="viewMode === 'flow'">
@@ -403,7 +415,9 @@
       <mat-drawer-container class="flex-auto h-full" [hasBackdrop]="false">
         <!-- Drawer content -->
         <mat-drawer-content class="flex overflow-hidden h-full report-bg">
-          <div class="flex-auto w-full overflow-y-auto border-l h-full report-content">
+          <div
+            class="flex-auto w-full overflow-y-auto border-l h-full report-content"
+          >
             <div class="relative p-10 w-full border-l h-full">
               <div class="table-users w-full">
                 <table class="w-full border bg-card mt-2" cellspacing="0">
@@ -524,4 +538,28 @@
       </mat-drawer-container>
     </div>
   </div>
+
+
+  <div *ngIf="viewMode === 'trends'">
+    <div class="layout-container">
+      <div class="graph-row">
+        <div class="charts-grid">
+
+          <!-- TRENDS HEADER -->
+    
+          <div class="trend-header mt-4">TRENDS</div>
+            <!-- Loader Overlay -->
+            <div class="chart-loader" *ngIf="loading">
+              <mat-spinner color="primary" [diameter]="90"></mat-spinner>
+            </div>
+          <!-- Chart  -->
+          <div class="chart-box chart-trend">
+
+            <div id="trend" style="width: 100%; height: 80vh"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
