@@ -17,6 +17,8 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
   imports: [ProjectCommonModule],
 })
 export class Cob11Component implements OnInit {
+  private chartRoot!: am5.Root;
+
   cogasflow_res = {
     FT0600F003_C: 0,
     COGASMAKEPRESSURE: 0,
@@ -394,13 +396,27 @@ export class Cob11Component implements OnInit {
   }
 
   prepareChart(chartData: any[]) {
-    let root = am5.Root.new("trend");
-    root.setThemes([am5themes_Animated.new(root)]);
-    root._logo.set("forceHidden", true);
+    const target = document.getElementById("trend");
+    if (!target) return;
+
+    // 🔥 Dispose previous root to avoid amCharts DOM conflict
+    if (this.chartRoot) {
+      this.chartRoot.dispose();
+    }
+
+    // 🔥 Create new root
+    this.chartRoot = am5.Root.new(target);
+    this.chartRoot.setThemes([am5themes_Animated.new(this.chartRoot)]);
+    this.chartRoot._logo.set("forceHidden", true);
+
+    const root = this.chartRoot;
 
     let axisColor = "#ffffff";
 
-    let chart = root.container.children.push(
+    // --------------------------
+    // CHART BASE
+    // --------------------------
+    const chart = root.container.children.push(
       am5xy.XYChart.new(root, {
         panX: true,
         panY: false,
@@ -415,10 +431,12 @@ export class Cob11Component implements OnInit {
       am5.Scrollbar.new(root, { orientation: "horizontal" })
     );
 
-    let xAxis = chart.xAxes.push(
+    // --------------------------
+    // AXES
+    // --------------------------
+    const xAxis = chart.xAxes.push(
       am5xy.DateAxis.new(root, {
         baseInterval: { timeUnit: "minute", count: 1 },
-        groupData: false,
         renderer: am5xy.AxisRendererX.new(root, {}),
       })
     );
@@ -435,16 +453,16 @@ export class Cob11Component implements OnInit {
 
     xAxis.get("renderer").set("minGridDistance", 40);
 
-    let yAxis = chart.yAxes.push(
+    const yAxis = chart.yAxes.push(
       am5xy.ValueAxis.new(root, {
         renderer: am5xy.AxisRendererY.new(root, {}),
       })
     );
 
-    // Axis colors
     xAxis.get("renderer").labels.template.setAll({
       fill: am5.color(axisColor),
     });
+
     yAxis.get("renderer").labels.template.setAll({
       fill: am5.color(axisColor),
     });
@@ -456,7 +474,9 @@ export class Cob11Component implements OnInit {
       .get("renderer")
       .grid.template.setAll({ stroke: am5.color(axisColor) });
 
-    // 🔥 SERIES CONFIG FUNCTION (to avoid repeating code)
+    // --------------------------
+    // SERIES CREATOR
+    // --------------------------
     const createSeries = (name: string, field: string, color: string) => {
       let series = chart.series.push(
         am5xy.LineSeries.new(root, {
@@ -469,35 +489,10 @@ export class Cob11Component implements OnInit {
           tooltip: am5.Tooltip.new(root, {
             labelText: `${name}: {valueY.formatNumber('#.00')}`,
           }),
-          
         })
       );
 
-      series.strokes.template.setAll({
-        strokeWidth: 3,
-      });
-
-      // series.bullets.push(() =>
-      //   am5.Bullet.new(root, {
-      //     sprite: am5.Circle.new(root, {
-      //       radius: 4,
-      //       fill: series.get("stroke"),
-      //       stroke: am5.color("#fff"),
-      //       strokeWidth: 1,
-      //     }),
-      //   })
-      // );
-
-      // let cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
-      //   behavior: "none"
-      // }));
-
-      // cursor.lineX.set("visible", false);
-      // cursor.lineY.set("visible", false);
-
-      // // Enable snapping tooltip to closest line / bullet
-      // cursor.set("snapToSeries", chart.series.values);
-      // cursor.set("snapToSeriesBy", "closest");
+      series.strokes.template.setAll({ strokeWidth: 3 });
 
       series.bullets.push(() =>
         am5.Bullet.new(root, {
@@ -506,8 +501,6 @@ export class Cob11Component implements OnInit {
             fill: series.get("stroke"),
             stroke: am5.color("#fff"),
             strokeWidth: 1,
-            // tooltipText: `${name}: {valueY.formatNumber('#.00')}`,
-
           }),
         })
       );
@@ -515,7 +508,9 @@ export class Cob11Component implements OnInit {
       series.data.setAll(chartData);
     };
 
-    // 🔥 NOW CREATE ALL 7 SERIES
+    // --------------------------
+    // ADD SERIES
+    // --------------------------
     createSeries("BPP FLOW", "FT0600F003_C", "#00CED1");
     createSeries("U/F TOTAL FLOW", "UFGasFlow", "#FFA500");
     createSeries("PBS FLOW", "PBS_BCOGF", "#FFA500");
@@ -524,17 +519,17 @@ export class Cob11Component implements OnInit {
     createSeries("LDCP FLOW", "COG_FLOW_GMS", "#FFA500");
     createSeries("FLARE STACK FLOW", "COFLARESTACKFLOW", "#FFA500");
 
-    chart.set("cursor", am5xy.XYCursor.new(root, { behavior: "none" }));
-    let cursor = chart.get("cursor");
-
+    // --------------------------
+    // CURSOR
+    // --------------------------
+    let cursor = chart.set("cursor", am5xy.XYCursor.new(root, { behavior: "none" }));
     cursor.lineX.set("visible", false);
     cursor.lineY.set("visible", false);
-
-    // Enable tooltip on bullets
     cursor.set("snapToSeries", chart.series.values);
 
     this.loading = false;
   }
+
 
   ngOnDestroy(): void {
     // Clean up subscription to prevent memory leaks
@@ -544,8 +539,13 @@ export class Cob11Component implements OnInit {
     if (this.ssebooster) {
       this.ssebooster.unsubscribe();
     }
+    if (this.chartRoot) {
+      this.chartRoot.dispose();
+    }
 
     this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
   }
+
+
 }
