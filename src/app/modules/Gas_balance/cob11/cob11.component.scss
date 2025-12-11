@@ -8,7 +8,6 @@
   width: 100%;
 }
 
-
 /* CO Gas Flow Section */
 .layout-container {
   display: flex;
@@ -48,9 +47,9 @@
   );
 }
 
-.td{
+.td {
   background: var(--backg-clr);
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   // border: 1px solid #fff;
 }
 
@@ -566,12 +565,9 @@
   background: var(--backg-clr);
   position: sticky;
   top: 0;
-  z-index: 50;       /* make sure it stays on top */
+  z-index: 50; /* make sure it stays on top */
   // padding: 10px 0;
 }
-
-
-
 
 .switch-option input[type="radio"] {
   display: none;
@@ -581,7 +577,7 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  border: 2px solid var(--radio-accent);   /* ✅ dynamic border */
+  border: 2px solid var(--radio-accent); /* ✅ dynamic border */
   margin-right: 8px;
   display: inline-block;
   position: relative;
@@ -598,16 +594,6 @@
   left: 50%; /* Adjusted to center horizontally */
   transform: translate(-50%, -50%); /* Center the inner circle */
 }
-
-
-
-
-
-
-
-
-
-
 
 .mode-switch {
   display: flex; /* make labels align horizontally */
@@ -633,7 +619,6 @@
   cursor: pointer;
 }
 
-
 // .switch-option input:checked ~ .custom-radio {
 //   border-color: var(--radio-accent);
 //   box-shadow: 0 0 10px var(--radio-accent);
@@ -642,9 +627,6 @@
 // .switch-option input:checked ~ .custom-radio::after {
 //   background: var(--radio-accent);
 // }
-
-
-
 
 /* Report Section */
 // .report-content {
@@ -691,8 +673,6 @@
   );
 }
 
-
-
 // .report-content {
 //   // display: flex;
 //   // justify-content: center;
@@ -712,7 +692,6 @@
 //   border: 1px solid rgba(255, 255, 255, 0.3);
 //   box-shadow: 0 10px 35px rgba(0,0,0,0.25);
 // }
-
 
 // .report-table {
 //   width: 100%;
@@ -742,8 +721,6 @@
 //   background: rgba(0, 150, 255, 0.1);
 // }
 
-
-
 .graph-row {
   display: flex;
   // flex-direction: column !important;
@@ -751,12 +728,11 @@
   width: 100%;
 } /* Force main dashboard layout into vertical stacking */
 
-
 /* 2×2 grid layout for charts */
 .charts-grid {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr; 
+  grid-template-columns: 1fr;
   // gap: 15px;
   // margin-top: 15px;
 }
@@ -765,8 +741,8 @@
 .trend-header {
   grid-column: 1 / span 2;
   width: 10%;
-    /* ⭐ Center header in grid */
-    justify-self: center;
+  /* ⭐ Center header in grid */
+  justify-self: center;
   text-align: center;
   padding: 4px 6px;
   font-weight: 700;
@@ -795,8 +771,6 @@
   }
 }
 
-
-
 .chart-box {
   width: 97%;
   margin: 2%;
@@ -804,7 +778,7 @@
   padding: 20px;
   border-radius: 12px;
   border: 1px solid var(--color-border-medium);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   position: relative;
 }
 
@@ -824,13 +798,6 @@
   z-index: 10;
 }
 
-
 .chart-trend {
-  background: linear-gradient(135deg, #C33764,#1D2671);
-
+  background: linear-gradient(135deg, #000428, #004e92);
 }
-
-
-
-
-
