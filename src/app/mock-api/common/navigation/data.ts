@@ -36,17 +36,41 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         link: '/gasbalance/cbm',
         classes: { wrapper: 'nav-item-cog' }
       },
+      {
+        id: 'gasbalance.bf',
+        title: 'BF',
+        type: 'basic',
+        link: '/gasbalance/bf',
+        classes: { wrapper: 'nav-item-cog' }
+      },
+      {
+        id: 'gasbalance.bofg',
+        title: 'BOFG',
+        type: 'basic',
+        link: '/gasbalance/bofg',
+        classes: { wrapper: 'nav-item-cog' }
+      },
+    ],
+  },
+  {
+    id: 'gasutility',
+    title: 'Gas_Utility',
+    type: 'collapsable',
+    // icon: 'heroicons_outline:beaker',
+    children: [
+      {
+        id: 'gasutility.gas_holder',
+        title: 'Gas Holder',
+        type: 'basic',
+        link: '/gasutility/gas_holder',
+        classes: { wrapper: 'nav-item-cog' }
+      },
       // {
-      //   id: 'gasbalance.bf',
-      //   title: 'BF',
+      //   id: 'gasbalance.cbm',
+      //   title: 'CBM',
       //   type: 'basic',
-      //   link: '/gasbalance/bf',
-      // },
-      // {
-      //   id: 'gasbalance.sinter',
-      //   title: 'Sinter',
-      //   type: 'basic',
-      //   link: '/gasbalance/sinter',
+      //   link: '/gasbalance/cbm',
+      //   classes: { wrapper: 'nav-item-cog' }
       // },
     ],
   },

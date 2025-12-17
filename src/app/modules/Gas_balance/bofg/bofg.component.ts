@@ -9,65 +9,7 @@ import { ProjectCommonModule } from 'app/core/project-common-modules/project-com
   imports: [ProjectCommonModule],
 })
 export class BofgComponent implements OnInit {
-  // nodes: any = [
-  //   {
-  //     name: 'BOFG',
-  //     cssClass: 'ngx-org-head',
-  //     title: '',
-  //     childs: [
-  //       {
-  //         name: 'EXPORT VOL',
-  //         cssClass: 'ngx-org-body_green',
-  //         title: '',
-  //         childs: [
-  //           {
-  //             name: 'PBS#2',
-  //             cssClass: 'ngx-org-body_orange',
-  //             title: '',
-  //           },
-  //           {
-  //             name: 'MILLS',
-  //             cssClass: 'ngx-org-body_orange',
-  //             title: '',
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   },
-  // ];
 
-
-
-  // selectedNode: any = null;
-  // nodes: any = [
-  //   {
-  //     name: 'BOFG',
-  //     cssClass: 'ngx-org-head',
-
-  //     childs: [
-  //       {
-  //         name: 'EXPORT VOL',
-  //         cssClass: 'ngx-org-body_orange',
-
-  //         childs: [
-  //           {
-  //             name: 'PBS#2',
-  //             cssClass: 'ngx-org-body_orange',
-  //           },
-  //           {
-  //             name: 'MILLS',
-  //             cssClass: 'ngx-org-body_orange',
-  //           }
-  //         ]
-  //       },
-  //     ]
-  //   }
-  // ];
-
-  // onNodeClick(event: any) {
-  //   this.selectedNode = event;
-  //   console.log('Selected Node:', event);
-  // }
   constructor() { }
 
   ngOnInit(): void {

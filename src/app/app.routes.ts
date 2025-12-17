@@ -86,14 +86,14 @@ export const appRoutes: Route[] = [
             path: 'cob11',
             loadChildren: () => import('app/modules/Gas_balance/cob11/cob11.routes'),
           },
-          // {
-          //   path: 'bf',
-          //   loadChildren: () => import('app/modules/Gas_balance/bf/bf.routes'),
-          // },
-          // {
-          //   path: 'bofg',
-          //   loadChildren: () => import('app/modules/Gas_balance/bofg/bofg.routes'),
-          // },
+          {
+            path: 'bf',
+            loadChildren: () => import('app/modules/Gas_balance/bf/bf.routes'),
+          },
+          {
+            path: 'bofg',
+            loadChildren: () => import('app/modules/Gas_balance/bofg/bofg.routes'),
+          },
           // {
           //   path: 'mills',
           //   loadChildren: () => import('app/modules/Gas_balance/mills/mills.routes'),
@@ -106,6 +106,16 @@ export const appRoutes: Route[] = [
           //   path: 'agbs',
           //   loadChildren: () => import('app/modules/Gas_balance/agbs/agbs.routes'),
           // },
+        ],
+      },
+      {
+        path: 'gasutility',
+        children: [
+          {
+            path: 'gas_holder',
+            loadChildren: () => import('app/modules/gas-utility/gas-holder/gas-holder.routes'),
+          },
+
         ],
       },
 
