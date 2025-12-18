@@ -44,9 +44,15 @@ export class CbmComponent implements OnInit {
 
   private sseoverview?: Subscription;
   private ssebooster?: Subscription;
+  viewMode: string = "cbm"; // default selected: CBM
 
   constructor(private sseService: SseService) { }
 
+  onViewModeChange() {
+    if (this.viewMode === "trends") {
+
+    }
+  }
   splitLetters(text: string): string[] {
     return text.split('').map((c) => (c === ' ' ? '\u00A0' : c));
   }

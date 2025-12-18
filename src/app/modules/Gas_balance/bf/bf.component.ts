@@ -10,9 +10,15 @@ import { ProjectCommonModule } from 'app/core/project-common-modules/project-com
   imports: [ProjectCommonModule],
 })
 export class BfComponent implements OnInit {
+  viewMode: string = "bf5"; // default selected: bf#5
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  onViewModeChange() {
+    if (this.viewMode === "trends") {
+
+    }
+  }
 }

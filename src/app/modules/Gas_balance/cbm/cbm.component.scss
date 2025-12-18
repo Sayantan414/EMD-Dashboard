@@ -1,10 +1,8 @@
-// :host {
-//   display: block;
-//   // overflow-x: auto;
-//   overflow-y: hidden;
-// }
+.mainDiv {
+  width: 100%;
+}
 
-/* Left detail panel */
+/* CO Gas Flow Section */
 .layout-container {
   display: flex;
   align-items: flex-start;
@@ -14,11 +12,10 @@
   // width: max-content;
   width: 100%;
   overflow-x: auto;
-  height: calc(100vh - 130px);
+  height: calc(100vh - 180px);
   // height: calc(100vh - 100px);
   overflow-y: auto;
 }
-
 
 /* Glass morphism scrollbar */
 .layout-container::-webkit-scrollbar {
@@ -44,6 +41,12 @@
   );
 }
 
+.td {
+  background: var(--backg-clr);
+  font-family: "Courier New", monospace;
+  // border: 1px solid #fff;
+}
+
 .detail-view {
   width: 0%;
   min-width: 278px;
@@ -65,8 +68,7 @@
 .detail-view:hover {
   background: rgba(255, 255, 255, 0.4);
   // box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
-  box-shadow: 0 12px 28px  var(--header-text);
-
+  box-shadow: 0 12px 28px var(--header-text);
 }
 
 .detail-view h3 {
@@ -79,9 +81,7 @@
 
 .gasflow-container {
   text-align: center;
-  // min-height: 160vh;
-  min-height: 125vh;
-  // padding: 20px;
+  min-height: auto;
 
   .title {
     font-size: 28px;
@@ -179,18 +179,6 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
-    // .header {
-    //   background: url('/assets/blue-strip.jpg');
-    //   background-size: cover;
-    //   border-bottom: 1px solid #ccc;
-    //   color: var(--cogheader-text);
-    //   // color: #0d47a1;
-    //   font-weight: 600;
-    //   font-weight: bold;
-    //   font-size: 20px;
-    //   padding: 3px 0;
-    //   // text-align: center;
-    // }
 
     .header {
       display: flex;
@@ -332,7 +320,6 @@
   .gen {
     background: var(--box-bg-gen);
     height: 150px;
-
   }
 
   .top_header {
@@ -402,7 +389,7 @@
     }
   }
 
-  .branch.UfTotalFlow {
+  .branch.totalFlow {
     width: 600px;
     /* same as your normal branch width */
     position: relative;
@@ -451,7 +438,6 @@
       /* left side */
     }
   }
-
 
   .branch.single-left {
     width: 600px;
@@ -554,3 +540,65 @@
     }
   }
 }
+
+.radio-buttons-container {
+  background: var(--backg-clr);
+  position: sticky;
+  top: 0;
+  z-index: 50; /* make sure it stays on top */
+  // padding: 10px 0;
+}
+
+.switch-option input[type="radio"] {
+  display: none;
+}
+
+.custom-radio {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--radio-accent); /* ✅ dynamic border */
+  margin-right: 8px;
+  display: inline-block;
+  position: relative;
+}
+
+.switch-option input[type="radio"]:checked + .custom-radio::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: var(--radio-accent); /* ✅ dynamic fill */
+  border-radius: 50%;
+  position: absolute;
+  top: 50%; /* Adjusted to center vertically */
+  left: 50%; /* Adjusted to center horizontally */
+  transform: translate(-50%, -50%); /* Center the inner circle */
+}
+
+.mode-switch {
+  display: flex; /* make labels align horizontally */
+  justify-content: center; /* center them horizontally */
+  align-items: center; /* vertically center the text */
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8px 16px;
+  border-radius: 12px;
+  margin-bottom: 2px;
+  gap: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.switch-option {
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--header-text);
+  transition: color 0.3s ease;
+}
+
+.switch-option input {
+  cursor: pointer;
+}
+
+
+
+

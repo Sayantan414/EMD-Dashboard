@@ -9,7 +9,7 @@ import { ProjectCommonModule } from 'app/core/project-common-modules/project-com
   imports: [ProjectCommonModule],
 })
 export class BofgComponent implements OnInit {
-  viewMode: string = "flow"; // default selected: CO Gas Flow
+  viewMode: string = "bofg"; // default selected: bofg
 
   constructor() { }
 
