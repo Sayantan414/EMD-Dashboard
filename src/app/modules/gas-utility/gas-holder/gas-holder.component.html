@@ -1,1 +1,175 @@
-<p>gas-holder works!</p>
+<div class="mainDiv">
+  <div class="radio-buttons-container">
+    <div class="mode-switch">
+      <label class="switch-option">
+        <input
+          type="radio"
+          name="viewMode"
+          value="report"
+          [(ngModel)]="viewMode"
+        />
+        <span class="custom-radio"></span>
+        Report
+      </label>
+
+      <label class="switch-option">
+        <input
+          type="radio"
+          name="viewMode"
+          value="trends"
+          [(ngModel)]="viewMode"
+          (change)="onViewModeChange()"
+        />
+        <span class="custom-radio"></span>
+        Trends
+      </label>
+    </div>
+  </div>
+  <div *ngIf="viewMode === 'report'">
+    <div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+      <!-- report-wrapper -->
+
+      <mat-drawer-container class="flex-auto h-full" [hasBackdrop]="false">
+        <!-- Drawer content -->
+        <mat-drawer-content class="flex overflow-hidden h-full report-bg">
+          <div
+            class="flex-auto w-full overflow-y-auto border-l h-full report-content"
+          >
+            <div class="relative p-10 w-full border-l h-full">
+              <div class="table-users w-full">
+                <table class="w-full border bg-card mt-2" cellspacing="0">
+                  <thead class="sticky top-10 z-10">
+                    <!-- HEADER ROW 1 -->
+                    <tr>
+                      <th rowspan="2" class="text-center p-3">Sl. No.</th>
+                      <th rowspan="2" class="text-center p-3">Date</th>
+                      <th rowspan="2" class="text-center p-3">Time</th>
+
+                      <th rowspan="2" class="text-center p-3">
+                        Gas Holder Level
+                      </th>
+                      <th rowspan="2" class="text-center p-3">
+                        Gas Holder Pressure
+                      </th>
+                      <th rowspan="2" class="text-center p-3">
+                        Gas Holder Temperature
+                      </th>
+
+                      <th rowspan="2" class="text-center p-3">
+                        Exported Gas PBS
+                      </th>
+                      <th rowspan="2" class="text-center p-3">
+                        Exported Gas Mills
+                      </th>
+                      <th class="text-center p-3" rowspan="2">
+                        Totalizer LD Gas (Mills + PBS)
+                      </th>
+                      <th class="text-center p-3" rowspan="2">
+                        Totalizer LD Gas Mills
+                      </th>
+                      <th class="text-center p-3" rowspan="2">
+                        Totalizer LD Gas PBS
+                      </th>
+
+                      <!-- GROUPED HEADERS -->
+                      <th colspan="3" class="text-center p-3">
+                        LD Gas (Mills + PBS) Consumption
+                      </th>
+                      <th colspan="3" class="text-center p-3">
+                        LD Gas Mills Consumption
+                      </th>
+                      <th colspan="3" class="text-center p-3">
+                        LD Gas PBS Consumption
+                      </th>
+                    </tr>
+
+                    <!-- HEADER ROW 2 (SUB COLUMNS) -->
+                    <tr>
+                      <th class="text-center p-2">A</th>
+                      <th class="text-center p-2">B</th>
+                      <th class="text-center p-2">C</th>
+
+                      <th class="text-center p-2">A</th>
+                      <th class="text-center p-2">B</th>
+                      <th class="text-center p-2">C</th>
+
+                      <th class="text-center p-2">A</th>
+                      <th class="text-center p-2">B</th>
+                      <th class="text-center p-2">C</th>
+                    </tr>
+                  </thead>
+
+                  <!-- BODY -->
+                  <tbody>
+                    <tr
+                      *ngFor="let row of reportData; let rindex = index"
+                      class="border hover:bg-blue-200"
+                    >
+                      <td class="text-center p-3">{{ rindex + 1 }}</td>
+                      <td class="text-center p-3">{{ row.date }}</td>
+                      <td class="text-center p-3">{{ row.time }}</td>
+
+                      <td class="text-center p-3">{{ row.GASHOLDERLVL }}</td>
+                      <td class="text-center p-3">{{ row.GASHOLDERPRES }}</td>
+                      <td class="text-center p-3">{{ row.GASHOLDERTEMP }}</td>
+
+                      <td class="text-center p-3">{{ row.EXPORTEDGAS }}</td>
+                      <td class="text-center p-3">{{ row.GAS_FLOW_mills }}</td>
+
+                      <td class="text-center p-3">{{ row.PBS_totaliser }}</td>
+                      <td class="text-center p-3">{{ row.Mills_totaliser }}</td>
+                      <td class="text-center p-3">
+                        {{
+                          (row.PBS_totaliser - row.Mills_totaliser).toFixed(2)
+                        }}
+                      </td>
+
+                      <!-- PBS -->
+                      <td class="text-center p-3">{{ row.a_pbs_totaliser }}</td>
+                      <td class="text-center p-3">{{ row.b_pbs_totaliser }}</td>
+                      <td class="text-center p-3">{{ row.c_pbs_totaliser }}</td>
+
+                      <!-- Mills -->
+                      <td class="text-center p-3">
+                        {{ row.a_mills_totaliser }}
+                      </td>
+                      <td class="text-center p-3">
+                        {{ row.b_mills_totaliser }}
+                      </td>
+                      <td class="text-center p-3">
+                        {{ row.c_mills_totaliser }}
+                      </td>
+
+                      <!-- Shift -->
+                      <td class="text-center p-3">
+                        {{
+                          (row.a_pbs_totaliser - row.a_mills_totaliser).toFixed(
+                            2
+                          )
+                        }}
+                      </td>
+                      <td class="text-center p-3">
+                        {{
+                          (row.b_pbs_totaliser - row.b_mills_totaliser).toFixed(
+                            2
+                          )
+                        }}
+                      </td>
+                      <td class="text-center p-3">
+                        {{
+                          (row.c_pbs_totaliser - row.c_mills_totaliser).toFixed(
+                            2
+                          )
+                        }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </mat-drawer-content>
+      </mat-drawer-container>
+    </div>
+  </div>
+</div>
