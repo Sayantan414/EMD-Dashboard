@@ -1,1 +1,162 @@
-<p>Bofg works!</p>
+<!-- <p>Bofg works!</p> -->
+<div class="mainDiv">
+    <div class="radio-buttons-container">
+      <div class="mode-switch">
+        <label class="switch-option">
+          <input
+            type="radio"
+            name="viewMode"
+            value="flow"
+            [(ngModel)]="viewMode"
+          />
+          <span class="custom-radio"></span>
+         BOFG
+        </label>
+  
+        <label class="switch-option">
+          <input
+            type="radio"
+            name="viewMode"
+            value="report"
+            [(ngModel)]="viewMode"
+          />
+          <span class="custom-radio"></span>
+          Report
+        </label>
+  
+        <label class="switch-option">
+          <input
+            type="radio"
+            name="viewMode"
+            value="trends"
+            [(ngModel)]="viewMode"
+            (change)="onViewModeChange()"
+          />
+          <span class="custom-radio"></span>
+          Trends
+        </label>
+      </div>
+    </div>
+    <div *ngIf="viewMode === 'flow'">
+      <div class="layout-container">
+        <div class="detail-view">
+          <h3 class="animated-underline">BOFG</h3>
+          <!-- <div class="detail-content"> -->
+          <!-- <p>
+          Carbon monoxide (CO) is a colorless, odorless, and tasteless gas
+          generated during the incomplete combustion of carbon-based fuels. In
+          steel plants, CO serves two contrasting roles. On one hand, it is an
+          important process gas used for energy generation and reduction
+          reactions. On the other, it is a significant safety hazard that requires
+          continuous monitoring and strict control measures. The gas has a
+          calorific value of approximately 3,014 kcal per normal cubic meter (Nm³)
+          or 2,411 kcal per kilogram (kg). Although its energy content is lower
+          than that of natural gas or hydrogen, CO remains a valuable industrial
+          fuel due to its availability within integrated steelmaking processes.
+        </p> -->
+          <!-- </div> -->
+        </div>
+  
+
+  
+        <div class="gasflow-container m-10 ml-50">
+          <h2 class="title animated-underline">BOFG</h2>
+  
+          <div class="tree">
+            <!-- Continuous main vertical line -->
+            <div class="main-line"></div>
+  
+            <!-- Top Node -->
+            <div class="node generation gen">
+              <div class="top_header">BOFG</div>
+              <div class="sub-title red">Generation</div>
+              <div class="labels unique">
+                <span>Flow</span><span>Pressure</span>
+              </div>
+              <div class="values unique">
+                <div>
+                  <div class="value">xxxx</div>
+                  <div class="unit">Nm³/hr</div>
+                </div>
+                <div>
+                  <div class="value">xxxx</div>
+                  <div class="unit">mmwc</div>
+                </div>
+              </div>
+            </div>
+  
+            <!-- LEVEL 1 -->
+            <div class="branch exportVolume" style="margin-top: 2%">
+              <div class="node consumption left flow-box">
+                <div class="header">EXPORT VOLUME</div>
+                <div class="sub-title green">Consumption</div>
+                <div class="labels"><span>Total Flow</span></div>
+                <div class="values">
+                  <div>
+                    <div class="value">xxxx</div>
+                    <div class="unit">Nm³/hr</div>
+                  </div>
+                </div>
+                <div class="labels"><span>N1</span><span>N2</span></div>
+                <div class="values">
+                  <div>
+                    <div class="value">xxxx</div>
+                    <div class="unit">Nm³/hr</div>
+                  </div>
+                  <div>
+                    <div class="value">xxxx</div>
+                    <div class="unit">mmwc</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Example: Single right-side node -->
+            <div class="branch single-right">
+              <div class="node consumption right flow-box">
+                <div class="header">MILLS</div>
+                <div class="sub-title green">Consumption</div>
+                <div class="labels unique">
+                  <span>Flow</span><span>Pressure</span>
+                </div>
+                <div class="values">
+                  <div>
+                    <div class="value">xxxx</div>
+                    <div class="unit">Nm³/hr</div>
+                  </div>
+                  <div>
+                    <div class="value">
+                      xxxx
+                    </div>
+                    <div class="unit">mmwc</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <!-- LEVEL 1 -->
+            <div class="branch single-left">
+          <div class="node consumption left flow-box">
+            <div class="header">PBS#2</div>
+            <div class="sub-title green">Consumption</div>
+            <div class="labels unique">
+              <span>Flow</span><span>Pressure</span>
+            </div>
+            <div class="values">
+              <div>
+                <div class="value">xxxx</div>
+                <div class="unit">Nm³/hr</div>
+              </div>
+              <div>
+                <div class="value">xxxx</div>
+                <div class="unit">mmwc</div>
+              </div>
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

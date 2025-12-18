@@ -1,579 +1,605 @@
-// latest 1
-// .container {
-//     display: flex;
-//     width: 100%;
-//     height: 100vh;
-//     padding: 20px;
-//     box-sizing: border-box;
-//     gap: 20px;
-//     /* Add space between detail view and chart */
-// }
-
-// .detail-view {
-//     width: 25%;
-//     min-width: 280px;
-//     display: flex;
-//     justify-content: center;
-//     align-items: flex-start;
-//     padding: 10px;
-// }
-
-// .chart-container {
-//     flex: 1;
-//     display: flex;
-//     justify-content: center;
-//     align-items: flex-start;
-//     overflow: auto;
-//     position: relative;
-// }
-
-// .tree {
-//     display: flex;
-//     justify-content: center;
-//     align-items: flex-start;
-//     transform: scale(1.2);
-//     transform-origin: top center;
-//     margin: 0 auto;
-//     /* Center the tree horizontally */
-// }
-
-// /* Center the entire org chart wrapper */
-// :host ::ng-deep .ngx-org-chart-wrapper {
-//     display: flex;
-//     justify-content: center !important;
-//     width: 100% !important;
-// }
-
-// /* Center the chart tree */
-// :host ::ng-deep .org-chart-tree {
-//     display: flex;
-//     justify-content: center !important;
-//     margin: 0 auto !important;
-// }
-
-// :host ::ng-deep .ngx-org-head,
-// :host ::ng-deep .ngx-org-body_green,
-// :host ::ng-deep .ngx-org-body_orange {
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     text-align: center;
-//     font-size: 10px;
-//     line-height: 1.2;
-//     min-height: 40px;
-//     border-radius: 6px;
-//     font-weight: 600;
-//     transition: all 0.3s ease;
-//     cursor: pointer;
-//     padding: 8px 12px;
-// }
-
-// :host ::ng-deep .ngx-org-head {
-//     border: 2px solid var(--border-head);
-//     background: var(--bg-head);
-//     color: #212121;
-//     width: 140px;
-//     font-size: 12px;
-//     font-weight: bold;
-// }
-
-// :host ::ng-deep .ngx-org-body_green {
-//     color: var(--tree-text);
-//     background: var(--bg-ldcp);
-//     border: 2px solid var(--border-ldcp);
-//     border-radius: 4px;
-//     transition: all 0.3s ease;
-//     width: 120px;
-// }
-
-// :host ::ng-deep .ngx-org-body_orange {
-//     color: var(--tree-text);
-//     background: var(--bg-pbs);
-//     border: 2px solid var(--border-pbs);
-//     border-radius: 4px;
-//     transition: all 0.3s ease;
-//     width: 130px;
-// }
-
-// :host ::ng-deep .ngx-org-body_green:hover {
-//     background: var(--bg-ldcp-hover);
-//     border: 2px solid var(--border-ldcp-hover);
-//     transform: translateY(-2px);
-//     box-shadow: 0 4px 12px rgba(169, 219, 52, 0.3);
-// }
-
-// :host ::ng-deep .ngx-org-body_orange:hover {
-//     background: var(--bg-pbs-hover);
-//     border: 2px solid var(--border-pbs-hover);
-//     transform: translateY(-2px);
-//     box-shadow: 0 4px 12px rgba(219, 133, 52, 0.3);
-// }
-
-// .detail-card {
-//     width: 100%;
-//     background: rgba(255, 255, 255, 0.25);
-//     border-radius: 12px;
-//     padding: 20px 18px;
-//     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-//     border: 1px solid rgba(255, 255, 255, 0.4);
-//     backdrop-filter: blur(10px);
-//     color: #002b4d;
-//     font-family: 'Open Sans', sans-serif;
-//     transition: all 0.3s ease;
-// }
-
-// .detail-card:hover {
-//     background: rgba(255, 255, 255, 0.35);
-//     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-//     transform: translateY(-2px);
-// }
-
-// .detail-card h3 {
-//     text-align: center;
-//     font-weight: 700;
-//     color: #002b4d;
-//     margin-bottom: 12px;
-// }
-
-// .detail-card p {
-//     text-align: justify;
-//     font-size: 15px;
-//     line-height: 1.5;
-//     color: #003366;
-// }
-
-// /* Host styles */
-// :host {
-//     display: block;
-//     width: 100%;
-//     height: 100vh;
-//     padding: 20px;
-//     box-sizing: border-box;
-// }
-
-
-
-
-// latest 2
-// .container {
-//     // display: flex;
-//     // flex-direction: row;
-//     // height: calc(100vh - 84px);
-//     // padding: 10px;
-//     // box-sizing: border-box;
-//     // overflow: hidden;
-//     /* prevents scroll */
-
-//     display: flex;
-//     width: 100%;
-//     height: 100vh;
-//     padding: 20px;
-//     box-sizing: border-box;
-//     gap: 10%;
-// }
-
-
-
-
-// /* Right tree area */
-// .tree {
-//     flex: 1;
-//     display: flex;
-//     justify-content: center;
-//     align-items: flex-start;
-//     padding-top: 20px;
-//     overflow: hidden;
-//     transform: scale(1);
-//     /* ensures no scrollbar */
-// }
-
-// /* Make the org chart responsive */
-// ::ng-deep ngx-org-chart {
-//     transform: scale(0.9);
-//     /* scale slightly to fit in viewport */
-//     transform-origin: top center;
-//     width: 100%;
-// }
-
-// @media (max-width: 1500px) {
-//     ::ng-deep ngx-org-chart {
-//         transform: scale(0.8);
-//     }
-// }
-
-// @media (max-width: 1200px) {
-//     ::ng-deep ngx-org-chart {
-//         transform: scale(0.7);
-//     }
-// }
-
-
-// ::ng-deep .line-long .ngx-org-node::before {
-//     height: 100px !important;
-// }
-
-
-
-// /* In your component's CSS file */
-// :host ::ng-deep .ngx-org-head {
-//     background: var(--bg-head);
-//     border: 2px solid var(--border-head);
-//     display: flex;
-//     justify-content: center;
-//     color: var(--tree-text);
-//     padding: 15px;
-//     width: 100px;
-// }
-
-
-// :host ::ng-deep .ngx-org-body_green {
-//     padding: 10px;
-//     color: var(--tree-text);
-//     background: var(--bg-ldcp);
-//     border: 2px solid var(--border-ldcp);
-//     border-radius: 4px;
-//     transition: all 0.3s ease;
-// }
-
-// :host ::ng-deep .ngx-org-body_green:hover {
-//     background: var(--bg-ldcp-hover);
-//     border: 2px solid var(--border-ldcp-hover);
-//     transform: translateY(-2px);
-//     box-shadow: 0 4px 12px rgba(169, 219, 52, 0.3);
-// }
-
-// :host ::ng-deep .ngx-org-body_orange {
-//     padding: 10px;
-//     color: var(--tree-text);
-//     background: var(--bg-pbs);
-//     border: 2px solid var(--border-pbs);
-//     border-radius: 4px;
-//     transition: all 0.3s ease;
-// }
-
-// :host ::ng-deep .ngx-org-body_orange:hover {
-//     background: var(--bg-pbs-hover);
-//     border: 2px solid var(--border-pbs-hover);
-//     transform: translateY(-2px);
-//     box-shadow: 0 4px 12px rgba(219, 133, 52, 0.3);
-// }
-
-
-// :host ::ng-deep .ngx-org-body_redorange {
-//     color: var(--tree-text);
-//     background: var(--bg-sp);
-//     border: 2px solid var(--border-sp);
-//     border-radius: 4px;
-//     transition: all 0.3s ease;
-// }
-
-// :host ::ng-deep .ngx-org-body_redorange:hover {
-//     background: var(--bg-sp-hover);
-//     border: 2px solid var(--border-sp-hover);
-//     transform: translateY(-2px);
-//     box-shadow: 0 4px 12px rgba(219, 77, 52, 0.3);
-// }
-
-// .detail-card {
-//     width: 80%;
-//     background: rgba(255, 255, 255, 0.25);
-//     border-radius: 12px;
-//     padding: 20px 18px;
-//     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-//     border: 1px solid rgba(255, 255, 255, 0.4);
-//     backdrop-filter: blur(10px);
-//     // color: #002b4d;
-//     color: var(--text);
-//     font-family: 'Open Sans', sans-serif;
-//     transition: all 0.3s ease;
-// }
-
-// .detail-card:hover {
-//     background: rgba(255, 255, 255, 0.35);
-//     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-//     transform: translateY(-2px);
-// }
-
-// .detail-card h3 {
-//     text-align: center;
-//     font-weight: 700;
-//     // color: #002b4d;
-//     color: var(--text);
-//     margin-bottom: 12px;
-// }
-
-// .detail-card p {
-//     text-align: justify;
-//     font-size: 15px;
-//     line-height: 1.5;
-//     // color: #003366;
-//     color: var(--text);
-// }
-
-
-
-// .bofg-container {
-//     text-align: center;
-//     // background-color: #e6e6e6;
-//     padding: 20px;
-//     font-family: Arial, sans-serif;
-
-//     .title {
-//         font-weight: 600;
-//         font-size: 30px;
-//         color: #8b0035;
-//         margin-bottom: 15px;
-//     }
-
-//     .bofg-box {
-//         background: linear-gradient(180deg, #80deea, #e0f7fa);
-//         display: inline-block;
-//         width: 15%;
-//         height: 200px;
-//         // background: linear-gradient(180deg, #d8e1ef 0%, #f7f8fc 100%);
-//         border: 1px solid #9ea9b7;
-//         border-radius: 5px;
-//         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-//         padding: 6px 10px;
-//         text-align: center;
-
-//         .header {
-//             display: flex;
-//             justify-content: space-between;
-//             font-weight: bold;
-//             color: #002b5c;
-//             font-size: 20px;
-//             border-bottom: 1px solid #ccc;
-//             padding-bottom: 2px;
-//             margin-bottom: 6px;
-
-//             .sub-title {
-//                 color: #b30000;
-//                 font-weight: 600;
-//             }
-//         }
-
-//         .labels {
-//             display: flex;
-//             justify-content: space-around;
-//             font-size: 12px;
-//             font-weight: bold;
-//             color: #b30000;
-//             margin-bottom: 4px;
-//         }
-
-//         .values {
-//             display: flex;
-//             justify-content: space-around;
-//             align-items: center;
-//             margin-top: 10px;
-
-//             .value-box {
-//                 display: flex;
-//                 flex-direction: column;
-//                 align-items: center;
-//             }
-
-//             .value {
-//                 background-color: #fff;
-//                 border: 1px solid #ccc;
-//                 border-radius: 5px;
-//                 padding: 8px 10px;
-//                 width: 90px;
-//                 height: 45px;
-//                 display: flex;
-//                 align-items: center;
-//                 justify-content: center;
-//                 font-size: 20px; // ⬅️ bigger number text
-//                 font-weight: bold;
-//                 color: #000;
-//                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-//             }
-
-//             .flow {
-//                 background-color: #ffffff;
-//             }
-
-//             .pressure {
-//                 background-color: #ffffff;
-//             }
-
-//             .unit-text {
-//                 margin-top: 4px;
-//                 font-size: 13px; // ⬅️ unit text size
-//                 font-weight: 600;
-//                 color: #333;
-//             }
-//         }
-
-//     }
-// }
-
-
-
-
-.bofg-container {
+.mainDiv {
+    width: 100%;
+  }
+  
+  /* CO Gas Flow Section */
+  .layout-container {
+    display: flex;
+    align-items: flex-start;
+    // gap: 50px;
+    // padding: 2px;
+    background: var(--backg-clr);
+    // width: max-content;
+    width: 100%;
+    overflow-x: auto;
+    height: calc(100vh - 180px);
+    // height: calc(100vh - 100px);
+    overflow-y: auto;
+  }
+  
+  /* Glass morphism scrollbar */
+  .layout-container::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .layout-container::-webkit-scrollbar-track {
+    background: rgba(10, 31, 31, 0.8);
+    border-radius: 3px;
+  }
+  
+  .layout-container::-webkit-scrollbar-thumb {
+    background: var(--gradient-accent);
+    border-radius: 3px;
+    border: 1px solid var(--color-border-primary);
+  }
+  
+  .layout-container::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+      to bottom,
+      var(--color-green-300),
+      var(--color-green-400)
+    );
+  }
+  
+  .td {
+    background: var(--backg-clr);
+    font-family: "Courier New", monospace;
+    // border: 1px solid #fff;
+  }
+  
+  .detail-view {
+    width: 0%;
+    min-width: 278px;
+    /* height: 200px; ❌ remove this */
+    min-height: 200px; /* ✅ optional: ensures at least some height */
+    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.3);
+    // border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--header-text);
+    border-radius: 14px;
+    padding: 25px 20px;
+    margin: 3%;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    color: var(--detail-view-text);
+    font-family: "Open Sans", sans-serif;
+    transition: all 0.3s ease;
+  }
+  
+  .detail-view:hover {
+    background: rgba(255, 255, 255, 0.4);
+    // box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 12px 28px var(--header-text);
+  }
+  
+  .detail-view h3 {
+    // color: var(--text);
+    color: var(--header-text);
+    font-weight: 700;
     text-align: center;
-    padding: 20px;
-    font-family: Arial, sans-serif;
+    margin-bottom: 18px;
+  }
+  
+  .gasflow-container {
+    text-align: center;
+    min-height: auto;
 
     .title {
-        font-weight: 600;
-        font-size: 30px;
-        // color: #8b0035;
-        color: var(--header-text);
-        margin-bottom: 15px;
+      font-size: 28px;
+      font-weight: bold;
+      color: var(--header-text);
+      margin-bottom: 25px;
     }
-
-    .bofg-box {
-        background: linear-gradient(180deg, #80deea, #e0f7fa);
+  
+    .tree {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    /* Continuous main vertical line through the center */
+    .main-line {
+      position: absolute;
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
+      height: calc(100% - 200px);
+      /* end at last branch */
+      background: gray;
+      z-index: 0;
+    }
+  
+    /* Each branch (pair of boxes on one level) */
+    .branch {
+      display: flex;
+      justify-content: space-between;
+      width: 400px;
+      position: relative;
+      margin-top: 80px;
+      z-index: 1;
+      /* horizontal connector between left & right nodes */
+      &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 10%;
+        right: 10%;
+        height: 3px;
+        background: gray;
+        z-index: 0;
+      }
+  
+      /* vertical connector from main spine to branch line */
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 3px;
+        height: 60px;
+        /* extended to connect staggered nodes */
+        background: gray;
+        transform: translate(-50%, -100%);
+        z-index: 0;
+      }
+  
+      /* stagger effect */
+      .node.left {
+        transform: translateY(-20px);
+        /* up */
+      }
+  
+      .node.right {
+        transform: translateY(20px);
+        /* down */
+      }
+    }
+  
+    /* Remove stagger for last single branch (Misc) */
+    .branch.single .node {
+      transform: none !important;
+    }
+  
+    .node {
+      // width: 250px;
+      width: 222px;
+      height: 164px;
+      background: var(--box-bg);
+      // background: linear-gradient(180deg, #80deea, #e0f7fa);
+      border: 1px solid #0277bd;
+      border-radius: 6px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+      padding: 4px;
+      transition: all 0.3s ease;
+      z-index: 2;
+  
+      &:hover {
+        transform: scale(1.03);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+  
+  
+      .header {
+        display: flex;
+        align-items: center; // vertical center
+        justify-content: center; // horizontal center
+        // background: url("/assets/blue-strip.jpg");
+        background-size: cover;
+        border-bottom: 1px solid #ccc;
+        color: var(--cogheader-text);
+        font-weight: bold;
+        // font-size: 20px;
+        // height: 40px; // fixed height
+        font-size: 15px;
+        height: 20px; // fixed height
+      }
+  
+      .sub-title {
         display: inline-block;
-        width: 20%;
-        height: 230px;
-        border: 1px solid #9ea9b7;
-        border-radius: 5px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-        padding: 10px;
+        color: #b30000;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 1px;
+        // font-size: 8px;
+        border: 1px solid #b30000;
+        border-radius: 6px;
+        padding: 2px;
+        margin-top: 8px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 4px rgba(179, 0, 0, 0.3);
+        text-shadow: 1px 1px 4px rgba(255, 0, 0, 0.4);
+  
+        &.red {
+          color: red;
+          background: linear-gradient(90deg, #fceeee, #ffc4c4);
+        }
+  
+        &.green {
+          color: green;
+          background: linear-gradient(90deg, #f4fceb, #7ffd18);
+        }
+      }
+  
+      .labels {
+        display: flex;
+        justify-content: space-around;
+        font-size: 15px;
+        // font-size: 10px;
+        color: #b30000;
+        font-weight: 600;
+      }
+  
+      .unique,
+      .values {
+        display: flex;
+        justify-content: space-between;
+      }
+  
+      .unique span,
+      .values > div {
+        width: 48%;
+        /* same width so they align perfectly */
         text-align: center;
-        transition: all 0.3s ease;
-
-        &:hover {
-            transform: scale(1.03);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+  
+      .unique {
+        font-size: 15px;
+        // font-size: 10px;
+        color: #b30000;
+        font-weight: 600;
+        // margin-bottom: 4px;
+      }
+  
+      .values .value {
+        font-size: 30px;
+        font-weight: bold;
+        color: #000;
+      }
+  
+      .values .unit {
+        font-size: 14px;
+        color: #333;
+      }
+  
+      .values {
+        display: flex;
+        justify-content: space-around;
+        gap: 10px;
+  
+        > div {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            font-weight: bold;
-            color: #002b5c;
-            font-size: 20px;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 2px;
-            margin-bottom: 6px;
+  
+        .value {
+          background: #fff;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          // padding: 3px 6px;
+          font-weight: bold;
+          // font-size: 20px;
+          font-size: 18px;
+          min-width: 60px;
+          text-align: center;
+          color: #0d0d0d;
+          // height: 22px;
         }
-
-        // ✨ Stylish "Generation" subtitle
-        .sub-title {
-            display: inline-block;
-            color: #b30000;
-            font-weight: 700;
-            font-size: 22px;
-            letter-spacing: 1px;
-            background: linear-gradient(90deg, #ffe0e0, #ffc4c4);
-            border: 1px solid #b30000;
-            border-radius: 6px;
-            padding: 3px 10px;
-            margin-top: 8px;
-            margin-bottom: 10px;
-            box-shadow: 0 2px 4px rgba(179, 0, 0, 0.3);
-            text-shadow: 1px 1px 4px rgba(255, 0, 0, 0.4);
+  
+        .unit {
+          font-size: 11px;
+          color: #222;
+          margin-top: 2px;
         }
-
-        .labels {
-            display: flex;
-            justify-content: space-around;
-            font-size: 16px;
-            font-weight: bold;
-            color: #b30000;
-            margin-top: 10px;
-            margin-bottom: 6px;
-        }
-
-        .values {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin-top: 10px;
-
-            .value-box {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .value {
-                background-color: #fff;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                padding: 8px 10px;
-                width: 100px;
-                height: 50px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 20px; // Bigger number text
-                font-weight: bold;
-                color: #000;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-            }
-
-            .flow {
-                background-color: #ffffff;
-            }
-
-            .pressure {
-                background-color: #ffffff;
-            }
-
-            .unit-text {
-                margin-top: 6px;
-                font-size: 13px;
-                font-weight: 600;
-                color: #333;
-            }
-        }
+      }
     }
-
-
-
-    // /* Animation for BPP header */
-    // .sub-title {
-    //     animation: pulse-blue 2s infinite;
-    //     // background: url('/assets/blue-strip.jpg');
-    //     // background-size: cover;
-    // }
-
-
-    // /* Keyframes for pulsing blue effect */
-    // @keyframes pulse-blue {
-    //     0% {
-    //         box-shadow: 0 0 5px rgba(92, 6, 0, 0.5);
-    //         transform: scale(1);
-    //     }
-
-    //     50% {
-    //         box-shadow: 0 0 20px rgba(92, 0, 51, 0.8), 0 0 30px rgba(255, 0, 98, 0.6);
-    //         transform: scale(1.02);
-    //     }
-
-    //     100% {
-    //         box-shadow: 0 0 5px rgba(92, 0, 31, 0.5);
-    //         transform: scale(1);
-    //     }
-    // }
-
-
-    /* Component A */
-    @keyframes pulse-blue-a {
-        0% {
-            box-shadow: 0 0 5px rgba(92, 6, 0, 0.5);
-            transform: scale(1);
-        }
-
-        50% {
-            box-shadow: 0 0 20px rgba(92, 0, 51, 0.8), 0 0 30px rgba(255, 0, 98, 0.6);
-            transform: scale(1.02);
-        }
-
-        100% {
-            box-shadow: 0 0 5px rgba(92, 0, 31, 0.5);
-            transform: scale(1);
-        }
+  
+    .flow-box {
+      transition: all 0.3s ease;
+      cursor: pointer;
+  
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(0, 150, 255, 0.6),
+          0 0 30px rgba(0, 200, 255, 0.4);
+        border: 2px solid #00bcd4;
+      }
+  
+      &:hover .header {
+        // color: #fff;
+        text-shadow: 0 0 6px #00bcd4;
+      }
+  
+      &:hover .sub-title.green {
+        background: linear-gradient(90deg, #e8ffe8, #99ff99);
+        color: #006600;
+      }
     }
-
-    .sub-title {
-        animation: pulse-blue-a 2s infinite;
+  
+    .gen {
+      background: var(--box-bg-gen);
+      height: 150px;
     }
+  
+    .top_header {
+      // background: url("/assets/blue-strip.jpg");
+      background-size: cover;
+      border-bottom: 1px solid #ccc;
+      color: #002b5c;
+      font-weight: 600;
+      font-weight: bold;
+      // font-size: 20px;
+      font-size: 15px;
+      padding: 3px 0;
+    }
+  
+    /* Animation */
+    @keyframes pulse-blue-b {
+      0% {
+        box-shadow: 0 0 5px rgba(0, 43, 92, 0.5);
+        transform: scale(1);
+      }
+  
+      50% {
+        box-shadow: 0 0 20px rgba(0, 43, 92, 0.8), 0 0 30px rgba(0, 150, 255, 0.6);
+        transform: scale(1.02);
+      }
+  
+      100% {
+        box-shadow: 0 0 5px rgba(0, 43, 92, 0.5);
+        transform: scale(1);
+      }
+    }
+  
+    .node.generation .header,
+    .top_header,
+    .node.consumption .header,
+    .top_header {
+      animation: pulse-blue-b 2s infinite;
+    }
+  
+    /* For the last single node branch */
+    .branch.single {
+      width: auto;
+      justify-content: center;
+      // margin-top: 50px;
+      margin-top: 20px;
+      font-weight: bold;
+  
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 3px;
+        height: 40px;
+        background: gray;
+        transform: translateX(-50%);
+      }
+  
+      &::after {
+        content: none;
+        /* remove double connector */
+      }
+  
+      .node.center {
+        height: 140px;
+        margin: 0 auto;
+      }
+    }
+  
+    .branch.exportVolume {
+      width: 600px;
+      /* same as your normal branch width */
+      position: relative;
+      // margin-top: -50px;
+      margin-top: 90px;
+      display: flex;
+      justify-content: flex-start;
+      /* keep node on left side */
+      z-index: 1;
+      font-weight: bold;
+  
+      /* Horizontal connector from main vertical line to left node */
+      &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        /* from center main line */
+        width: 40%;
+        /* half of branch width (connects to left) */
+        height: 3px;
+        background: gray;
+        transform: translateX(-100%);
+        /* draw line from center toward left */
+        z-index: 0;
+      }
+  
+      /* Vertical connector from main line to horizontal line */
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 3px;
+        height: 60px;
+        background: gray;
+        transform: translate(-50%, -100%);
+        z-index: 0;
+      }
+  
+      .node.left {
+        height: 208px;
+        transform: none;
+        /* keep natural position */
+        margin-left: 0;
+        /* left side */
+      }
+    }
+  
+    .branch.single-left {
+      width: 600px;
+      /* same as your normal branch width */
+      position: relative;
+      margin-top: -50px;
+      // margin-top: -90px;
+      display: flex;
+      justify-content: flex-start;
+      /* keep node on left side */
+      z-index: 1;
+      font-weight: bold;
+  
+      /* Horizontal connector from main vertical line to left node */
+      &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        /* from center main line */
+        width: 40%;
+        /* half of branch width (connects to left) */
+        height: 3px;
+        background: gray;
+        transform: translateX(-100%);
+        /* draw line from center toward left */
+        z-index: 0;
+      }
+  
+      /* Vertical connector from main line to horizontal line */
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 3px;
+        height: 60px;
+        background: gray;
+        transform: translate(-50%, -100%);
+        z-index: 0;
+      }
+  
+      .node.left {
+        height: 140px;
+  
+        transform: none;
+        /* keep natural position */
+        margin-left: 0;
+        /* left side */
+      }
+    }
+  
+    .branch.single-right {
+      width: 600px;
+      /* same as your normal branch width */
+      position: relative;
+      // margin-top: -50px;
+      margin-top: -50px;
+      display: flex;
+      justify-content: flex-end;
+      /* keep node on right side */
+      z-index: 1;
+      font-weight: bold;
+  
+      /* Horizontal connector from main vertical line to right node */
+      &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        /* start from main vertical line */
+        width: 40%;
+        /* half branch width (connects to right) */
+        height: 3px;
+        background: gray;
+        /* draw line from center toward right side */
+        transform: translateX(0);
+        z-index: 0;
+      }
+  
+      /* Vertical connector from main line to horizontal line */
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 3px;
+        height: 60px;
+        background: gray;
+        transform: translate(-50%, -100%);
+        z-index: 0;
+      }
+  
+      .node.right {
+        height: 140px;
+        transform: none;
+        /* keep natural position */
+        margin-right: 0;
+        /* right side alignment */
+      }
+    }
+  }
+  
+  .radio-buttons-container {
+    background: var(--backg-clr);
+    position: sticky;
+    top: 0;
+    z-index: 50; /* make sure it stays on top */
+    // padding: 10px 0;
+  }
+  
+  .switch-option input[type="radio"] {
+    display: none;
+  }
+  
+  .custom-radio {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid var(--radio-accent); /* ✅ dynamic border */
+    margin-right: 8px;
+    display: inline-block;
+    position: relative;
+  }
+  
+  .switch-option input[type="radio"]:checked + .custom-radio::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: var(--radio-accent); /* ✅ dynamic fill */
+    border-radius: 50%;
+    position: absolute;
+    top: 50%; /* Adjusted to center vertically */
+    left: 50%; /* Adjusted to center horizontally */
+    transform: translate(-50%, -50%); /* Center the inner circle */
+  }
+  
+  .mode-switch {
+    display: flex; /* make labels align horizontally */
+    justify-content: center; /* center them horizontally */
+    align-items: center; /* vertically center the text */
+    background: rgba(255, 255, 255, 0.15);
+    padding: 8px 16px;
+    border-radius: 12px;
+    margin-bottom: 2px;
+    gap: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .switch-option {
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--header-text);
+    transition: color 0.3s ease;
+  }
+  
+  .switch-option input {
+    cursor: pointer;
+  }
+  
 
-}
+  
+
+  
