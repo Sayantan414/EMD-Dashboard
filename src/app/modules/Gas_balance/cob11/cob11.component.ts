@@ -368,6 +368,7 @@ export class Cob11Component implements OnInit {
         uftotal: (item.CO_GAS1_F ?? 0) + (item.CO_GAS2_F ?? 0),
 
         pbsFlow: item.PBS_BCOGF,
+        pbsPressure: "N/A",
         bf5Flow: item.BF_COF,
         bf5Pressure: "N/A",
 

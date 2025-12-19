@@ -175,4 +175,75 @@
       </div>
     </div>
   </div>
+
+  <div *ngIf="viewMode === 'report'">
+    <div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+      <!-- report-wrapper -->
+
+      <mat-drawer-container class="flex-auto h-full" [hasBackdrop]="false">
+        <!-- Drawer content -->
+        <mat-drawer-content class="flex overflow-hidden h-full report-bg">
+          <div
+            class="flex-auto w-full overflow-y-auto border-l h-full report-content"
+          >
+            <div class="relative p-10 w-full border-l h-full">
+              <div class="table-users w-full">
+                <table class="w-full border bg-card mt-2" cellspacing="0">
+                  <thead class="sticky top-10 z-10 tableTextDesign">
+                    <tr>
+                      <th class="text-center p-3" rowspan="2">Sl. No.</th>
+                      <th class="text-center p-3" rowspan="2">Date</th>
+                      <th class="text-center p-3" rowspan="2">Time</th>
+                      <th class="text-center p-3" colspan="2">Generation</th>
+                      <th class="text-center p-3" colspan="7">Consumption</th>
+                    </tr>
+
+                    <tr>
+                      <th class="text-center p-3">CBM (Flow)</th>
+                      <th class="text-center p-3">CBM (Pressure)</th>
+                      <th class="text-center p-3">GEECL FLOW (Total Flow)</th>
+                      <th class="text-center p-3">PRESSURE (Inlet)</th>
+                      <th class="text-center p-3">PRESSURE (Outlet)</th>
+                      <th class="text-center p-3">MRS FLOW (M1)</th>
+                      <th class="text-center p-3">MRS FLOW (M2)</th>
+                      <th class="text-center p-3">FLARE (Flow)</th>
+                      <th class="text-center p-3">FLARE (Pressure)</th>
+                    </tr>
+                  </thead>
+
+                  <tr
+                    
+                    class="border hover:bg-blue-200 tr"
+                  >
+                  <!-- *ngFor="let row of reportData; let rindex = index" -->
+                    <td class="text-center p-3 td">
+                      <!-- {{ rindex + 1 }} -->
+                    </td>
+                    <td class="text-center p-3 td">N/A</td>
+                    <td class="text-center p-3 td">N/A</td>
+
+                    <td class="text-center p-3 td">N/A</td>
+
+                    <td class="text-center p-3 td">N/A</td>
+
+                    <td class="text-center p-3 td">N/A</td>
+
+                    <td class="text-center p-3 td">N/A</td>
+                    <td class="text-center p-3 td">N/A</td>
+                    <td class="text-center p-3 td">N/A</td>
+
+                    <td class="text-center p-3 td">N/A</td>
+                  
+                    <td class="text-center p-3 td">N/A</td>
+
+                    <td class="text-center p-3 td">N/A</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </mat-drawer-content>
+      </mat-drawer-container>
+    </div>
+  </div>
 </div>

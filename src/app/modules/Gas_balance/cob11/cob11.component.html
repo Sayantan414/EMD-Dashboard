@@ -421,7 +421,7 @@
             <div class="relative p-10 w-full border-l h-full">
               <div class="table-users w-full">
                 <table class="w-full border bg-card mt-2" cellspacing="0">
-                  <thead class="sticky top-10 z-10">
+                  <thead class="sticky top-10 z-10 tableTextDesign">
                     <tr>
                       <th class="text-center p-3" rowspan="2">Sl. No.</th>
                       <th class="text-center p-3" rowspan="2">Date</th>
@@ -463,71 +463,71 @@
                       {{ rindex + 1 }}
                     </td>
                     <td class="text-center p-3 td">
-                      {{ row.date }}
+                      {{ row.date != null ? row.date : 'N/A' }}
                     </td>
                     <td class="text-center p-3 td">
-                      {{ row.time }}
+                       {{ row.time != null ? row.time : 'N/A' }}
                     </td>
                     <td class="text-center p-3 td">
-                      {{ row.bppFlow | number : "1.2-2" }}
+                      {{ row.bppFlow != null ? (row.bppFlow | number:'1.2-2') : 'N/A' }}
                     </td>
                     <td class="text-center p-3 td">
-                      {{ row.bppPressure | number : "1.2-2" }}
+                      {{ row.bppPressure != null ? (row.bppPressure | number:'1.2-2') : 'N/A' }}
                     </td>
                     <td class="text-center p-3 td">
-                      {{ row.uftotal | number : "1.2-2" }}
+                      {{ row.uftotal != null ? (row.uftotal | number:'1.2-2') : 'N/A' }}
                     </td>
                     <td class="text-center p-3 td">
-                      {{ row.pbsFlow }}
+                      {{ row.pbsFlow != null ? row.pbsFlow : 'N/A' }}
                     </td>
-                    <td class="text-center p-3 td">N/A</td>
+                    <td class="text-center p-3 td"> {{ row.pbsPressure != null ? row.pbsPressure : 'N/A' }}</td>
                     <td class="text-center p-3 td">
-                      {{ row.bf5Flow }}
-                    </td>
-                    <td class="text-center p-3 td">
-                      {{ row.bf5Pressure }}
+                      {{ row.bf5Flow != null ? row.bf5Flow : 'N/A' }}
                     </td>
                     <td class="text-center p-3 td">
-                      {{ row.millsFlow }}
+                      {{ row.bf5Pressure != null ? row.bf5Pressure : 'N/A' }}
                     </td>
                     <td class="text-center p-3 td">
-                      {{ row.millsPressure }}
+                      {{ row.millsFlow != null ? row.millsFlow : 'N/A' }}
                     </td>
                     <td class="text-center p-3 td">
-                      {{ row.sinterFlow }}
+                      {{ row.millsPressure != null ? row.millsPressure : 'N/A' }}
                     </td>
                     <td class="text-center p-3 td">
-                      {{ row.sinterPressure }}
+                      {{ row.sinterFlow != null ? row.sinterFlow : 'N/A' }}
                     </td>
                     <td class="text-center p-3 td">
-                      {{ row.bofFlow }}
+                      {{ row.sinterPressure != null ? row.sinterPressure : 'N/A' }}
                     </td>
                     <td class="text-center p-3 td">
-                      {{ row.bofPressure }}
+                      {{ row.bofFlow != null ? row.bofFlow : 'N/A' }}
                     </td>
                     <td class="text-center p-3 td">
-                      {{ row.ccpFlow }}
+                      {{ row.bofPressure != null ? row.bofPressure : 'N/A' }}
                     </td>
                     <td class="text-center p-3 td">
-                      {{ row.ccpPressure }}
+                      {{ row.ccpFlow != null ? row.ccpFlow : 'N/A' }}
                     </td>
                     <td class="text-center p-3 td">
-                      {{ row.ldcpFlow }}
+                      {{ row.ccpPressure != null ? row.ccpPressure : 'N/A' }}
                     </td>
                     <td class="text-center p-3 td">
-                      {{ row.ldcpPressure }}
+                      {{ row.ldcpFlow != null ? row.ldcpFlow : 'N/A' }}
                     </td>
                     <td class="text-center p-3 td">
-                      {{ row.flareFlow | number : "1.2-2" }}
+                      {{ row.ldcpPressure != null ? row.ldcpPressure : 'N/A' }}
                     </td>
                     <td class="text-center p-3 td">
-                      {{ row.flarePressure | number : "1.2-2" }}
+                      {{ row.flareFlow != null ? (row.flareFlow | number:'1.2-2') : 'N/A' }}
                     </td>
                     <td class="text-center p-3 td">
-                      {{ row.lossesFlow }}
+                      {{ row.flarePressure != null ? (row.flarePressure | number:'1.2-2') : 'N/A' }}
                     </td>
                     <td class="text-center p-3 td">
-                      {{ row.lossesPressure }}
+                      {{ row.lossesFlow != null ? row.lossesFlow : 'N/A' }}
+                    </td>
+                    <td class="text-center p-3 td">
+                      {{ row.lossesPressure != null ? row.lossesPressure : 'N/A' }}
                     </td>
                   </tr>
                 </table>

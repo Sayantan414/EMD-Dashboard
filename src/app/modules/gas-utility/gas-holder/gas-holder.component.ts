@@ -14,7 +14,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class GasHolderComponent implements OnInit {
   viewMode: string = "report";
-  loading: boolean = false;
+  loading: boolean = true;
   reportData: any[] = [];
 
   private _unsubscribeAll: Subject<any> = new Subject();
@@ -28,11 +28,11 @@ export class GasHolderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loading = false;
+    // this.loading = false;
     this.getReportData();
   }
 
-  onViewModeChange() {
+  onViewModeChange() {alert('1')
     if (this.viewMode === "trends") {
       this.loading = true;
     }
@@ -104,6 +104,7 @@ export class GasHolderComponent implements OnInit {
         SHIFT_C: this.to2Decimal(item.SHIFT_C),
       };
     });
+    this.loading = false;
   }
 
 
