@@ -5,6 +5,16 @@
         <input
           type="radio"
           name="viewMode"
+          value="gasholder"
+          [(ngModel)]="viewMode"
+        />
+        <span class="custom-radio"></span>
+        Gas Holder
+      </label>
+      <label class="switch-option">
+        <input
+          type="radio"
+          name="viewMode"
           value="report"
           [(ngModel)]="viewMode"
         />
@@ -25,6 +35,52 @@
       </label>
     </div>
   </div>
+  <!-- GAS HOLDER VIEW -->
+
+
+  <div *ngIf="viewMode === 'gasholder'">
+
+    <div class="cylinder-with-header layout-container p-10">
+  
+      <div class="cylinder">
+        <div class="cylinder-cap"></div>
+  
+        <div class="cylinder-body">
+          <!-- VALUE INSIDE -->
+          <div class="gas-value">
+            <p>
+              <strong>{{ gasholder_res.GASHOLDERLVL | number : "1.2-2" }} kg</strong>
+              / {{ maxGasLevel }} kg
+            </p>
+          </div>
+  
+          <div
+            class="gas-fill"
+            [ngClass]="gasLevelClass"
+            [style.height.%]="gasFillPercent"
+          >
+            <div class="gas-wave"></div>
+            <div class="gas-shine"></div>
+          </div>
+        </div>
+  
+        <div class="cylinder-base"></div>
+      </div>
+  
+      <!-- HEADER BELOW -->
+      <h2 class="area_header gas-header">
+        <span
+          *ngFor="let letter of splitLetters(gaslevel); let i = index"
+          [style.animation-delay]="i * 0.2 + 's'"
+        >
+          {{ letter }}
+        </span>
+      </h2>
+  
+    </div>
+  
+  </div>
+
   <div *ngIf="viewMode === 'report'">
     <div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
       <!-- report-wrapper -->
@@ -36,11 +92,18 @@
             class="flex-auto w-full overflow-y-auto border-l h-full report-content"
           >
             <div class="relative p-10 w-full border-l h-full">
-              <div *ngIf="loading" class="absolute inset-0 z-50 flex items-center justify-center mt-[-150px]">
+              <div
+                *ngIf="loading"
+                class="absolute inset-0 z-50 flex items-center justify-center mt-[-150px]"
+              >
                 <mat-spinner color="primary" [diameter]="100"></mat-spinner>
               </div>
               <div class="table-users w-full">
-                <table class="w-full border bg-card mt-2" cellspacing="0" *ngIf="reportData.length > 0 && !loading">
+                <table
+                  class="w-full border bg-card mt-2"
+                  cellspacing="0"
+                  *ngIf="reportData.length > 0 && !loading"
+                >
                   <thead class="sticky top-10 z-10 tableTextDesign">
                     <!-- HEADER ROW 1 -->
                     <tr>
@@ -108,57 +171,57 @@
                       *ngFor="let row of reportData; let rindex = index"
                       class="border hover:bg-blue-200"
                     >
-                      <td class="text-center p-3">{{ rindex + 1 }}</td>
-                      <td class="text-center p-3">{{ row.date }}</td>
-                      <td class="text-center p-3">{{ row.time }}</td>
+                      <td class="text-center p-3 td">{{ rindex + 1 }}</td>
+                      <td class="text-center p-3 td">{{ row.date }}</td>
+                      <td class="text-center p-3 td">{{ row.time }}</td>
 
-                      <td class="text-center p-3">{{ row.GASHOLDERLVL }}</td>
-                      <td class="text-center p-3">{{ row.GASHOLDERPRES }}</td>
-                      <td class="text-center p-3">{{ row.GASHOLDERTEMP }}</td>
+                      <td class="text-center p-3 td">{{ row.GASHOLDERLVL }}</td>
+                      <td class="text-center p-3 td">{{ row.GASHOLDERPRES }}</td>
+                      <td class="text-center p-3 td">{{ row.GASHOLDERTEMP }}</td>
 
-                      <td class="text-center p-3">{{ row.EXPORTEDGAS }}</td>
-                      <td class="text-center p-3">{{ row.GAS_FLOW_mills }}</td>
+                      <td class="text-center p-3 td">{{ row.EXPORTEDGAS }}</td>
+                      <td class="text-center p-3 td">{{ row.GAS_FLOW_mills }}</td>
 
-                      <td class="text-center p-3">{{ row.PBS_totaliser }}</td>
-                      <td class="text-center p-3">{{ row.Mills_totaliser }}</td>
-                      <td class="text-center p-3">
+                      <td class="text-center p-3 td">{{ row.PBS_totaliser }}</td>
+                      <td class="text-center p-3 td">{{ row.Mills_totaliser }}</td>
+                      <td class="text-center p-3 td">
                         {{
                           (row.PBS_totaliser - row.Mills_totaliser).toFixed(2)
                         }}
                       </td>
 
                       <!-- PBS -->
-                      <td class="text-center p-3">{{ row.a_pbs_totaliser }}</td>
-                      <td class="text-center p-3">{{ row.b_pbs_totaliser }}</td>
-                      <td class="text-center p-3">{{ row.c_pbs_totaliser }}</td>
+                      <td class="text-center p-3 td">{{ row.a_pbs_totaliser }}</td>
+                      <td class="text-center p-3 td">{{ row.b_pbs_totaliser }}</td>
+                      <td class="text-center p-3 td">{{ row.c_pbs_totaliser }}</td>
 
                       <!-- Mills -->
-                      <td class="text-center p-3">
+                      <td class="text-center p-3 td">
                         {{ row.a_mills_totaliser }}
                       </td>
-                      <td class="text-center p-3">
+                      <td class="text-center p-3 td">
                         {{ row.b_mills_totaliser }}
                       </td>
-                      <td class="text-center p-3">
+                      <td class="text-center p-3 td">
                         {{ row.c_mills_totaliser }}
                       </td>
 
                       <!-- Shift -->
-                      <td class="text-center p-3">
+                      <td class="text-center p-3 td">
                         {{
                           (row.a_pbs_totaliser - row.a_mills_totaliser).toFixed(
                             2
                           )
                         }}
                       </td>
-                      <td class="text-center p-3">
+                      <td class="text-center p-3 td">
                         {{
                           (row.b_pbs_totaliser - row.b_mills_totaliser).toFixed(
                             2
                           )
                         }}
                       </td>
-                      <td class="text-center p-3">
+                      <td class="text-center p-3 td">
                         {{
                           (row.c_pbs_totaliser - row.c_mills_totaliser).toFixed(
                             2

@@ -1,38 +1,124 @@
-import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ProjectCommonModule } from 'app/core/project-common-modules/project-common.module';
-import { SseService } from 'app/services/sse.servece';
-import { TrendService } from 'app/services/trend.service';
-import { Subject, takeUntil } from 'rxjs';
-
+import { Component, OnInit } from "@angular/core";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { ProjectCommonModule } from "app/core/project-common-modules/project-common.module";
+import { SseService } from "app/services/sse.servece";
+import { TrendService } from "app/services/trend.service";
+import { interval, startWith, Subject, Subscription, takeUntil } from "rxjs";
 @Component({
-  selector: 'app-gas-holder',
+  selector: "app-gas-holder",
   standalone: true,
   imports: [ProjectCommonModule],
-  templateUrl: './gas-holder.component.html',
-  styleUrl: './gas-holder.component.scss'
+  templateUrl: "./gas-holder.component.html",
+  styleUrl: "./gas-holder.component.scss",
 })
 export class GasHolderComponent implements OnInit {
-  viewMode: string = "report";
+  viewMode: string = "gasholder";
   loading: boolean = true;
   reportData: any[] = [];
+  gaslevel = "Gas Level";
+  maxGasLevel = 30;
+  gasholder_res = {
+    GASHOLDERLVL: 0,
+  };
+  gasLevelClass: 'gas-green' | 'gas-yellow' | 'gas-red' = 'gas-green';
+
+  previousValues: any = { ...this.gasholder_res };
+  private sseoverview?: Subscription;
 
   private _unsubscribeAll: Subject<any> = new Subject();
-
 
   constructor(
     private sseService: SseService,
     private trendService: TrendService,
     private _snackBar: MatSnackBar
   ) {
+    this._unsubscribeAll = new Subject();
   }
 
+  splitLetters(text: string): string[] {
+    return text.split("").map((c) => (c === " " ? "\u00A0" : c));
+  }
+  
+  animateValue(
+    start: number,
+    end: number,
+    duration: number,
+    callback: (val: number) => void,
+    decimals: number = 0
+  ) {
+    const startTime = performance.now();
+
+    const step = (currentTime: number) => {
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      const value = start + (end - start) * progress;
+
+      // keep decimals
+      const formattedValue = parseFloat(value.toFixed(decimals));
+      callback(formattedValue);
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    };
+
+    requestAnimationFrame(step);
+  }
+
+  /** Clamp value between 0 and max */
+  get gasFillPercent(): number {
+    const value = Number(this.gasholder_res.GASHOLDERLVL) || 0;
+    return Math.min(Math.max((value / this.maxGasLevel) * 100, 0), 100);
+  }
+
+  updateGasColor(value: number) {
+    // const gasPercent = (value / this.maxGasLevel) * 100;
+    // console.log(gasPercent);
+    const gaslevelvalue = Number(this.gasholder_res.GASHOLDERLVL) || 0;
+
+    if (gaslevelvalue < 10) {
+      this.gasLevelClass = 'gas-red';
+    } else if (gaslevelvalue < 20) {
+      this.gasLevelClass = 'gas-yellow';
+    } else {
+      this.gasLevelClass = 'gas-green';
+    }
+  }
+  
   ngOnInit() {
     // this.loading = false;
+    interval(60000) // 1 minute
+      .pipe(
+        startWith(0), // call immediately on load
+        takeUntil(this._unsubscribeAll)
+      )
+      .subscribe(() => {
+        this.getReportData();
+      });
+    this.sseoverview = this.sseService.getOverview().subscribe((data: any) => {
+      // console.log('es', data);
+      // console.log(this.bf5_res);
+      console.log("Response", data);
+
+      // Animate each property
+      //sourav code
+      this.animateValue(
+        this.previousValues.GASHOLDERLVL,
+        data.GASHOLDERLVL,
+        800,
+        (val) => {
+          this.gasholder_res.GASHOLDERLVL = val;
+          this.updateGasColor(val);   // ✅ ADD THIS
+        },
+        2
+      );
+      // Update previous values for next round
+      this.previousValues = { ...data };
+    });
+
     this.getReportData();
   }
 
-  onViewModeChange() {alert('1')
+  onViewModeChange() {
     if (this.viewMode === "trends") {
       this.loading = true;
     }
@@ -46,7 +132,6 @@ export class GasHolderComponent implements OnInit {
         next: (res: any[]) => {
           this.prepareReportTable(res);
           console.log(res);
-
         },
         error: (err) => {
           this._snackBar.open(err, "", {
@@ -59,27 +144,26 @@ export class GasHolderComponent implements OnInit {
 
   private to2Decimal(val: any): string {
     if (val === null || val === undefined || isNaN(val)) {
-      return '0.00';
+      return "0.00";
     }
     return Number(val).toFixed(2);
   }
 
-
   prepareReportTable(data: any[]) {
     this.reportData = data.map((item) => {
       // Treat timestamp as LOCAL
-      const d = new Date(item.datestamp.replace('Z', ''));
+      const d = new Date(item.datestamp.replace("Z", ""));
 
       return {
-        date: d.toLocaleDateString('en-IN', {
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric',
+        date: d.toLocaleDateString("en-IN", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
         }),
 
-        time: d.toLocaleTimeString('en-IN', {
-          hour: '2-digit',
-          minute: '2-digit',
+        time: d.toLocaleTimeString("en-IN", {
+          hour: "2-digit",
+          minute: "2-digit",
         }),
 
         GASHOLDERLVL: this.to2Decimal(item.GASHOLDERLVL),
@@ -107,5 +191,13 @@ export class GasHolderComponent implements OnInit {
     this.loading = false;
   }
 
+  ngOnDestroy(): void {
+    // Clean up subscription to prevent memory leaks
+    if (this.sseoverview) {
+      this.sseoverview.unsubscribe();
+    }
 
+    this._unsubscribeAll.next(true);
+    this._unsubscribeAll.complete();
+  }
 }

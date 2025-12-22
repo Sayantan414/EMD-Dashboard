@@ -117,6 +117,7 @@ export class Cob11Component implements OnInit {
     this.sseoverview = this.sseService.getOverview().subscribe((data: any) => {
       // console.log('es', data);
       // console.log(this.bf5_res);
+      // console.log('Response', data);
 
       // Animate each property
       //sourav code
@@ -212,7 +213,6 @@ export class Cob11Component implements OnInit {
     });
 
     this.ssebooster = this.sseService.getBooster().subscribe((data: any) => {
-      // console.log('es', data);
       // console.log(this.bf5_res);
 
       // Animate each property
