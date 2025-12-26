@@ -163,7 +163,8 @@
 
   .node {
     // width: 250px;
-    width: 222px;
+    // width: 222px;
+    width: 183px;
     height: 164px;
     background: var(--box-bg);
     // background: linear-gradient(180deg, #80deea, #e0f7fa);
@@ -628,4 +629,73 @@
 
 .tableTextDesign{
   text-transform: uppercase;
+}
+
+
+.branch.bof-distribution {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-top: 60px;
+}
+
+/* MAIN HORIZONTAL PIPE */
+.main-horizontal {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #7a7a7a;
+  z-index: 1;
+}
+
+/* SIDE GROUPS */
+.side-group {
+  display: flex;
+  gap: 28px;
+  position: relative;
+}
+
+/* BOX → PIPE CONNECTOR */
+.side-group .node::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 30px;
+  height: 3px;
+  background: #7a7a7a;
+}
+
+.left-group .node::after {
+  right: -30px;
+}
+
+.right-group .node::after {
+  left: -29px;
+}
+
+/* BOF */
+.bof-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+/* VERTICAL PIPE FROM SPINE */
+// .bof-wrapper::before {
+//   content: "";
+//   position: absolute;
+//   top: -70px;
+//   left: 10%;
+//   width: 3px;
+//   height: 70px;
+//   background: #7a7a7a;
+//   transform: translateX(10%);
+// }
+
+/* Z-ORDER SAFETY */
+.node {
+  position: relative;
+  z-index: 2;
 }
