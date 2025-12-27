@@ -28,7 +28,7 @@
           name="viewMode"
           value="trends"
           [(ngModel)]="viewMode"
-          (selectionChange)="onViewModeChange()"
+          (change)="onViewModeChange()"
         />
         <span class="custom-radio"></span>
         Trends
@@ -37,23 +37,116 @@
   </div>
   <!-- GAS HOLDER VIEW -->
 
-
   <div *ngIf="viewMode === 'gasholder'">
+    <div class="cylinder-with-header layout-container pb-10">
+      <!-- METRIC CHART BOXES -->
+      <div class="metric-container">
+        <!-- Pressure -->
+        <div class="metric-box">
+          <div class="metric-header">
+            <span class="metric-title">Gas Holder Pressure</span>
+            <span class="metric-underline"></span>
+          </div>
 
-    <div class="cylinder-with-header layout-container p-10">
-  
+          <div
+            class="metric-value"
+            [ngClass]="{
+              'value-green': gasholder_res.GASHOLDERPRES >= 20,
+              'value-yellow':
+                gasholder_res.GASHOLDERPRES >= 10 &&
+                gasholder_res.GASHOLDERPRES < 20,
+              'value-red': gasholder_res.GASHOLDERPRES < 10
+            }"
+          >
+            {{ gasholder_res.GASHOLDERPRES | number : "1.2-2" }}
+          </div>
+
+          <apx-chart
+            [series]="pressureSeries"
+            [chart]="miniChart"
+            [stroke]="stroke"
+            [xaxis]="xAxis"
+            [tooltip]="tooltip"
+          >
+          </apx-chart>
+        </div>
+
+        <!-- Temperature -->
+        <div class="metric-box">
+          <div class="metric-header">
+            <span class="metric-title">Gas Temperature</span>
+            <span class="metric-underline"></span>
+          </div>
+
+          <div
+            class="metric-value"
+            [ngClass]="{
+              'value-green': gasholder_res.GASHOLDERTEMP < 60,
+              'value-yellow':
+                gasholder_res.GASHOLDERTEMP >= 60 &&
+                gasholder_res.GASHOLDERTEMP < 80,
+              'value-red': gasholder_res.GASHOLDERTEMP >= 80
+            }"
+          >
+            {{ gasholder_res.GASHOLDERTEMP | number : "1.2-2" }}
+            <span class="metric-unit">°C</span>
+          </div>
+
+          <apx-chart
+            [series]="tempSeries"
+            [chart]="miniChart"
+            [stroke]="stroke"
+            [xaxis]="xAxis"
+            [tooltip]="tooltip"
+          >
+          </apx-chart>
+        </div>
+
+        <!-- Gas Flow -->
+        <div class="metric-box">
+          <div class="metric-header">
+            <span class="metric-title">Gas Flow (Mills)</span>
+            <span class="metric-underline"></span>
+          </div>
+
+          <div
+            class="metric-value"
+            [ngClass]="{
+              'value-green': gasholder_res.GAS_FLOW_mills >= 15,
+              'value-yellow':
+                gasholder_res.GAS_FLOW_mills >= 5 &&
+                gasholder_res.GAS_FLOW_mills < 15,
+              'value-red': gasholder_res.GAS_FLOW_mills < 5
+            }"
+          >
+            {{ gasholder_res.GAS_FLOW_mills | number : "1.2-2" }}
+          </div>
+
+          <apx-chart
+            [series]="flowSeries"
+            [chart]="miniChart"
+            [stroke]="stroke"
+            [xaxis]="xAxis"
+            [tooltip]="tooltip"
+          >
+          </apx-chart>
+        </div>
+      </div>
+      <br />
       <div class="cylinder">
         <div class="cylinder-cap"></div>
-  
+
         <div class="cylinder-body">
           <!-- VALUE INSIDE -->
           <div class="gas-value">
             <p>
-              <strong>{{ gasholder_res.GASHOLDERLVL | number : "1.2-2" }} kg</strong>
+              <strong
+                >{{ gasholder_res.GASHOLDERLVL | number : "1.2-2" }} kg</strong
+              >
               / {{ maxGasLevel }} kg
             </p>
           </div>
-  
+
           <div
             class="gas-fill"
             [ngClass]="gasLevelClass"
@@ -63,10 +156,10 @@
             <div class="gas-shine"></div>
           </div>
         </div>
-  
+
         <div class="cylinder-base"></div>
       </div>
-  
+
       <!-- HEADER BELOW -->
       <h2 class="area_header gas-header">
         <span
@@ -76,9 +169,7 @@
           {{ letter }}
         </span>
       </h2>
-  
     </div>
-  
   </div>
 
   <div *ngIf="viewMode === 'report'">
@@ -176,14 +267,24 @@
                       <td class="text-center p-3 td">{{ row.time }}</td>
 
                       <td class="text-center p-3 td">{{ row.GASHOLDERLVL }}</td>
-                      <td class="text-center p-3 td">{{ row.GASHOLDERPRES }}</td>
-                      <td class="text-center p-3 td">{{ row.GASHOLDERTEMP }}</td>
+                      <td class="text-center p-3 td">
+                        {{ row.GASHOLDERPRES }}
+                      </td>
+                      <td class="text-center p-3 td">
+                        {{ row.GASHOLDERTEMP }}
+                      </td>
 
                       <td class="text-center p-3 td">{{ row.EXPORTEDGAS }}</td>
-                      <td class="text-center p-3 td">{{ row.GAS_FLOW_mills }}</td>
+                      <td class="text-center p-3 td">
+                        {{ row.GAS_FLOW_mills }}
+                      </td>
 
-                      <td class="text-center p-3 td">{{ row.PBS_totaliser }}</td>
-                      <td class="text-center p-3 td">{{ row.Mills_totaliser }}</td>
+                      <td class="text-center p-3 td">
+                        {{ row.PBS_totaliser }}
+                      </td>
+                      <td class="text-center p-3 td">
+                        {{ row.Mills_totaliser }}
+                      </td>
                       <td class="text-center p-3 td">
                         {{
                           (row.PBS_totaliser - row.Mills_totaliser).toFixed(2)
@@ -191,9 +292,15 @@
                       </td>
 
                       <!-- PBS -->
-                      <td class="text-center p-3 td">{{ row.a_pbs_totaliser }}</td>
-                      <td class="text-center p-3 td">{{ row.b_pbs_totaliser }}</td>
-                      <td class="text-center p-3 td">{{ row.c_pbs_totaliser }}</td>
+                      <td class="text-center p-3 td">
+                        {{ row.a_pbs_totaliser }}
+                      </td>
+                      <td class="text-center p-3 td">
+                        {{ row.b_pbs_totaliser }}
+                      </td>
+                      <td class="text-center p-3 td">
+                        {{ row.c_pbs_totaliser }}
+                      </td>
 
                       <!-- Mills -->
                       <td class="text-center p-3 td">

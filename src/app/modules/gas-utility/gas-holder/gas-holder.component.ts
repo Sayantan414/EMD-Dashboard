@@ -3,11 +3,12 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { ProjectCommonModule } from "app/core/project-common-modules/project-common.module";
 import { SseService } from "app/services/sse.servece";
 import { TrendService } from "app/services/trend.service";
+import { NgApexchartsModule } from "ng-apexcharts";
 import { interval, startWith, Subject, Subscription, takeUntil } from "rxjs";
 @Component({
   selector: "app-gas-holder",
   standalone: true,
-  imports: [ProjectCommonModule],
+  imports: [ProjectCommonModule, NgApexchartsModule],
   templateUrl: "./gas-holder.component.html",
   styleUrl: "./gas-holder.component.scss",
 })
@@ -19,11 +20,38 @@ export class GasHolderComponent implements OnInit {
   maxGasLevel = 30;
   gasholder_res = {
     GASHOLDERLVL: 0,
+    GASHOLDERPRES: 0,
+    GASHOLDERTEMP: 0,
+    GAS_FLOW_mills: 0
   };
   gasLevelClass: 'gas-green' | 'gas-yellow' | 'gas-red' = 'gas-green';
 
   previousValues: any = { ...this.gasholder_res };
   private sseoverview?: Subscription;
+
+  pressureSeries = [{ name: 'Pressure', data: [] }];
+tempSeries     = [{ name: 'Temperature', data: [] }];
+flowSeries     = [{ name: 'Gas Flow', data: [] }];
+
+miniChart = {
+  type: 'area',
+  height: 120,
+  sparkline: { enabled: true },
+  animations: { enabled: true }
+};
+
+stroke = {
+  curve: 'smooth',
+  width: 2
+};
+
+xAxis = {
+  type: 'datetime'
+};
+
+tooltip = {
+  theme: 'dark'
+};
 
   private _unsubscribeAll: Subject<any> = new Subject();
 
@@ -95,9 +123,34 @@ export class GasHolderComponent implements OnInit {
         this.getReportData();
       });
     this.sseoverview = this.sseService.getOverview().subscribe((data: any) => {
-      // console.log('es', data);
-      // console.log(this.bf5_res);
       console.log("Response", data);
+      const time = new Date().getTime();
+
+      // Update values
+      this.gasholder_res.GASHOLDERPRES = data.GASHOLDERPRES;
+      this.gasholder_res.GASHOLDERTEMP = data.GASHOLDERTEMP;
+      this.gasholder_res.GAS_FLOW_mills = data.GAS_FLOW_mills;
+    
+      // Push data to charts (keep last 20 points)
+      this.pressureSeries = [{
+        name: 'Pressure',
+        data: [...this.pressureSeries[0].data, [time, data.GASHOLDERPRES]].slice(-20)
+      }];
+      
+      this.tempSeries = [{
+        name: 'Temperature',
+        data: [...this.tempSeries[0].data, [time, data.GASHOLDERTEMP]].slice(-20)
+      }];
+      
+      this.flowSeries = [{
+        name: 'Gas Flow',
+        data: [...this.flowSeries[0].data, [time, data.GAS_FLOW_mills]].slice(-20)
+      }];
+      
+    
+      this.pressureSeries[0].data.splice(0, this.pressureSeries[0].data.length - 20);
+      this.tempSeries[0].data.splice(0, this.tempSeries[0].data.length - 20);
+      this.flowSeries[0].data.splice(0, this.flowSeries[0].data.length - 20);
 
       // Animate each property
       //sourav code
@@ -131,7 +184,6 @@ export class GasHolderComponent implements OnInit {
       .subscribe({
         next: (res: any[]) => {
           this.prepareReportTable(res);
-          console.log(res);
         },
         error: (err) => {
           this._snackBar.open(err, "", {
