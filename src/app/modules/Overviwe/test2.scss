@@ -461,3 +461,52 @@
 .box:hover::before {
   left: 100%;
 }
+
+// .box-header {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+// }
+
+
+
+.overview_header_forButton {
+  position: relative;
+  width: 100%;
+  text-align: center;   /* centers the header text */
+}
+
+.title-text {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.inline-plus-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 32px;
+  height: 28px;          /* ↓ reduce background height */
+  min-height: 28px;     /* override Material default */
+
+  padding: 0;           /* remove extra Material padding */
+  line-height: 28px;
+
+  border-radius: 6px;
+  // background: #f3ef1c;
+  transition: all 0.2s ease;
+}
+
+.inline-plus-btn mat-icon {
+  color: #fffb00; /* change icon color on hover */
+}
+
+// .inline-plus-btn:hover {
+//   background: #FFD700;
+//   transform: translateY(-50%) scale(1.1);
+// }
+// .inline-plus-btn:hover mat-icon {
+//   color: white; /* change icon color on hover */
+// }

@@ -1,15 +1,27 @@
 <div class="container">
   <div class="flex">
     <div class="col">
-      <div class="box" (click)="onClickCOB10()" style="cursor: pointer">
-        <h2 class="overview_header">
-          <span
-            *ngFor="let letter of splitLetters(cob10); let i = index"
-            [style.animation-delay]="i * 0.2 + 's'"
-          >
-            {{ letter }}
+      <div class="box">
+        
+        <h2 class="overview_header_forButton overview_header">
+          <span class="title-text">
+            <span
+              *ngFor="let letter of splitLetters(cob10); let i = index"
+              [style.animation-delay]="i * 0.2 + 's'"
+            >
+              {{ letter }}
+            </span>
           </span>
+        
+          <button
+            mat-icon-button
+            class="inline-plus-btn"
+            (click)="onClickCOB10()"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
         </h2>
+        
         <div class="tr">
           <!-- <div class="td">GEN</div> -->
           <div class="td">C.O. GAS MAKE [Th. Nm³/hr]</div>
@@ -44,15 +56,35 @@
           <div class="td">N/A</div>
         </div>
       </div>
-      <div class="box" (click)="onClickCOB11()" style="cursor: pointer">
-        <h2 class="overview_header">
+      <div class="box">
+        <!-- <h2 class="overview_header">
           <span
             *ngFor="let letter of splitLetters(cob11); let i = index"
             [style.animation-delay]="i * 0.2 + 's'"
           >
             {{ letter }}
           </span>
+        </h2> -->
+
+        <h2 class="overview_header_forButton overview_header">
+          <span class="title-text">
+            <span
+              *ngFor="let letter of splitLetters(cob11); let i = index"
+              [style.animation-delay]="i * 0.2 + 's'"
+            >
+              {{ letter }}
+            </span>
+          </span>
+        
+          <button
+            mat-icon-button
+            class="inline-plus-btn"
+            (click)="onClickCOB11()"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
         </h2>
+
         <div class="tr">
           <!-- <div class="td">MAKE</div> -->
           <div class="td">C.O. GAS MAKE [Nm³/hr]</div>
@@ -95,15 +127,35 @@
       </div>
     </div>
     <div class="col">
-      <div class="box" (click)="onClickBF5()" style="cursor: pointer">
-        <h2 class="overview_header">
+      <div class="box">
+        <!-- <h2 class="overview_header">
           <span
             *ngFor="let letter of splitLetters(bf); let i = index"
             [style.animation-delay]="i * 0.2 + 's'"
           >
             {{ letter }}
           </span>
+        </h2> -->
+
+        <h2 class="overview_header_forButton overview_header">
+          <span class="title-text">
+            <span
+              *ngFor="let letter of splitLetters(bf); let i = index"
+              [style.animation-delay]="i * 0.2 + 's'"
+            >
+              {{ letter }}
+            </span>
+          </span>
+        
+          <button
+            mat-icon-button
+            class="inline-plus-btn"
+            (click)="onClickBF5()"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
         </h2>
+
         <div class="tr">
           <div class="td">BLAST VOLUME [Nm³/min]</div>
           <div class="td">{{ overview_res.BLAST_VOLUME }}</div>
