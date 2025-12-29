@@ -22,37 +22,94 @@ export class GasHolderComponent implements OnInit {
     GASHOLDERLVL: 0,
     GASHOLDERPRES: 0,
     GASHOLDERTEMP: 0,
-    GAS_FLOW_mills: 0
+    GAS_FLOW_mills: 0,
   };
-  gasLevelClass: 'gas-green' | 'gas-yellow' | 'gas-red' = 'gas-green';
+  gasLevelClass: "gas-green" | "gas-yellow" | "gas-red" = "gas-green";
 
   previousValues: any = { ...this.gasholder_res };
   private sseoverview?: Subscription;
 
-  pressureSeries = [{ name: 'Pressure', data: [] }];
-tempSeries     = [{ name: 'Temperature', data: [] }];
-flowSeries     = [{ name: 'Gas Flow', data: [] }];
+  pressureSeries = [{ name: "Pressure", data: [] }];
+  tempSeries = [{ name: "Temperature", data: [] }];
+  flowSeries = [{ name: "Gas Flow", data: [] }];
 
-miniChart = {
-  type: 'area',
-  height: 120,
-  sparkline: { enabled: true },
-  animations: { enabled: true }
-};
+  // miniChart = {
+  //   type: "area",
+  //   height: 120,
+  //   sparkline: { enabled: true },
+  //   animations: { enabled: true },
+  // };
 
-stroke = {
-  curve: 'smooth',
-  width: 2
-};
+  // stroke = {
+  //   curve: "smooth",
+  //   width: 2,
+  // };
 
-xAxis = {
-  type: 'datetime'
-};
+  // xAxis = {
+  //   type: "datetime",
+  // };
 
-tooltip = {
-  theme: 'dark'
-};
+  // tooltip = {
+  //   theme: "dark",
+  // };
 
+  miniChart = {
+    type: "area",
+    height: 120,
+    sparkline: { enabled: false }, // ✅ disable sparkline
+    animations: { enabled: true },
+    toolbar: { show: false },
+    zoom: { enabled: false }
+  };
+  
+  xAxis = {
+    type: "datetime",
+    labels: { show: false },
+    axisBorder: { show: false },
+    axisTicks: { show: false },
+    tooltip: { enabled: false }
+  };
+  
+  yaxis = {
+    opposite: true,
+      labels: {
+        formatter: (val: number) => val.toFixed(2),
+        
+        style: {
+          colors: ['#ef5350'],   // 🔴 red color for Y-axis values
+          fontSize: '11px',
+          fontWeight: 900
+        }
+      }
+    
+  };
+
+  
+  tooltip = {
+    enabled: true,
+    followCursor: false,
+    intersect: false,
+    shared: false,
+    theme: "dark",
+    fixed: { enabled: false },
+  
+    y: {
+      formatter: (val: number) => {
+        return val !== undefined ? val.toFixed(2) : "0.00";
+      }
+    }
+  };
+  
+  
+  stroke = {
+    curve: "smooth",
+    width: 2
+  };
+  
+  grid = {
+    show: false
+  };
+  
   private _unsubscribeAll: Subject<any> = new Subject();
 
   constructor(
@@ -66,7 +123,7 @@ tooltip = {
   splitLetters(text: string): string[] {
     return text.split("").map((c) => (c === " " ? "\u00A0" : c));
   }
-  
+
   animateValue(
     start: number,
     end: number,
@@ -104,14 +161,14 @@ tooltip = {
     const gaslevelvalue = Number(this.gasholder_res.GASHOLDERLVL) || 0;
 
     if (gaslevelvalue < 10) {
-      this.gasLevelClass = 'gas-red';
+      this.gasLevelClass = "gas-red";
     } else if (gaslevelvalue < 20) {
-      this.gasLevelClass = 'gas-yellow';
+      this.gasLevelClass = "gas-yellow";
     } else {
-      this.gasLevelClass = 'gas-green';
+      this.gasLevelClass = "gas-green";
     }
   }
-  
+
   ngOnInit() {
     // this.loading = false;
     interval(60000) // 1 minute
@@ -126,29 +183,48 @@ tooltip = {
       console.log("Response", data);
       const time = new Date().getTime();
 
-      // Update values
-      this.gasholder_res.GASHOLDERPRES = data.GASHOLDERPRES;
-      this.gasholder_res.GASHOLDERTEMP = data.GASHOLDERTEMP;
-      this.gasholder_res.GAS_FLOW_mills = data.GAS_FLOW_mills;
-    
+      const pres = Number(data.GASHOLDERPRES.toFixed(2));
+      const temp = Number(data.GASHOLDERTEMP.toFixed(2));
+      const flow = Number(data.GAS_FLOW_mills.toFixed(2));
+
+        // Update values
+  this.gasholder_res.GASHOLDERPRES = pres;
+  this.gasholder_res.GASHOLDERTEMP = temp;
+  this.gasholder_res.GAS_FLOW_mills = flow;
+
       // Push data to charts (keep last 20 points)
-      this.pressureSeries = [{
-        name: 'Pressure',
-        data: [...this.pressureSeries[0].data, [time, data.GASHOLDERPRES]].slice(-20)
-      }];
-      
-      this.tempSeries = [{
-        name: 'Temperature',
-        data: [...this.tempSeries[0].data, [time, data.GASHOLDERTEMP]].slice(-20)
-      }];
-      
-      this.flowSeries = [{
-        name: 'Gas Flow',
-        data: [...this.flowSeries[0].data, [time, data.GAS_FLOW_mills]].slice(-20)
-      }];
-      
-    
-      this.pressureSeries[0].data.splice(0, this.pressureSeries[0].data.length - 20);
+      this.pressureSeries = [
+        {
+          name: "Pressure",
+          data: [
+            ...this.pressureSeries[0].data,
+            [time, pres],
+          ].slice(-20),
+        },
+      ];
+
+      this.tempSeries = [
+        {
+          name: "Temperature",
+          data: [...this.tempSeries[0].data, [time, temp]].slice(
+            -20
+          ),
+        },
+      ];
+
+      this.flowSeries = [
+        {
+          name: "Gas Flow",
+          data: [...this.flowSeries[0].data, [time, flow]].slice(
+            -20
+          ),
+        },
+      ];
+
+      this.pressureSeries[0].data.splice(
+        0,
+        this.pressureSeries[0].data.length - 20
+      );
       this.tempSeries[0].data.splice(0, this.tempSeries[0].data.length - 20);
       this.flowSeries[0].data.splice(0, this.flowSeries[0].data.length - 20);
 
@@ -160,7 +236,7 @@ tooltip = {
         800,
         (val) => {
           this.gasholder_res.GASHOLDERLVL = val;
-          this.updateGasColor(val);   // ✅ ADD THIS
+          this.updateGasColor(val); // ✅ ADD THIS
         },
         2
       );
