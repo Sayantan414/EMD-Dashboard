@@ -5,6 +5,29 @@ import { SseService } from "app/services/sse.servece";
 import { TrendService } from "app/services/trend.service";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { interval, startWith, Subject, Subscription, takeUntil } from "rxjs";
+
+import {
+  ApexNonAxisChartSeries,
+  ApexPlotOptions,
+  ApexChart,
+  ApexStroke,
+  ApexFill,
+  ApexTooltip,
+  ChartComponent,
+} from "ng-apexcharts";
+
+export type ChartOptions = {
+  series: ApexNonAxisChartSeries;
+  chart: ApexChart;
+  labels: string[];
+  plotOptions: ApexPlotOptions;
+  fill: ApexFill;
+  stroke: ApexStroke;
+  tooltip: ApexTooltip;
+  colors?: string[];
+};
+
+
 @Component({
   selector: "app-gas-holder",
   standalone: true,
@@ -17,6 +40,14 @@ export class GasHolderComponent implements OnInit {
   loading: boolean = true;
   reportData: any[] = [];
   gaslevel = "Gas Level";
+  ghp = "Gas Holder Pressure";
+  gt = "Gas Temperature";
+  gfm = "Gas Flow (Mills)";
+
+  max_GASHOLDERPRES = 300;
+  max_GASHOLDERTEMP = 60;
+  max_GAS_FLOW_mills = 30000;
+
   maxGasLevel = 30;
   gasholder_res = {
     GASHOLDERLVL: 0,
@@ -29,117 +60,109 @@ export class GasHolderComponent implements OnInit {
   previousValues: any = { ...this.gasholder_res };
   private sseoverview?: Subscription;
 
-  pressureSeries = [{ name: "Pressure", data: [] }];
-  tempSeries = [{ name: "Temperature", data: [] }];
-  flowSeries = [{ name: "Gas Flow", data: [] }];
 
-  // miniChart = {
-  //   type: "area",
-  //   height: 120,
-  //   sparkline: { enabled: true },
-  //   animations: { enabled: true },
-  // };
 
-  // stroke = {
-  //   curve: "smooth",
-  //   width: 2,
-  // };
+   tempGauge: any = {
+     series: [2.29],   // live value here
+   
+     chart: {
+       type: "radialBar",
+       height: 300
+      
+     },
+   
+     plotOptions: {
+       radialBar: {
+         startAngle: -90,
+         endAngle: 90,
+         track: {
+           background: "#ffffff",
+           strokeWidth: "90%"
+         },
+         dataLabels: {
+           name: {
+             show: true,
+             offsetY: -10,
+             color: "var(--gauge-text)",
+             fontSize: "20px",
+             formatter: () => "Gas Temperature" 
+           },
+           value: {
+             show: false                 
+           }
+         }
+       }
+     },
+   
+     fill: {
+       type: "gradient",
+       gradient: {
+         shade: "light",
+         type: "horizontal",
+         gradientToColors: ["#ff99ff"],  // 💗 pink right side
+         stops: [0, 100]
+       },
+       colors: ["#000066"]                // 🔵 dark blue left side
+     },
+   
+     stroke: {
+       lineCap: "round"
+     },
+   
+     labels: ["Gas Temperature"]
+   };
+   
+ 
+   flowGauge: Partial<ChartOptions> = {
+     series: [0],
+     chart: {
+       height: 230,
+       type: "radialBar",
+     },
+     plotOptions: {
+       radialBar: {
+         startAngle: -135,
+         endAngle: 135,
+         hollow: {
+           size: "70%",
+         },
+         track: {
+           background: "#ffffff",
+           strokeWidth: "90%"
+         },
+         dataLabels: {
+           name: {
+             show: true,
+             fontSize: "18px",
+             fontWeight: 600,
+             color: "var(--gauge-text)", 
+             offsetY: 10,
+           },
+           value: {
+             show: false,
+           },
+         },
+       },
+     },
+     fill: {
+       type: "gradient",
+       gradient: {
+         shade: "light",
+         type: "horizontal",
+         stops: [0, 100],
+       },
+     },
+     stroke: {
+       lineCap: "round",
+     },
+     labels: ["Gas Flow (Mills)"],
+   };
 
-  // xAxis = {
-  //   type: "datetime",
-  // };
 
-  // tooltip = {
-  //   theme: "dark",
-  // };
 
-  miniChart = {
-    type: "area",
-    height: 120,
-    sparkline: { enabled: false }, // ✅ disable sparkline
-    animations: { enabled: true },
-    toolbar: { show: false },
-    zoom: { enabled: false },
-  };
-
-  xAxis = {
-    type: "datetime",
-    labels: { show: false },
-    axisBorder: { show: false },
-    axisTicks: { show: false },
-    tooltip: { enabled: false },
-  };
-
-  pressureColors = ['#00CCFF']; // Vivid Sky Blue
-  tempColors     = ['#ffa726']; // Orange
-  flowColors     = ['#66bb6a']; // Green
-  
-  pressureYaxis = {
-    labels: {
-      formatter: (val: number) => val.toFixed(2),
-      offsetX: -10,
-      style: {
-        colors: ['#00CCFF'],
-        fontSize: '11px',
-        fontWeight: 900
-      }
-    }
-  };
-  
-  tempYaxis = {
-    // opposite: true,
-    labels: {
-      formatter: (val: number) => val.toFixed(2),
-      offsetX: -10,
-
-      style: {
-        colors: ['#ffa726'],
-        fontSize: '11px',
-        fontWeight: 900
-      }
-    }
-  };
-  
-  flowYaxis = {
-    // opposite: true,
-    labels: {
-      formatter: (val: number) => val.toFixed(2),
-      offsetX: -10,
-
-      style: {
-        colors: ['#66bb6a'],
-        fontSize: '11px',
-        fontWeight: 900
-      }
-    }
-  };
-  
-
-  tooltip = {
-    enabled: true,
-    followCursor: false,
-    intersect: false,
-    shared: false,
-    theme: "dark",
-    fixed: { enabled: false },
-
-    y: {
-      formatter: (val: number) => {
-        return val !== undefined ? val.toFixed(2) : "0.00";
-      },
-    },
-  };
-
-  stroke = {
-    curve: "smooth",
-    width: 2,
-  };
-
-  grid = {
-    show: false,
-  };
 
   private _unsubscribeAll: Subject<any> = new Subject();
+  public pressureGauge: Partial<ChartOptions>;
 
   constructor(
     private sseService: SseService,
@@ -147,6 +170,59 @@ export class GasHolderComponent implements OnInit {
     private _snackBar: MatSnackBar
   ) {
     this._unsubscribeAll = new Subject();
+    this.pressureGauge = {
+      series: [0],
+
+      chart: {
+        height: 228,
+        width: 280,        // <-- width added
+        type: "radialBar",
+        offsetY: -10
+      },
+
+      plotOptions: {
+        radialBar: {
+          startAngle: -135,
+          endAngle: 135,
+          hollow: {
+            size: "65%"
+          },
+          track: {
+            background: "#ffffff",
+            strokeWidth: "90%"
+          },
+          dataLabels: {
+            name: {
+              show: false
+            },
+            value: {
+              fontSize: "20px",
+              offsetY: 10,
+              color: "var(--gauge-text)",      // <-- Set color here, this is allowed
+              fontWeight: "600",  // <-- This is allowed too
+              formatter: () => `Gas Holder Pressure`
+            }
+          }
+        }
+      },
+
+      fill: {
+        type: "gradient",
+        colors: ["#ff4d4d"], 
+        gradient: {
+          shade: "light",
+          type: "horizontal",
+          gradientToColors: ["#ff0000"],
+          stops: [0, 50, 100]
+        }
+      },
+
+      stroke: {
+        dashArray: 4
+      },
+
+      labels: [""]
+    };
   }
 
   splitLetters(text: string): string[] {
@@ -210,48 +286,69 @@ export class GasHolderComponent implements OnInit {
       });
     this.sseoverview = this.sseService.getOverview().subscribe((data: any) => {
       console.log("Response", data);
-      const time = new Date().getTime();
-
-      const pres = Number(data.GASHOLDERPRES.toFixed(2));
-      const temp = Number(data.GASHOLDERTEMP.toFixed(2));
-      const flow = Number(data.GAS_FLOW_mills.toFixed(2));
-
-      // Update values
-      this.gasholder_res.GASHOLDERPRES = pres;
-      this.gasholder_res.GASHOLDERTEMP = temp;
-      this.gasholder_res.GAS_FLOW_mills = flow;
-
-      // Push data to charts (keep last 20 points)
-      this.pressureSeries = [
-        {
-          name: "Pressure",
-          data: [...this.pressureSeries[0].data, [time, pres]].slice(-20),
-        },
-      ];
-
-      this.tempSeries = [
-        {
-          name: "Temperature",
-          data: [...this.tempSeries[0].data, [time, temp]].slice(-20),
-        },
-      ];
-
-      this.flowSeries = [
-        {
-          name: "Gas Flow",
-          data: [...this.flowSeries[0].data, [time, flow]].slice(-20),
-        },
-      ];
-
-      this.pressureSeries[0].data.splice(
-        0,
-        this.pressureSeries[0].data.length - 20
-      );
-      this.tempSeries[0].data.splice(0, this.tempSeries[0].data.length - 20);
-      this.flowSeries[0].data.splice(0, this.flowSeries[0].data.length - 20);
 
       // Animate each property
-      //sourav code
+
+      this.animateValue(
+        this.previousValues.GASHOLDERPRES,
+        data.GASHOLDERPRES,
+        800, // ms
+        (val) => {
+          
+          if (isNaN(val)) this.gasholder_res.GASHOLDERPRES = 0;
+          else this.gasholder_res.GASHOLDERPRES = val;
+          console.log(this.gasholder_res.GASHOLDERPRES);
+
+          // ✅ Update gauge
+          const maxGasMake = this.max_GASHOLDERPRES || 300; // fallback if API doesn't send
+          const percent = Math.min((val / maxGasMake) * 100, 100);
+          this.pressureGauge.series = [percent];
+
+        },
+        2
+      );
+
+
+      this.animateValue(
+        this.previousValues.GASHOLDERTEMP,
+        data.GASHOLDERTEMP,
+        800, // ms
+        (val) => {
+          
+          if (isNaN(val)) this.gasholder_res.GASHOLDERTEMP = 0;
+          else this.gasholder_res.GASHOLDERTEMP = val;
+          console.log(this.gasholder_res.GASHOLDERTEMP);
+
+          // ✅ Update gauge
+          const maxGasMake = this.max_GASHOLDERTEMP || 60; // fallback if API doesn't send
+          const percent = Math.min((val / maxGasMake) * 100, 100);
+          this.tempGauge.series = [percent];
+
+        },
+        2
+      );
+
+
+
+      this.animateValue(
+        this.previousValues.GAS_FLOW_mills,
+        data.GAS_FLOW_mills,
+        800, // ms
+        (val) => {
+          
+          if (isNaN(val)) this.gasholder_res.GAS_FLOW_mills = 0;
+          else this.gasholder_res.GAS_FLOW_mills = val;
+
+          // ✅ Update gauge
+          const maxGasMake = this.max_GAS_FLOW_mills || 30000; // fallback if API doesn't send
+          const percent = Math.min((val / maxGasMake) * 100, 100);
+          this.flowGauge.series = [percent];
+
+        },
+        2
+      );
+
+
       this.animateValue(
         this.previousValues.GASHOLDERLVL,
         data.GASHOLDERLVL,
