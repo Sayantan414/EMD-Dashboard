@@ -84,8 +84,8 @@ export class GasHolderComponent implements OnInit {
              show: true,
              offsetY: -10,
              color: "var(--gauge-text)",
-             fontSize: "20px",
-             formatter: () => "Gas Temperature" 
+             fontSize: "17px",
+             formatter: () => "TEMPERATURE" 
            },
            value: {
              show: false                 
@@ -109,7 +109,7 @@ export class GasHolderComponent implements OnInit {
        lineCap: "round"
      },
    
-     labels: ["Gas Temperature"]
+     labels: ["TEMPERATURE"]
    };
    
  
@@ -133,7 +133,7 @@ export class GasHolderComponent implements OnInit {
          dataLabels: {
            name: {
              show: true,
-             fontSize: "18px",
+             fontSize: "17px",
              fontWeight: 600,
              color: "var(--gauge-text)", 
              offsetY: 10,
@@ -155,7 +155,7 @@ export class GasHolderComponent implements OnInit {
      stroke: {
        lineCap: "round",
      },
-     labels: ["Gas Flow (Mills)"],
+     labels: ["GAS FLOW"],
    };
 
 
@@ -175,11 +175,11 @@ export class GasHolderComponent implements OnInit {
 
       chart: {
         height: 228,
-        width: 280,        // <-- width added
         type: "radialBar",
         offsetY: -10
       },
 
+      
       plotOptions: {
         radialBar: {
           startAngle: -135,
@@ -196,11 +196,11 @@ export class GasHolderComponent implements OnInit {
               show: false
             },
             value: {
-              fontSize: "20px",
+              fontSize: "17px",
               offsetY: 10,
               color: "var(--gauge-text)",      // <-- Set color here, this is allowed
               fontWeight: "600",  // <-- This is allowed too
-              formatter: () => `Gas Holder Pressure`
+              formatter: () => `PRESSURE`
             }
           }
         }
