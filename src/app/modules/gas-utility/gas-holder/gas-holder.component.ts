@@ -59,32 +59,62 @@ export class GasHolderComponent implements OnInit {
     sparkline: { enabled: false }, // ✅ disable sparkline
     animations: { enabled: true },
     toolbar: { show: false },
-    zoom: { enabled: false }
+    zoom: { enabled: false },
   };
-  
+
   xAxis = {
     type: "datetime",
     labels: { show: false },
     axisBorder: { show: false },
     axisTicks: { show: false },
-    tooltip: { enabled: false }
-  };
-  
-  yaxis = {
-    opposite: true,
-      labels: {
-        formatter: (val: number) => val.toFixed(2),
-        
-        style: {
-          colors: ['#ef5350'],   // 🔴 red color for Y-axis values
-          fontSize: '11px',
-          fontWeight: 900
-        }
-      }
-    
+    tooltip: { enabled: false },
   };
 
+  pressureColors = ['#00CCFF']; // Vivid Sky Blue
+  tempColors     = ['#ffa726']; // Orange
+  flowColors     = ['#66bb6a']; // Green
   
+  pressureYaxis = {
+    labels: {
+      formatter: (val: number) => val.toFixed(2),
+      offsetX: -10,
+      style: {
+        colors: ['#00CCFF'],
+        fontSize: '11px',
+        fontWeight: 900
+      }
+    }
+  };
+  
+  tempYaxis = {
+    // opposite: true,
+    labels: {
+      formatter: (val: number) => val.toFixed(2),
+      offsetX: -10,
+
+      style: {
+        colors: ['#ffa726'],
+        fontSize: '11px',
+        fontWeight: 900
+      }
+    }
+  };
+  
+  flowYaxis = {
+    // opposite: true,
+    labels: {
+      formatter: (val: number) => val.toFixed(2),
+      offsetX: -10,
+
+      style: {
+        colors: ['#66bb6a'],
+        fontSize: '11px',
+        fontWeight: 900
+      }
+    }
+  };
+  
+
   tooltip = {
     enabled: true,
     followCursor: false,
@@ -92,24 +122,23 @@ export class GasHolderComponent implements OnInit {
     shared: false,
     theme: "dark",
     fixed: { enabled: false },
-  
+
     y: {
       formatter: (val: number) => {
         return val !== undefined ? val.toFixed(2) : "0.00";
-      }
-    }
+      },
+    },
   };
-  
-  
+
   stroke = {
     curve: "smooth",
-    width: 2
+    width: 2,
   };
-  
+
   grid = {
-    show: false
+    show: false,
   };
-  
+
   private _unsubscribeAll: Subject<any> = new Subject();
 
   constructor(
@@ -187,37 +216,30 @@ export class GasHolderComponent implements OnInit {
       const temp = Number(data.GASHOLDERTEMP.toFixed(2));
       const flow = Number(data.GAS_FLOW_mills.toFixed(2));
 
-        // Update values
-  this.gasholder_res.GASHOLDERPRES = pres;
-  this.gasholder_res.GASHOLDERTEMP = temp;
-  this.gasholder_res.GAS_FLOW_mills = flow;
+      // Update values
+      this.gasholder_res.GASHOLDERPRES = pres;
+      this.gasholder_res.GASHOLDERTEMP = temp;
+      this.gasholder_res.GAS_FLOW_mills = flow;
 
       // Push data to charts (keep last 20 points)
       this.pressureSeries = [
         {
           name: "Pressure",
-          data: [
-            ...this.pressureSeries[0].data,
-            [time, pres],
-          ].slice(-20),
+          data: [...this.pressureSeries[0].data, [time, pres]].slice(-20),
         },
       ];
 
       this.tempSeries = [
         {
           name: "Temperature",
-          data: [...this.tempSeries[0].data, [time, temp]].slice(
-            -20
-          ),
+          data: [...this.tempSeries[0].data, [time, temp]].slice(-20),
         },
       ];
 
       this.flowSeries = [
         {
           name: "Gas Flow",
-          data: [...this.flowSeries[0].data, [time, flow]].slice(
-            -20
-          ),
+          data: [...this.flowSeries[0].data, [time, flow]].slice(-20),
         },
       ];
 

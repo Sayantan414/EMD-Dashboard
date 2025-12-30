@@ -49,24 +49,26 @@
           </div>
 
           <div
-            class="metric-value"
-            [ngClass]="{
-              'value-green': gasholder_res.GASHOLDERPRES >= 20,
-              'value-yellow':
-                gasholder_res.GASHOLDERPRES >= 10 &&
-                gasholder_res.GASHOLDERPRES < 20,
-              'value-red': gasholder_res.GASHOLDERPRES < 10
-            }"
+            class="metric-value value-skyblue"
+           
           >
+          <!-- [ngClass]="{
+            'value-green': gasholder_res.GASHOLDERPRES >= 20,
+            'value-yellow':
+              gasholder_res.GASHOLDERPRES >= 10 &&
+              gasholder_res.GASHOLDERPRES < 20,
+            'value-red': gasholder_res.GASHOLDERPRES < 10
+          }" -->
             {{ gasholder_res.GASHOLDERPRES | number : "1.2-2" }}
           </div>
 
           <apx-chart
             [series]="pressureSeries"
             [chart]="miniChart"
+            [colors]="pressureColors"
             [stroke]="stroke"
             [xaxis]="xAxis"
-            [yaxis]="yaxis"
+            [yaxis]="pressureYaxis"
             [tooltip]="tooltip"
             [grid]="grid"
           >
@@ -81,15 +83,17 @@
           </div>
 
           <div
-            class="metric-value"
-            [ngClass]="{
-              'value-green': gasholder_res.GASHOLDERTEMP < 60,
-              'value-yellow':
-                gasholder_res.GASHOLDERTEMP >= 60 &&
-                gasholder_res.GASHOLDERTEMP < 80,
-              'value-red': gasholder_res.GASHOLDERTEMP >= 80
-            }"
+            class="metric-value value-orange"
+           
           >
+          <!-- [ngClass]="{
+            'value-green': gasholder_res.GASHOLDERTEMP < 60,
+            'value-yellow':
+              gasholder_res.GASHOLDERTEMP >= 60 &&
+              gasholder_res.GASHOLDERTEMP < 80,
+            'value-red': gasholder_res.GASHOLDERTEMP >= 80
+          }" -->
+
             {{ gasholder_res.GASHOLDERTEMP | number : "1.2-2" }}
             <span class="metric-unit">°C</span>
           </div>
@@ -97,9 +101,10 @@
           <apx-chart
             [series]="tempSeries"
             [chart]="miniChart"
+            [colors]="tempColors"
             [stroke]="stroke"
             [xaxis]="xAxis"
-            [yaxis]="yaxis"
+            [yaxis]="tempYaxis"
             [tooltip]="tooltip"
             [grid]="grid"
           >
@@ -114,24 +119,27 @@
           </div>
 
           <div
-            class="metric-value"
-            [ngClass]="{
-              'value-green': gasholder_res.GAS_FLOW_mills >= 15,
-              'value-yellow':
-                gasholder_res.GAS_FLOW_mills >= 5 &&
-                gasholder_res.GAS_FLOW_mills < 15,
-              'value-red': gasholder_res.GAS_FLOW_mills < 5
-            }"
+            class="metric-value value-green"
+           
           >
+          <!-- [ngClass]="{
+            'value-green': gasholder_res.GAS_FLOW_mills >= 15,
+            'value-yellow':
+              gasholder_res.GAS_FLOW_mills >= 5 &&
+              gasholder_res.GAS_FLOW_mills < 15,
+            'value-red': gasholder_res.GAS_FLOW_mills < 5
+          }" -->
+
             {{ gasholder_res.GAS_FLOW_mills | number : "1.2-2" }}
           </div>
 
           <apx-chart
             [series]="flowSeries"
             [chart]="miniChart"
+            [colors]="flowColors"
             [stroke]="stroke"
             [xaxis]="xAxis"
-            [yaxis]="yaxis"
+            [yaxis]="flowYaxis"
             [tooltip]="tooltip"
             [grid]="grid"
           >
