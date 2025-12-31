@@ -200,17 +200,16 @@
               </span>
             </h2>
             <apx-chart
-            [series]="tempGauge.series"
-            [chart]="tempGauge.chart"
-            [labels]="tempGauge.labels"
-            [plotOptions]="tempGauge.plotOptions"
-            [fill]="tempGauge.fill"
-            [stroke]="tempGauge.stroke"
+            [series]="expGasPBSGauge.series"
+            [chart]="expGasPBSGauge.chart"
+            [labels]="expGasPBSGauge.labels"
+            [plotOptions]="expGasPBSGauge.plotOptions"
+            [fill]="expGasPBSGauge.fill"
+            [stroke]="expGasPBSGauge.stroke"
           >
           </apx-chart>
             <div class="meter-value">
-                {{ gasholder_res.GASHOLDERTEMP | number : "1.2-2" }}
-                <span class="metric-unit">°C</span>
+                {{ gasholder_res.Mills_totaliser | number : "1.2-2" }}
             </div>
           </div>
   

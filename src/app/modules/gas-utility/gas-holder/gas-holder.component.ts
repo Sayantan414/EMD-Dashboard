@@ -27,7 +27,6 @@ export type ChartOptions = {
   colors?: string[];
 };
 
-
 @Component({
   selector: "app-gas-holder",
   standalone: true,
@@ -47,123 +46,167 @@ export class GasHolderComponent implements OnInit {
   tldgm = "Totalizer LD Gas Mills (Nm3)";
   tldgpbs = "Totalizer LD Gas PBS (Nm3)";
 
+  maxGasLevel = 30;
 
   max_GASHOLDERPRES = 300;
   max_GASHOLDERTEMP = 60;
   max_GAS_FLOW_mills = 30000;
+  max_Mills_totaliser = 600000;
 
-  maxGasLevel = 30;
   gasholder_res = {
     GASHOLDERLVL: 0,
     GASHOLDERPRES: 0,
     GASHOLDERTEMP: 0,
     GAS_FLOW_mills: 0,
+    Mills_totaliser: 0,
   };
   gasLevelClass: "gas-Warm" | "gas-purple" | "gas-red" = "gas-Warm";
 
   previousValues: any = { ...this.gasholder_res };
   private sseoverview?: Subscription;
 
+  tempGauge: any = {
+    series: [2.29], // live value here
 
+    chart: {
+      type: "radialBar",
+      height: 300,
+    },
 
-   tempGauge: any = {
-     series: [2.29],   // live value here
-   
-     chart: {
-       type: "radialBar", 
-       height: 300
-      
-     },
-   
-     plotOptions: {
-       radialBar: {
-         startAngle: -90,
-         endAngle: 90,
-         track: {
-           background: "#ffffff",
-           strokeWidth: "90%"
-         },
-         dataLabels: {
-           name: {
-             show: true,
-             offsetY: -10,
-             color: "var(--gauge-text)",
-             fontSize: "17px",
-             formatter: () => "TEMPERATURE" 
-           },
-           value: {
-             show: false                 
-           }
-         }
-       }
-     },
-   
-     fill: {
-       type: "gradient",
-       gradient: {
-         shade: "light",
-         type: "horizontal",
-         gradientToColors: ["#ff99ff"],  // 💗 pink right side
-         stops: [0, 100]
-       },
-       colors: ["#000066"]                // 🔵 dark blue left side
-     },
-   
-     stroke: {
-       lineCap: "round"
-     },
-   
-     labels: ["TEMPERATURE"]
-   };
-   
- 
-   flowGauge: Partial<ChartOptions> = {
-     series: [0],
-     chart: {
-       height: 230,
-       type: "radialBar",
-     },
-     plotOptions: {
-       radialBar: {
-         startAngle: -135,
-         endAngle: 135,
-         hollow: {
-           size: "70%",
-         },
-         track: {
-           background: "#ffffff",
-           strokeWidth: "90%"
-         },
-         dataLabels: {
-           name: {
-             show: true,
-             fontSize: "17px",
-             fontWeight: 600,
-             color: "var(--gauge-text)", 
-             offsetY: 10,
-           },
-           value: {
-             show: false,
-           },
-         },
-       },
-     },
-     fill: {
-       type: "gradient",
-       gradient: {
-         shade: "light",
-         type: "horizontal",
-         stops: [0, 100],
-       },
-     },
-     stroke: {
-       lineCap: "round",
-     },
-     labels: ["GAS FLOW"],
-   };
+    plotOptions: {
+      radialBar: {
+        startAngle: -90,
+        endAngle: 90,
+        track: {
+          background: "#ffffff",
+          strokeWidth: "90%",
+        },
+        dataLabels: {
+          name: {
+            show: true,
+            offsetY: -10,
+            color: "var(--gauge-text)",
+            fontSize: "17px",
+            formatter: () => "TEMPERATURE",
+          },
+          value: {
+            show: false,
+          },
+        },
+      },
+    },
 
+    fill: {
+      type: "gradient",
+      gradient: {
+        shade: "light",
+        type: "horizontal",
+        gradientToColors: ["#ff99ff"], // 💗 pink right side
+        stops: [0, 100],
+      },
+      colors: ["#000066"], // 🔵 dark blue left side
+    },
 
+    stroke: {
+      lineCap: "round",
+    },
 
+    labels: ["TEMPERATURE"],
+  };
+
+  flowGauge: Partial<ChartOptions> = {
+    series: [0],
+    chart: {
+      height: 230,
+      type: "radialBar",
+    },
+    plotOptions: {
+      radialBar: {
+        startAngle: -135,
+        endAngle: 135,
+        hollow: {
+          size: "70%",
+        },
+        track: {
+          background: "#ffffff",
+          strokeWidth: "90%",
+        },
+        dataLabels: {
+          name: {
+            show: true,
+            fontSize: "17px",
+            fontWeight: 600,
+            color: "var(--gauge-text)",
+            offsetY: 10,
+          },
+          value: {
+            show: false,
+          },
+        },
+      },
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        shade: "light",
+        type: "horizontal",
+        stops: [0, 100],
+      },
+    },
+    stroke: {
+      lineCap: "round",
+    },
+    labels: ["GAS FLOW"],
+  };
+
+  expGasPBSGauge: any = {
+    series: [2.29], // live value here
+
+    chart: {
+      type: "radialBar",
+      height: 300,
+    },
+
+    plotOptions: {
+      radialBar: {
+        startAngle: -90,
+        endAngle: 90,
+        track: {
+          background: "#ffffff",
+          strokeWidth: "90%",
+        },
+        dataLabels: {
+          name: {
+            show: true,
+            offsetY: -10,
+            color: "var(--gauge-text)",
+            fontSize: "17px",
+            formatter: () => "MILLS",
+          },
+          value: {
+            show: false,
+          },
+        },
+      },
+    },
+
+    fill: {
+      type: "gradient",
+      gradient: {
+        shade: "light",
+        type: "horizontal",
+        gradientToColors: ["#ff99ff"], // 💗 pink right side
+        stops: [0, 100],
+      },
+      colors: ["#000066"], // 🔵 dark blue left side
+    },
+
+    stroke: {
+      lineCap: "round",
+    },
+
+    labels: ["MILLS"],
+  };
 
   private _unsubscribeAll: Subject<any> = new Subject();
   public pressureGauge: Partial<ChartOptions>;
@@ -180,52 +223,51 @@ export class GasHolderComponent implements OnInit {
       chart: {
         height: 228,
         type: "radialBar",
-        offsetY: -10
+        offsetY: -10,
       },
 
-      
       plotOptions: {
         radialBar: {
           startAngle: -135,
           endAngle: 135,
           hollow: {
-            size: "65%"
+            size: "65%",
           },
           track: {
             background: "#ffffff",
-            strokeWidth: "90%"
+            strokeWidth: "90%",
           },
           dataLabels: {
             name: {
-              show: false
+              show: false,
             },
             value: {
               fontSize: "17px",
               offsetY: 10,
-              color: "var(--gauge-text)",      // <-- Set color here, this is allowed
-              fontWeight: "600",  // <-- This is allowed too
-              formatter: () => `PRESSURE`
-            }
-          }
-        }
+              color: "var(--gauge-text)", // <-- Set color here, this is allowed
+              fontWeight: "600", // <-- This is allowed too
+              formatter: () => `PRESSURE`,
+            },
+          },
+        },
       },
 
       fill: {
         type: "gradient",
-        colors: ["#ff4d4d"], 
+        colors: ["#ff4d4d"],
         gradient: {
           shade: "light",
           type: "horizontal",
           gradientToColors: ["#ff0000"],
-          stops: [0, 50, 100]
-        }
+          stops: [0, 50, 100],
+        },
       },
 
       stroke: {
-        dashArray: 4
+        dashArray: 4,
       },
 
-      labels: [""]
+      labels: [""],
     };
   }
 
@@ -298,48 +340,38 @@ export class GasHolderComponent implements OnInit {
         data.GASHOLDERPRES,
         800, // ms
         (val) => {
-          
           if (isNaN(val)) this.gasholder_res.GASHOLDERPRES = 0;
           else this.gasholder_res.GASHOLDERPRES = val;
-          console.log(this.gasholder_res.GASHOLDERPRES);
 
           // ✅ Update gauge
           const maxGasMake = this.max_GASHOLDERPRES || 300; // fallback if API doesn't send
           const percent = Math.min((val / maxGasMake) * 100, 100);
           this.pressureGauge.series = [percent];
-
         },
         2
       );
-
 
       this.animateValue(
         this.previousValues.GASHOLDERTEMP,
         data.GASHOLDERTEMP,
         800, // ms
         (val) => {
-          
           if (isNaN(val)) this.gasholder_res.GASHOLDERTEMP = 0;
           else this.gasholder_res.GASHOLDERTEMP = val;
-          console.log(this.gasholder_res.GASHOLDERTEMP);
 
           // ✅ Update gauge
           const maxGasMake = this.max_GASHOLDERTEMP || 60; // fallback if API doesn't send
           const percent = Math.min((val / maxGasMake) * 100, 100);
           this.tempGauge.series = [percent];
-
         },
         2
       );
-
-
 
       this.animateValue(
         this.previousValues.GAS_FLOW_mills,
         data.GAS_FLOW_mills,
         800, // ms
         (val) => {
-          
           if (isNaN(val)) this.gasholder_res.GAS_FLOW_mills = 0;
           else this.gasholder_res.GAS_FLOW_mills = val;
 
@@ -347,11 +379,25 @@ export class GasHolderComponent implements OnInit {
           const maxGasMake = this.max_GAS_FLOW_mills || 30000; // fallback if API doesn't send
           const percent = Math.min((val / maxGasMake) * 100, 100);
           this.flowGauge.series = [percent];
-
         },
         2
       );
 
+      this.animateValue(
+        this.previousValues.Mills_totaliser,
+        data.Mills_totaliser,
+        800, // ms
+        (val) => {
+          if (isNaN(val)) this.gasholder_res.Mills_totaliser = 0;
+          else this.gasholder_res.Mills_totaliser = val;
+
+          // ✅ Update gauge
+          const maxGasMake = this.max_Mills_totaliser || 600000; // fallback if API doesn't send
+          const percent = Math.min((val / maxGasMake) * 100, 100);
+          this.expGasPBSGauge.series = [percent];
+        },
+        2
+      );
 
       this.animateValue(
         this.previousValues.GASHOLDERLVL,
