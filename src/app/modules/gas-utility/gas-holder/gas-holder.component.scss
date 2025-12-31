@@ -430,12 +430,19 @@
   animation: gasGlow 3s ease-in-out infinite;
 }
 
-.gas-green {
+.gas-Warm {
+  // background: linear-gradient(
+  //   to top,
+  //   #00c853 0%,
+  //   #69f0ae 60%,
+  //   #b9f6ca 100%
+  // );
+
   background: linear-gradient(
     to top,
-    #00c853 0%,
-    #69f0ae 60%,
-    #b9f6ca 100%
+    #8d4a2f 0%, //Copper
+    #c97c5d 60%, // Rose Bronze
+    #f3e0d6 100% // Soft Beige
   );
 }
 

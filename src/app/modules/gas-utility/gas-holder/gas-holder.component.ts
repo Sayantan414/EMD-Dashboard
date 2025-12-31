@@ -43,6 +43,10 @@ export class GasHolderComponent implements OnInit {
   ghp = "Gas Holder Pressure";
   gt = "Gas Temperature";
   gfm = "Gas Flow (Mills)";
+  gpbs = "Exported Gas PBS";
+  tldgm = "Totalizer LD Gas Mills (Nm3)";
+  tldgpbs = "Totalizer LD Gas PBS (Nm3)";
+
 
   max_GASHOLDERPRES = 300;
   max_GASHOLDERTEMP = 60;
@@ -55,7 +59,7 @@ export class GasHolderComponent implements OnInit {
     GASHOLDERTEMP: 0,
     GAS_FLOW_mills: 0,
   };
-  gasLevelClass: "gas-green" | "gas-purple" | "gas-red" = "gas-green";
+  gasLevelClass: "gas-Warm" | "gas-purple" | "gas-red" = "gas-Warm";
 
   previousValues: any = { ...this.gasholder_res };
   private sseoverview?: Subscription;
@@ -66,7 +70,7 @@ export class GasHolderComponent implements OnInit {
      series: [2.29],   // live value here
    
      chart: {
-       type: "radialBar",
+       type: "radialBar", 
        height: 300
       
      },
@@ -270,7 +274,7 @@ export class GasHolderComponent implements OnInit {
     } else if (gaslevelvalue < 20) {
       this.gasLevelClass = "gas-purple";
     } else {
-      this.gasLevelClass = "gas-green";
+      this.gasLevelClass = "gas-Warm";
     }
   }
 
