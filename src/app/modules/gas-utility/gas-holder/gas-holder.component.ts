@@ -55,7 +55,7 @@ export class GasHolderComponent implements OnInit {
     GASHOLDERTEMP: 0,
     GAS_FLOW_mills: 0,
   };
-  gasLevelClass: "gas-green" | "gas-yellow" | "gas-red" = "gas-green";
+  gasLevelClass: "gas-green" | "gas-purple" | "gas-red" = "gas-green";
 
   previousValues: any = { ...this.gasholder_res };
   private sseoverview?: Subscription;
@@ -268,7 +268,7 @@ export class GasHolderComponent implements OnInit {
     if (gaslevelvalue < 10) {
       this.gasLevelClass = "gas-red";
     } else if (gaslevelvalue < 20) {
-      this.gasLevelClass = "gas-yellow";
+      this.gasLevelClass = "gas-purple";
     } else {
       this.gasLevelClass = "gas-green";
     }

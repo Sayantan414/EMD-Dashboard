@@ -201,6 +201,7 @@
 .layout-container {
   display: flex;
   align-items: center;
+  justify-content: center;
   background: var(--backg-clr);
   width: 100%;
   overflow-x: auto;
@@ -246,10 +247,22 @@
 
 }
 
-.metric-box {
-  width: 20%;
-  padding: 0 0 16px 0;
+.metrics-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
 
+.metric-row {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.metric-box {
+  width: 50%;
+  padding: 0 0 16px 0;
+  height: 100%;
   border: 1px solid #939393;
   background: var(--chart-background);
   border-radius: var(--radius);
@@ -426,12 +439,18 @@
   );
 }
 
-.gas-yellow {
+.gas-purple {
+  // background: linear-gradient(
+  //   to top,
+  //   #f9a825 0%,
+  //   #ffd54f 60%,
+  //   #fff9c4 100%
+  // );
   background: linear-gradient(
     to top,
-    #f9a825 0%,
-    #ffd54f 60%,
-    #fff9c4 100%
+    #6a1b9a 0%,
+    #ba68c8 60%,
+    #f3e5f5 100%
   );
 }
 
@@ -454,23 +473,16 @@
   margin-top: 4px;
 }
 
-/* Gas text */
-// .gas-info h2 {
-//   font-size: 22px;
-//   margin-bottom: 8px;
-//   // color: var(--text-colour);
-// }
 
 .gas-value p {
-  // color: var(--text-colour);
-
-  color: #0099ff;
+  color: var(--chart-value);
+  // color: #01888d;
   white-space: nowrap;
   text-align: center;
     display: block;
   font-size: 15px;
-  font-weight: 600;
-  opacity: 0.85;
+  font-weight: 400;
+  // opacity: 0.85;
 }
 
 .gas-wave {
@@ -572,9 +584,15 @@
 
 
 .cylinder-with-header {
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+
   display: flex;
-  flex-direction: column;
+  flex-direction: row;     /* ✅ LEFT–RIGHT layout */
   align-items: center;
+  gap: 40px;
+  width: 100%;
 }
 
 /* Header spacing */
@@ -582,4 +600,29 @@
   margin-top: 12px;
   width: 150px;
   text-align: center;
+}
+
+.detail-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* ✅ horizontal center */
+  justify-content: center; /* ✅ vertical center */
+  // width: 0%;
+  min-width: 278px;
+  min-height: 200px; /* ✅ optional: ensures at least some height */
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--header-text);
+  border-radius: 14px;
+  padding: 25px 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  color: var(--detail-view-text);
+  font-family: "Open Sans", sans-serif;
+  transition: all 0.3s ease;
+  // transform: translateX(20px);
+}
+
+.detail-view:hover {
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 12px 28px var(--header-text);
 }

@@ -41,21 +41,63 @@
   <div *ngIf="viewMode === 'gasholder'">
     <div class="cylinder-with-header layout-container pb-10">
       <!-- METRIC CHART BOXES -->
-      <div class="metric-container">
+      <!-- <div class="metric-container"> -->
 
-
-
-        <!-- Gas Holder Pressure -->
-        <div class="metric-box">
-          <h2 class="area_header">
+        <div class="detail-view">
+          <div class="cylinder">
+            <div class="cylinder-cap"></div>
+    
+            <div class="cylinder-body">
+              <!-- VALUE INSIDE -->
+              <div class="gas-value">
+                <p>
+                  <strong
+                    >{{ gasholder_res.GASHOLDERLVL | number : "1.2-2" }} kg
+                  / {{ maxGasLevel }} kg</strong
+                  >
+                </p>
+              </div>
+    
+              <div
+                class="gas-fill"
+                [ngClass]="gasLevelClass"
+                [style.height.%]="gasFillPercent"
+              >
+                <div class="gas-wave"></div>
+                <div class="gas-shine"></div>
+              </div>
+            </div>
+    
+            <div class="cylinder-base"></div>
+          </div>
+    
+          <!-- HEADER BELOW -->
+          <h2 class="area_header gas-header">
             <span
-              *ngFor="let letter of splitLetters(ghp); let i = index"
+              *ngFor="let letter of splitLetters(gaslevel); let i = index"
               [style.animation-delay]="i * 0.2 + 's'"
             >
               {{ letter }}
             </span>
           </h2>
-          <apx-chart
+        </div>
+
+              <!-- RIGHT : METRICS (2 ROWS) -->
+      <div class="metrics-wrapper">
+  
+        <!-- ROW 1 -->
+        <div class="metric-row">
+          <!-- Pressure -->
+          <div class="metric-box">
+            <h2 class="area_header">
+              <span
+                *ngFor="let letter of splitLetters(ghp); let i = index"
+                [style.animation-delay]="i * 0.2 + 's'"
+              >
+                {{ letter }}
+              </span>
+            </h2>
+            <apx-chart
             [series]="pressureGauge.series"
             [chart]="pressureGauge.chart"
             [labels]="pressureGauge.labels"
@@ -64,25 +106,22 @@
             [stroke]="pressureGauge.stroke"
           >
           </apx-chart>
-          <!-- Actual live value -->
-          <div class="meter-value">
-            {{ gasholder_res.GASHOLDERPRES | number : "1.2-2" }}
+            <div class="meter-value">
+                {{ gasholder_res.GASHOLDERPRES | number : "1.2-2" }}
+            </div>
           </div>
-        </div>
-
-
-
-        <!-- Gas Temperature -->
-        <div class="metric-box">
-          <h2 class="area_header">
-            <span
-              *ngFor="let letter of splitLetters(gt); let i = index"
-              [style.animation-delay]="i * 0.2 + 's'"
-            >
-              {{ letter }}
-            </span>
-          </h2>
-          <apx-chart
+  
+          <!-- Temperature -->
+          <div class="metric-box">
+            <h2 class="area_header">
+              <span
+                *ngFor="let letter of splitLetters(gt); let i = index"
+                [style.animation-delay]="i * 0.2 + 's'"
+              >
+                {{ letter }}
+              </span>
+            </h2>
+            <apx-chart
             [series]="tempGauge.series"
             [chart]="tempGauge.chart"
             [labels]="tempGauge.labels"
@@ -91,26 +130,23 @@
             [stroke]="tempGauge.stroke"
           >
           </apx-chart>
-          <!-- Actual live value -->
-          <div class="meter-value">
-            {{ gasholder_res.GASHOLDERTEMP | number : "1.2-2" }}
-            <span class="metric-unit">°C</span>
+            <div class="meter-value">
+                {{ gasholder_res.GASHOLDERTEMP | number : "1.2-2" }}
+                <span class="metric-unit">°C</span>
+            </div>
           </div>
-        </div>
-
-
-
-        <!-- Gas Flow (Mills) -->
-        <div class="metric-box">
-          <h2 class="area_header">
-            <span
-              *ngFor="let letter of splitLetters(gfm); let i = index"
-              [style.animation-delay]="i * 0.2 + 's'"
-            >
-              {{ letter }}
-            </span>
-          </h2>
-          <apx-chart
+  
+          <!-- Flow -->
+          <div class="metric-box">
+            <h2 class="area_header">
+              <span
+                *ngFor="let letter of splitLetters(gfm); let i = index"
+                [style.animation-delay]="i * 0.2 + 's'"
+              >
+                {{ letter }}
+              </span>
+            </h2>
+            <apx-chart
             [series]="flowGauge.series"
             [chart]="flowGauge.chart"
             [labels]="flowGauge.labels"
@@ -119,49 +155,94 @@
             [stroke]="flowGauge.stroke"
           >
           </apx-chart>
-          <!-- Actual live value -->
-          <div class="meter-value">
-            {{ gasholder_res.GAS_FLOW_mills | number : "1.2-2" }}
+            <div class="meter-value">
+                {{ gasholder_res.GAS_FLOW_mills | number : "1.2-2" }}
+            </div>
           </div>
         </div>
-      </div>
-      <br />
-      <div class="cylinder">
-        <div class="cylinder-cap"></div>
 
-        <div class="cylinder-body">
-          <!-- VALUE INSIDE -->
-          <div class="gas-value">
-            <p>
-              <strong
-                >{{ gasholder_res.GASHOLDERLVL | number : "1.2-2" }} kg</strong
+
+
+        <!-- ROW 2 (SAME CHARTS) -->
+        <div class="metric-row">
+          <!-- Pressure -->
+          <div class="metric-box">
+            <h2 class="area_header">
+              <span
+                *ngFor="let letter of splitLetters(ghp); let i = index"
+                [style.animation-delay]="i * 0.2 + 's'"
               >
-              / {{ maxGasLevel }} kg
-            </p>
-          </div>
-
-          <div
-            class="gas-fill"
-            [ngClass]="gasLevelClass"
-            [style.height.%]="gasFillPercent"
+                {{ letter }}
+              </span>
+            </h2>
+            <apx-chart
+            [series]="pressureGauge.series"
+            [chart]="pressureGauge.chart"
+            [labels]="pressureGauge.labels"
+            [plotOptions]="pressureGauge.plotOptions"
+            [fill]="pressureGauge.fill"
+            [stroke]="pressureGauge.stroke"
           >
-            <div class="gas-wave"></div>
-            <div class="gas-shine"></div>
+          </apx-chart>
+            <div class="meter-value">
+                {{ gasholder_res.GASHOLDERPRES | number : "1.2-2" }}
+            </div>
+          </div>
+  
+          <!-- Temperature -->
+          <div class="metric-box">
+            <h2 class="area_header">
+              <span
+                *ngFor="let letter of splitLetters(gt); let i = index"
+                [style.animation-delay]="i * 0.2 + 's'"
+              >
+                {{ letter }}
+              </span>
+            </h2>
+            <apx-chart
+            [series]="tempGauge.series"
+            [chart]="tempGauge.chart"
+            [labels]="tempGauge.labels"
+            [plotOptions]="tempGauge.plotOptions"
+            [fill]="tempGauge.fill"
+            [stroke]="tempGauge.stroke"
+          >
+          </apx-chart>
+            <div class="meter-value">
+                {{ gasholder_res.GASHOLDERTEMP | number : "1.2-2" }}
+                <span class="metric-unit">°C</span>
+            </div>
+          </div>
+  
+          <!-- Flow -->
+          <div class="metric-box">
+            <h2 class="area_header">
+              <span
+                *ngFor="let letter of splitLetters(gfm); let i = index"
+                [style.animation-delay]="i * 0.2 + 's'"
+              >
+                {{ letter }}
+              </span>
+            </h2>
+            <apx-chart
+            [series]="flowGauge.series"
+            [chart]="flowGauge.chart"
+            [labels]="flowGauge.labels"
+            [plotOptions]="flowGauge.plotOptions"
+            [fill]="flowGauge.fill"
+            [stroke]="flowGauge.stroke"
+          >
+          </apx-chart>
+            <div class="meter-value">
+                {{ gasholder_res.GAS_FLOW_mills | number : "1.2-2" }}
+            </div>
           </div>
         </div>
-
-        <div class="cylinder-base"></div>
       </div>
 
-      <!-- HEADER BELOW -->
-      <h2 class="area_header gas-header">
-        <span
-          *ngFor="let letter of splitLetters(gaslevel); let i = index"
-          [style.animation-delay]="i * 0.2 + 's'"
-        >
-          {{ letter }}
-        </span>
-      </h2>
+        
+      <!-- </div> -->
+
     </div>
   </div>
 
