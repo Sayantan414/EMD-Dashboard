@@ -169,23 +169,23 @@
           <div class="metric-box">
             <h2 class="area_header">
               <span
-                *ngFor="let letter of splitLetters(gpbs); let i = index"
+                *ngFor="let letter of splitLetters(egpbs); let i = index"
                 [style.animation-delay]="i * 0.2 + 's'"
               >
                 {{ letter }}
               </span>
             </h2>
             <apx-chart
-            [series]="pressureGauge.series"
-            [chart]="pressureGauge.chart"
-            [labels]="pressureGauge.labels"
-            [plotOptions]="pressureGauge.plotOptions"
-            [fill]="pressureGauge.fill"
-            [stroke]="pressureGauge.stroke"
+            [series]="egpbsGauge.series"
+            [chart]="egpbsGauge.chart"
+            [labels]="egpbsGauge.labels"
+            [plotOptions]="egpbsGauge.plotOptions"
+            [fill]="egpbsGauge.fill"
+            [stroke]="egpbsGauge.stroke"
           >
           </apx-chart>
             <div class="meter-value">
-                {{ gasholder_res.GASHOLDERPRES | number : "1.2-2" }}
+                {{ gasholder_res.EXPORTEDGAS | number : "1.2-2" }}
             </div>
           </div>
   
@@ -200,12 +200,12 @@
               </span>
             </h2>
             <apx-chart
-            [series]="expGasPBSGauge.series"
-            [chart]="expGasPBSGauge.chart"
-            [labels]="expGasPBSGauge.labels"
-            [plotOptions]="expGasPBSGauge.plotOptions"
-            [fill]="expGasPBSGauge.fill"
-            [stroke]="expGasPBSGauge.stroke"
+            [series]="tldgmGauge.series"
+            [chart]="tldgmGauge.chart"
+            [labels]="tldgmGauge.labels"
+            [plotOptions]="tldgmGauge.plotOptions"
+            [fill]="tldgmGauge.fill"
+            [stroke]="tldgmGauge.stroke"
           >
           </apx-chart>
             <div class="meter-value">

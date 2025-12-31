@@ -42,7 +42,7 @@ export class GasHolderComponent implements OnInit {
   ghp = "Gas Holder Pressure";
   gt = "Gas Temperature";
   gfm = "Gas Flow (Mills)";
-  gpbs = "Exported Gas PBS";
+  egpbs = "Exported Gas PBS";
   tldgm = "Totalizer LD Gas Mills (Nm3)";
   tldgpbs = "Totalizer LD Gas PBS (Nm3)";
 
@@ -51,6 +51,7 @@ export class GasHolderComponent implements OnInit {
   max_GASHOLDERPRES = 300;
   max_GASHOLDERTEMP = 60;
   max_GAS_FLOW_mills = 30000;
+  max_EXPORTEDGAS = 10000;
   max_Mills_totaliser = 600000;
 
   gasholder_res = {
@@ -58,6 +59,7 @@ export class GasHolderComponent implements OnInit {
     GASHOLDERPRES: 0,
     GASHOLDERTEMP: 0,
     GAS_FLOW_mills: 0,
+    EXPORTEDGAS: 0,
     Mills_totaliser: 0,
   };
   gasLevelClass: "gas-Warm" | "gas-purple" | "gas-red" = "gas-Warm";
@@ -159,7 +161,7 @@ export class GasHolderComponent implements OnInit {
     labels: ["GAS FLOW"],
   };
 
-  expGasPBSGauge: any = {
+  tldgmGauge: any = {
     series: [2.29], // live value here
 
     chart: {
@@ -208,8 +210,11 @@ export class GasHolderComponent implements OnInit {
     labels: ["MILLS"],
   };
 
+
+
   private _unsubscribeAll: Subject<any> = new Subject();
   public pressureGauge: Partial<ChartOptions>;
+  public egpbsGauge: Partial<ChartOptions>;
 
   constructor(
     private sseService: SseService,
@@ -267,7 +272,60 @@ export class GasHolderComponent implements OnInit {
         dashArray: 4,
       },
 
-      labels: [""],
+      labels: ["PRESSURE"],
+    };
+
+    this.egpbsGauge = {
+      series: [0],
+
+      chart: {
+        height: 228,
+        type: "radialBar",
+        offsetY: -10,
+      },
+
+      plotOptions: {
+        radialBar: {
+          startAngle: -135,
+          endAngle: 135,
+          hollow: {
+            size: "65%",
+          },
+          track: {
+            background: "#ffffff",
+            strokeWidth: "90%",
+          },
+          dataLabels: {
+            name: {
+              show: false,
+            },
+            value: {
+              fontSize: "17px",
+              offsetY: 10,
+              color: "var(--gauge-text)", // <-- Set color here, this is allowed
+              fontWeight: "600", // <-- This is allowed too
+              formatter: () => `Gas PBS`,
+            },
+          },
+        },
+      },
+
+      fill: {
+        type: "gradient",
+        colors: ["#ff4d4d"],
+        gradient: {
+          shade: "light",
+          type: "horizontal",
+          gradientToColors: ["#ff0000"],
+          stops: [0, 50, 100],
+        },
+      },
+
+      stroke: {
+        dashArray: 4,
+      },
+
+      labels: ["Gas PBS"],
     };
   }
 
@@ -351,6 +409,7 @@ export class GasHolderComponent implements OnInit {
         2
       );
 
+      
       this.animateValue(
         this.previousValues.GASHOLDERTEMP,
         data.GASHOLDERTEMP,
@@ -384,6 +443,22 @@ export class GasHolderComponent implements OnInit {
       );
 
       this.animateValue(
+        this.previousValues.EXPORTEDGAS,
+        data.EXPORTEDGAS,
+        800, // ms
+        (val) => {
+          if (isNaN(val)) this.gasholder_res.EXPORTEDGAS = 0;
+          else this.gasholder_res.EXPORTEDGAS = val;
+
+          // ✅ Update gauge
+          const maxGasMake = this.max_EXPORTEDGAS || 10000; // fallback if API doesn't send
+          const percent = Math.min((val / maxGasMake) * 100, 100);
+          this.egpbsGauge.series = [percent];
+        },
+        2
+      );
+
+      this.animateValue(
         this.previousValues.Mills_totaliser,
         data.Mills_totaliser,
         800, // ms
@@ -394,11 +469,12 @@ export class GasHolderComponent implements OnInit {
           // ✅ Update gauge
           const maxGasMake = this.max_Mills_totaliser || 600000; // fallback if API doesn't send
           const percent = Math.min((val / maxGasMake) * 100, 100);
-          this.expGasPBSGauge.series = [percent];
+          this.tldgmGauge.series = [percent];
         },
         2
       );
 
+      
       this.animateValue(
         this.previousValues.GASHOLDERLVL,
         data.GASHOLDERLVL,
