@@ -224,16 +224,16 @@
               </span>
             </h2>
             <apx-chart
-            [series]="flowGauge.series"
-            [chart]="flowGauge.chart"
-            [labels]="flowGauge.labels"
-            [plotOptions]="flowGauge.plotOptions"
-            [fill]="flowGauge.fill"
-            [stroke]="flowGauge.stroke"
+            [series]="tldgPbsGauge.series"
+            [chart]="tldgPbsGauge.chart"
+            [labels]="tldgPbsGauge.labels"
+            [plotOptions]="tldgPbsGauge.plotOptions"
+            [fill]="tldgPbsGauge.fill"
+            [stroke]="tldgPbsGauge.stroke"
           >
           </apx-chart>
             <div class="meter-value">
-                {{ gasholder_res.GAS_FLOW_mills | number : "1.2-2" }}
+              {{ pbsMinusMills | number : "1.2-2" }}
             </div>
           </div>
         </div>

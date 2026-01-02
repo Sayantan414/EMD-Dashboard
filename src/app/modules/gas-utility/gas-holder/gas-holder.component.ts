@@ -53,6 +53,7 @@ export class GasHolderComponent implements OnInit {
   max_GAS_FLOW_mills = 30000;
   max_EXPORTEDGAS = 10000;
   max_Mills_totaliser = 600000;
+  max_PBS_MINUS_MILLS = 80000;
 
   gasholder_res = {
     GASHOLDERLVL: 0,
@@ -62,9 +63,13 @@ export class GasHolderComponent implements OnInit {
     EXPORTEDGAS: 0,
     Mills_totaliser: 0,
   };
+  pbsMinusMills = 0;
+  previousPBSMinusMills = 0;
+
   gasLevelClass: "gas-Warm" | "gas-purple" | "gas-red" = "gas-Warm";
 
   previousValues: any = { ...this.gasholder_res };
+  
   private sseoverview?: Subscription;
 
   tempGauge: any = {
@@ -89,6 +94,7 @@ export class GasHolderComponent implements OnInit {
             offsetY: -10,
             color: "var(--gauge-text)",
             fontSize: "17px",
+            fontWeight: "600",
             formatter: () => "TEMPERATURE",
           },
           value: {
@@ -183,6 +189,7 @@ export class GasHolderComponent implements OnInit {
             offsetY: -10,
             color: "var(--gauge-text)",
             fontSize: "17px",
+            fontWeight: "600",
             formatter: () => "MILLS",
           },
           value: {
@@ -210,7 +217,51 @@ export class GasHolderComponent implements OnInit {
     labels: ["MILLS"],
   };
 
-
+  tldgPbsGauge: Partial<ChartOptions> = {
+    series: [0],
+    chart: {
+      height: 230,
+      type: "radialBar",
+    },
+    plotOptions: {
+      radialBar: {
+        startAngle: -135,
+        endAngle: 135,
+        hollow: {
+          size: "70%",
+        },
+        track: {
+          background: "#ffffff",
+          strokeWidth: "90%",
+        },
+        dataLabels: {
+          name: {
+            show: true,
+            fontSize: "17px",
+            fontWeight: 600,
+            color: "var(--gauge-text)",
+            offsetY: 12,
+          },
+          value: {
+            show: false, // ❌ value shown below, not inside gauge
+          },
+        },
+      },
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        shade: "light",
+        type: "horizontal",
+        stops: [0, 100],
+      },
+    },
+    stroke: {
+      lineCap: "round",
+    },
+    labels: ["LD GAS PBS"],
+  };
+  
 
   private _unsubscribeAll: Subject<any> = new Subject();
   public pressureGauge: Partial<ChartOptions>;
@@ -304,7 +355,7 @@ export class GasHolderComponent implements OnInit {
               offsetY: 10,
               color: "var(--gauge-text)", // <-- Set color here, this is allowed
               fontWeight: "600", // <-- This is allowed too
-              formatter: () => `Gas PBS`,
+              formatter: () => `GAS PBS`,
             },
           },
         },
@@ -325,7 +376,7 @@ export class GasHolderComponent implements OnInit {
         dashArray: 4,
       },
 
-      labels: ["Gas PBS"],
+      labels: ["GAS PBS"],
     };
   }
 
@@ -474,6 +525,27 @@ export class GasHolderComponent implements OnInit {
         2
       );
 
+      // 🔵 PBS − MILLS (Derived animated value)
+this.animateValue(
+  this.previousPBSMinusMills,
+  (Number(data?.PBS_totaliser || 0) - Number(data?.Mills_totaliser || 0)),
+  800,
+  (val) => {
+    if (isNaN(val)) {
+      this.pbsMinusMills = 0;
+    } else {
+      this.pbsMinusMills = val;
+    }
+
+    // ✅ Update radial gauge (use absolute or clamp if needed)
+    const maxDiff = this.max_PBS_MINUS_MILLS || 80000; // define sensible max
+    const percent = Math.min((Math.abs(val) / maxDiff) * 100, 100);
+
+    this.tldgPbsGauge.series = [percent];
+  },
+  2
+);
+
       
       this.animateValue(
         this.previousValues.GASHOLDERLVL,
@@ -487,6 +559,10 @@ export class GasHolderComponent implements OnInit {
       );
       // Update previous values for next round
       this.previousValues = { ...data };
+      this.previousPBSMinusMills =
+  Number(data?.PBS_totaliser || 0) -
+  Number(data?.Mills_totaliser || 0);
+
     });
 
     this.getReportData();
