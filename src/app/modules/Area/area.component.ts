@@ -573,18 +573,16 @@ export class AreaComponent implements OnInit, OnDestroy {
     this.cob10overview = this.sseService
       .getOverview()
       .subscribe((data: any) => {
-        console.log("Result", data);
+        // console.log("Result", data);
 
         this.animateValue(
           this.previouscob10Values.FT0600F003_C,
           data.FT0600F003_C,
           800, // ms
           (val) => {
-            console.log('value in animate=', val);
             
             if (isNaN(val)) this.overview_res.FT0600F003_C = 0;
             else this.overview_res.FT0600F003_C = val;
-            console.log(this.overview_res.FT0600F003_C);
 
             // ✅ Update gauge
             const maxGasMake = this.max_gasmake_cob11 || 60000; // fallback if API doesn't send
@@ -935,7 +933,7 @@ export class AreaComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           const data = JSON.parse(JSON.stringify(response));
-          console.log(data);
+          // console.log(data);
           this.responseData = JSON.parse(JSON.stringify(response));
 
           if (data.length === 0) {

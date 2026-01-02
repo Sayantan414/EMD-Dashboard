@@ -5,6 +5,7 @@ import { SseService } from "app/services/sse.servece";
 import { TrendService } from "app/services/trend.service";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { interval, startWith, Subject, Subscription, takeUntil } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
 
 import {
   ApexNonAxisChartSeries,
@@ -37,6 +38,8 @@ export type ChartOptions = {
 export class GasHolderComponent implements OnInit {
   viewMode: string = "gasholder";
   loading: boolean = true;
+  hideViewModeSwitch = false;
+
   reportData: any[] = [];
   gaslevel = "Gas Level";
   ghp = "Gas Holder Pressure";
@@ -49,10 +52,10 @@ export class GasHolderComponent implements OnInit {
   maxGasLevel = 30;
 
   max_GASHOLDERPRES = 300;
-  max_GASHOLDERTEMP = 60;
+  max_GASHOLDERTEMP = 70;
   max_GAS_FLOW_mills = 30000;
   max_EXPORTEDGAS = 10000;
-  max_Mills_totaliser = 600000;
+  max_Mills_totaliser = 2000000;
   max_PBS_MINUS_MILLS = 80000;
 
   gasholder_res = {
@@ -69,7 +72,7 @@ export class GasHolderComponent implements OnInit {
   gasLevelClass: "gas-Warm" | "gas-purple" | "gas-red" = "gas-Warm";
 
   previousValues: any = { ...this.gasholder_res };
-  
+
   private sseoverview?: Subscription;
 
   tempGauge: any = {
@@ -261,7 +264,6 @@ export class GasHolderComponent implements OnInit {
     },
     labels: ["LD GAS PBS"],
   };
-  
 
   private _unsubscribeAll: Subject<any> = new Subject();
   public pressureGauge: Partial<ChartOptions>;
@@ -270,7 +272,8 @@ export class GasHolderComponent implements OnInit {
   constructor(
     private sseService: SseService,
     private trendService: TrendService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private route: ActivatedRoute
   ) {
     this._unsubscribeAll = new Subject();
     this.pressureGauge = {
@@ -430,6 +433,16 @@ export class GasHolderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      if (params["from"] === "dashboard") {
+        this.hideViewModeSwitch = true;
+        this.viewMode = "gasholder";
+      } else {
+        // 🔑 IMPORTANT: reset when not coming from dashboard
+        this.hideViewModeSwitch = false;
+      }
+    });
+
     // this.loading = false;
     interval(60000) // 1 minute
       .pipe(
@@ -460,7 +473,6 @@ export class GasHolderComponent implements OnInit {
         2
       );
 
-      
       this.animateValue(
         this.previousValues.GASHOLDERTEMP,
         data.GASHOLDERTEMP,
@@ -470,7 +482,7 @@ export class GasHolderComponent implements OnInit {
           else this.gasholder_res.GASHOLDERTEMP = val;
 
           // ✅ Update gauge
-          const maxGasMake = this.max_GASHOLDERTEMP || 60; // fallback if API doesn't send
+          const maxGasMake = this.max_GASHOLDERTEMP || 70; // fallback if API doesn't send
           const percent = Math.min((val / maxGasMake) * 100, 100);
           this.tempGauge.series = [percent];
         },
@@ -518,7 +530,7 @@ export class GasHolderComponent implements OnInit {
           else this.gasholder_res.Mills_totaliser = val;
 
           // ✅ Update gauge
-          const maxGasMake = this.max_Mills_totaliser || 600000; // fallback if API doesn't send
+          const maxGasMake = this.max_Mills_totaliser || 2000000; // fallback if API doesn't send
           const percent = Math.min((val / maxGasMake) * 100, 100);
           this.tldgmGauge.series = [percent];
         },
@@ -526,27 +538,26 @@ export class GasHolderComponent implements OnInit {
       );
 
       // 🔵 PBS − MILLS (Derived animated value)
-this.animateValue(
-  this.previousPBSMinusMills,
-  (Number(data?.PBS_totaliser || 0) - Number(data?.Mills_totaliser || 0)),
-  800,
-  (val) => {
-    if (isNaN(val)) {
-      this.pbsMinusMills = 0;
-    } else {
-      this.pbsMinusMills = val;
-    }
+      this.animateValue(
+        this.previousPBSMinusMills,
+        Number(data?.PBS_totaliser || 0) - Number(data?.Mills_totaliser || 0),
+        800,
+        (val) => {
+          if (isNaN(val)) {
+            this.pbsMinusMills = 0;
+          } else {
+            this.pbsMinusMills = val;
+          }
 
-    // ✅ Update radial gauge (use absolute or clamp if needed)
-    const maxDiff = this.max_PBS_MINUS_MILLS || 80000; // define sensible max
-    const percent = Math.min((Math.abs(val) / maxDiff) * 100, 100);
+          // ✅ Update radial gauge (use absolute or clamp if needed)
+          const maxDiff = this.max_PBS_MINUS_MILLS || 80000; // define sensible max
+          const percent = Math.min((Math.abs(val) / maxDiff) * 100, 100);
 
-    this.tldgPbsGauge.series = [percent];
-  },
-  2
-);
+          this.tldgPbsGauge.series = [percent];
+        },
+        2
+      );
 
-      
       this.animateValue(
         this.previousValues.GASHOLDERLVL,
         data.GASHOLDERLVL,
@@ -560,9 +571,7 @@ this.animateValue(
       // Update previous values for next round
       this.previousValues = { ...data };
       this.previousPBSMinusMills =
-  Number(data?.PBS_totaliser || 0) -
-  Number(data?.Mills_totaliser || 0);
-
+        Number(data?.PBS_totaliser || 0) - Number(data?.Mills_totaliser || 0);
     });
 
     this.getReportData();

@@ -109,7 +109,7 @@
       </div>
     </div>
     <!-- Gauge 5 -->
-    <div class="meter-card">
+    <!-- <div class="meter-card">
       <h2 class="area_header">
         <span
           *ngFor="let letter of splitLetters(bv); let i = index"
@@ -127,9 +127,9 @@
         [stroke]="volumeGauge.stroke"
       ></apx-chart>
       <div class="meter-value">{{ overview_res.BLAST_VOLUME }}</div>
-    </div>
+    </div> -->
     <!-- Gauge 6 -->
-    <div class="meter-card">
+    <!-- <div class="meter-card">
       <h2 class="area_header">
         <span
           *ngFor="let letter of splitLetters(bp); let i = index"
@@ -146,8 +146,10 @@
         [fill]="blastPressureGauge.fill"
         [stroke]="blastPressureGauge.stroke"
       ></apx-chart>
-      <div class="meter-value">{{ overview_res.BLAST_PRESSURE | number : "1.2-2" }}</div>
-    </div>
+      <div class="meter-value">
+        {{ overview_res.BLAST_PRESSURE | number : "1.2-2" }}
+      </div>
+    </div> -->
   </div>
   <!-- ============================ -->
   <!-- GRAPH SECTION (BELOW METERS) -->

@@ -29,8 +29,17 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         link: '/area',
         classes: { wrapper: 'nav-item-cog' }
       },
-    ],
+      {
+        id: 'dashboard.gas_holder',
+        title: 'Gas Holder',
+        type: 'basic',
+        link: '/gasutility/gas_holder',
+        queryParams: { from: 'dashboard' },
+        classes: { wrapper: 'nav-item-cog' }
+      }
+    ]
   },
+  
 
 
   {
