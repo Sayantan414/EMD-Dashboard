@@ -78,6 +78,17 @@ export const appRoutes: Route[] = [
         loadChildren: () => import('app/modules/Area/area.routes'),
       },
 
+      // {
+      //   path: 'area',
+      //   children: [
+      //     {
+      //       path: 'cob',
+      //       loadChildren: () => import('app/modules/Area/cob/cob.routes'),
+      //     },
+
+      //   ],
+      // },
+
       // ---- Gas Balance (parent) ----
       {
         path: 'gasbalance',

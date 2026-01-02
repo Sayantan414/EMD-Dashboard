@@ -9,13 +9,30 @@ export const horizontalNavigation: FuseNavigationItem[] = [
     // icon: 'heroicons_outline:chart-bar',
     link: '/overview',
   },
+  // {
+  //   id: 'dashboard',
+  //   title: 'Dashboard',
+  //   type: 'basic',
+  //   // icon: 'heroicons_outline:chart-bar',
+  //   link: '/area',
+  // },
+
   {
     id: 'dashboard',
     title: 'Dashboard',
-    type: 'basic',
-    // icon: 'heroicons_outline:chart-bar',
-    link: '/area',
+    type: 'collapsable',
+    children: [
+      {
+        id: 'dashboard.cob',
+        title: 'COB',
+        type: 'basic',
+        link: '/area',
+        classes: { wrapper: 'nav-item-cog' }
+      },
+    ],
   },
+
+
   {
     id: 'gasbalance',
     title: 'Gas_Balance',
