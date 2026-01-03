@@ -37,7 +37,7 @@ export type ChartOptions = {
 })
 export class GasHolderComponent implements OnInit {
   viewMode: string = "gasholder";
-  loading: boolean = true;
+  // loading: boolean = true;
   hideViewModeSwitch = false;
 
   reportData: any[] = [];
@@ -193,7 +193,7 @@ export class GasHolderComponent implements OnInit {
             color: "var(--gauge-text)",
             fontSize: "17px",
             fontWeight: "600",
-            formatter: () => "MILLS",
+            formatter: () => "LD GAS MILLS",
           },
           value: {
             show: false,
@@ -217,7 +217,7 @@ export class GasHolderComponent implements OnInit {
       lineCap: "round",
     },
 
-    labels: ["MILLS"],
+    labels: ["LD GAS MILLS"],
   };
 
   tldgPbsGauge: Partial<ChartOptions> = {
@@ -453,7 +453,7 @@ export class GasHolderComponent implements OnInit {
         this.getReportData();
       });
     this.sseoverview = this.sseService.getOverview().subscribe((data: any) => {
-      console.log("Response", data);
+      // console.log("Response", data);
 
       // Animate each property
 
@@ -579,7 +579,7 @@ export class GasHolderComponent implements OnInit {
 
   onViewModeChange() {
     if (this.viewMode === "trends") {
-      this.loading = true;
+      // this.loading = true;
     }
   }
 
@@ -646,7 +646,7 @@ export class GasHolderComponent implements OnInit {
         SHIFT_C: this.to2Decimal(item.SHIFT_C),
       };
     });
-    this.loading = false;
+    // this.loading = false;
   }
 
   ngOnDestroy(): void {

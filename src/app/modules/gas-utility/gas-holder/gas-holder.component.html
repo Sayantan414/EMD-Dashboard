@@ -256,18 +256,19 @@
             class="flex-auto w-full overflow-y-auto border-l h-full report-content"
           >
             <div class="relative p-10 w-full border-l h-full">
-              <div
+              <!-- <div
                 *ngIf="loading"
                 class="absolute inset-0 z-50 flex items-center justify-center mt-[-150px]"
               >
                 <mat-spinner color="primary" [diameter]="100"></mat-spinner>
-              </div>
+              </div> -->
               <div class="table-users w-full">
                 <table
                   class="w-full border bg-card mt-2"
                   cellspacing="0"
-                  *ngIf="reportData.length > 0 && !loading"
+                  *ngIf="reportData.length > 0 "
                 >
+                <!-- && !loading -->
                   <thead class="sticky top-10 z-10 tableTextDesign">
                     <!-- HEADER ROW 1 -->
                     <tr>
