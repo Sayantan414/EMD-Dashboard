@@ -53,10 +53,50 @@
   border-radius: 6px !important;
 }
 
+/* background.scss is already imported at line 1 */
 .set-bg-image {
   /* background-image: url(assets/images/documents-mangmnt.jpg) !important; */
   box-shadow: inset 0 0 0 2000px #8ec3ff54;
   background-position: center;
   background-size: cover;
   /* padding-left: 2px !important; */
+}
+
+/* Custom modern animations and styles added for premium feel */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.delay-100 {
+  animation-delay: 150ms;
+}
+
+.delay-200 {
+  animation-delay: 300ms;
+}
+
+.modern-button {
+  background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%) !important;
+  border: none !important;
+}
+
+.modern-button:hover:not([disabled]) {
+  transform: translateY(-2px);
+}
+
+.modern-button:disabled {
+  background: #a5b4fc !important;
+  transform: none;
 }
