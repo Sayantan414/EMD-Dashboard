@@ -14,7 +14,8 @@
     <li></li>
     <li></li>
   </ul>
-  <div class="md:flex md:items-stretch md:justify-center w-full sm:w-[85%] max-w-6xl sm:rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] z-10 sm:h-[80vh] overflow-hidden transform transition-all hover:shadow-[0_30px_60px_rgba(0,0,0,0.4)] duration-500 border border-white/10">
+  <div
+    class="md:flex md:items-stretch md:justify-center w-full sm:w-[85%] max-w-6xl sm:rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] z-10 sm:h-[80vh] overflow-hidden transform transition-all hover:shadow-[0_30px_60px_rgba(0,0,0,0.4)] duration-500 border border-white/10">
     <div
       class="relative w-full sm:w-full md:w-[40%] text-center flex flex-col items-center justify-center mx-auto sm:mx-0 h-full p-8 sm:p-12 bg-white dark:bg-gray-900"
       style="
@@ -24,16 +25,19 @@
       ">
       <!-- Overlay for left panel -->
       <div class="absolute inset-0 bg-white/90 dark:bg-black/80 backdrop-blur-sm z-0"></div>
-      
+
       <div class="z-10 w-full flex flex-col items-center justify-center animate-fade-in-up">
         <!-- Logo -->
-        <div class="flex flex-col items-center justify-center mb-10 transform transition-transform duration-500 hover:scale-105">
-          <div class="w-48 p-4 rounded-2xl bg-white/50 dark:bg-black/20 backdrop-blur-md shadow-xl border border-white/30">
+        <div
+          class="flex flex-col items-center justify-center mb-10 transform transition-transform duration-500 hover:scale-105">
+          <div
+            class="w-48 p-4 rounded-2xl bg-white/50 dark:bg-black/20 backdrop-blur-md shadow-xl border border-white/30">
             <img src="assets\images\logo\logo-sail.png" class="w-full h-auto drop-shadow-md" />
           </div>
         </div>
 
-        <div class="sm:hidden text-3xl font-black leading-none text-[#cd2027] w-full text-center mb-6 tracking-wide drop-shadow-sm">
+        <div
+          class="sm:hidden text-3xl font-black leading-none text-[#cd2027] w-full text-center mb-6 tracking-wide drop-shadow-sm">
           <!-- <p>SAIL RMG DASHBOARD</p> -->
           <p>Digital Energy Vision</p>
           <!-- <div>our community</div> -->
@@ -41,7 +45,8 @@
         </div>
 
         <!-- Title -->
-        <div class="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight text-gray-800 dark:text-gray-100 mb-6 drop-shadow-sm">
+        <div
+          class="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight text-gray-800 dark:text-gray-100 mb-6 drop-shadow-sm">
           Sign in
         </div>
         <!-- <div class="flex items-baseline mt-0.5 font-medium">
@@ -51,13 +56,14 @@
               </div> -->
 
         <!-- Alert -->
-        <fuse-alert class="mt-4 -mb-4 w-full" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type"
-          [@shake]="alert.type === 'error'">
+        <fuse-alert class="mt-4 -mb-4 w-full" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
+          [type]="alert.type" [@shake]="alert.type === 'error'">
           {{ alert.message }}
         </fuse-alert>
 
         <!-- Sign in form -->
-        <form class="mt-8 w-full flex flex-col gap-5 animate-fade-in-up delay-100" [formGroup]="signInForm" #signInNgForm="ngForm">
+        <form class="mt-8 w-full flex flex-col gap-5 animate-fade-in-up delay-100" [formGroup]="signInForm"
+          #signInNgForm="ngForm">
           <!-- Email field -->
           <mat-form-field class="w-full modern-input" appearance="fill">
             <mat-label>Login ID</mat-label>
@@ -82,8 +88,10 @@
                   ? (passwordField.type = 'text')
                   : (passwordField.type = 'password')
               " matSuffix>
-              <mat-icon class="icon-size-5 text-gray-500" *ngIf="passwordField.type === 'password'">visibility</mat-icon>
-              <mat-icon class="icon-size-5 text-gray-500" *ngIf="passwordField.type === 'text'">visibility_off</mat-icon>
+              <mat-icon class="icon-size-5 text-gray-500"
+                *ngIf="passwordField.type === 'password'">visibility</mat-icon>
+              <mat-icon class="icon-size-5 text-gray-500"
+                *ngIf="passwordField.type === 'text'">visibility_off</mat-icon>
             </button>
             <mat-error> Password is required </mat-error>
           </mat-form-field>
@@ -97,8 +105,9 @@
                   </div> -->
 
           <!-- Submit button -->
-          <button class="fuse-mat-button-large w-full mt-6 modern-button text-white font-bold tracking-widest text-lg uppercase shadow-lg hover:shadow-[0_8px_20px_rgba(78,70,229,0.4)] transition-all duration-300" mat-flat-button [color]="'primary'"
-            [disabled]="signInForm.invalid" (click)="signIn()">
+          <button
+            class="fuse-mat-button-large w-full mt-6 modern-button text-white font-bold tracking-widest text-lg uppercase shadow-lg hover:shadow-[0_8px_20px_rgba(78,70,229,0.4)] transition-all duration-300"
+            mat-flat-button [color]="'primary'" [disabled]="signInForm.invalid" (click)="signIn()">
             Sign in
           </button>
 
@@ -124,15 +133,12 @@
         </form>
       </div>
     </div>
-    
-    <div
-      class="relative hidden md:flex flex-auto items-center justify-center w-[60%] h-full overflow-hidden group"
-      style="background-image: url('{{
-        coverUrl
-      }}'); background-size: cover; background-position: center;">
+
+    <div class="relative hidden md:flex flex-auto items-center justify-center w-[60%] h-full overflow-hidden group"
+      style="background-image: url('{{ coverUrl}}'); background-size: cover; background-position: center;">
       <!-- Subtle overlay to ensure the background is clear but not too bright -->
       <div class="absolute inset-0 bg-black/5 z-0 transition-colors duration-700 group-hover:bg-black/10"></div>
-      
+
       <!-- <div class="absolute bottom-4 right-4 px-3 " style="backdrop-filter: contrast(0.5);">
                 <a class="text-md font-medium text-white hover:underline cursor-pointer test-white"
                     [routerLink]="['/Privacy-Policy']">Privacy Policy
@@ -140,25 +146,29 @@
             </div> -->
       <div class="z-10 relative w-full h-full flex items-center justify-center px-10 animate-fade-in-up delay-200">
         <!-- Frosted glass card with higher opacity for text readability -->
-        <div class="flex flex-col items-center justify-center bg-white/80 dark:bg-white/85 backdrop-blur-2xl rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.2)] px-12 py-16 w-full max-w-4xl transform transition-transform duration-700 group-hover:scale-105 text-center border border-white/60">
-          
+        <div
+          class="flex flex-col items-center justify-center bg-white/80 dark:bg-white/85 backdrop-blur-2xl rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.2)] px-12 py-16 w-full max-w-4xl transform transition-transform duration-700 group-hover:scale-105 text-center border border-white/60">
+
           <!-- <p>SAIL RMG DASHBOARD</p> -->
-          <p class="text-4xl lg:text-5xl xl:text-6xl whitespace-nowrap font-black leading-tight text-gray-900 drop-shadow-sm tracking-wide">
+          <p
+            class="text-4xl lg:text-5xl xl:text-6xl whitespace-nowrap font-black leading-tight text-gray-900 drop-shadow-sm tracking-wide">
             Digital Energy Vision
           </p>
 
           <!-- <div>our community</div> -->
           <!-- <p>Howrah Division</p> -->
-          
+
           <div class="mt-6 mb-8 w-24 h-1.5 bg-blue-600 rounded-full shadow-sm"></div>
-          
-          <p class="text-[10px] sm:text-xs lg:text-sm whitespace-nowrap font-bold text-gray-800 tracking-[0.1em] sm:tracking-[0.2em] flex items-center justify-center gap-1">
+
+          <p
+            class="text-[10px] sm:text-xs lg:text-sm whitespace-nowrap font-bold text-gray-800 tracking-[0.1em] sm:tracking-[0.2em] flex items-center justify-center gap-1">
             <!-- sourav code comment -->
             <!-- Designed & Developed By C&IT, C&A SAIL ISP. -->
             <!-- sourav code comment -->
 
             <!-- sourav code -->
-            Proudly Design <span class="text-blue-600 text-base sm:text-lg">&</span> Developed by IAD - A<span class="text-blue-600 text-base sm:text-lg">&</span>D, SAIL-ISP Burnpur
+            Proudly Design <span class="text-blue-600 text-base sm:text-lg">&</span> Developed by IAD - A<span
+              class="text-blue-600 text-base sm:text-lg">&</span>D, SAIL-ISP Burnpur
             <!-- sourav code -->
 
             <!-- <span style="margin-left: 10%;font-size: 10px;font-weight: 600;float: right;">
