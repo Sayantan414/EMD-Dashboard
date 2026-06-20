@@ -244,6 +244,14 @@ td {
     border-left: 3px solid #ef4444;
 }
 
+.btn.copy {
+    border-left: 3px solid #10b981; /* Beautiful Emerald Green */
+}
+
+.btn.toggle {
+    border-left: 3px solid #f59e0b; /* Vibrant Amber/Orange */
+}
+
 /* Responsive: collapse value into second line on small screens */
 @media (max-width:700px) {
     table {
