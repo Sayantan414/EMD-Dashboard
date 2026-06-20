@@ -377,39 +377,71 @@
 
 
 
-/* Cylinder */
-.cylinder {
-  width: 140px;
+/* INDUSTRIAL GAS HOLDER */
+.industrial-holder {
+  width: 180px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
-/* Top cap */
-.cylinder-cap {
-  width: 90px;
-  height: 20px;
-  background: linear-gradient(to right, #777, #aaa);
-  border-radius: 8px;
-  margin-bottom: 4px;
+/* Roof */
+.holder-roof {
+  width: 190px;
+  height: 30px;
+  background: linear-gradient(to bottom, #4a5568, #2d3748);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  border-bottom: 3px solid #1a202c;
+  position: relative;
+  z-index: 2;
+  box-shadow: inset 0 4px 10px rgba(255, 255, 255, 0.2);
+}
+
+.roof-vent {
+  width: 20px;
+  height: 10px;
+  background: #1a202c;
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px 2px 0 0;
 }
 
 /* Main body */
-.cylinder-body {
-  width: 150px;
-  height: 500px;
+.holder-body {
+  width: 170px;
+  height: 480px;
   background: linear-gradient(
     to right,
-    rgba(255, 255, 255, 0.2),
-    rgba(255, 255, 255, 0.05)
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0.1) 100%
   );
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  border-radius: 60px;
+  border-left: 4px solid #4a5568;
+  border-right: 4px solid #4a5568;
   position: relative;
   overflow: hidden;
-  box-shadow:
-    inset 0 0 25px rgba(0, 0, 0, 0.4),
-    0 10px 25px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.6);
+}
+
+/* Horizontal structural rings */
+.holder-ribs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 38px,
+    rgba(0, 0, 0, 0.6) 38px,
+    rgba(0, 0, 0, 0.6) 42px
+  );
+  z-index: 3;
+  pointer-events: none;
 }
 
 
@@ -430,90 +462,75 @@
   animation: gasGlow 3s ease-in-out infinite;
 }
 
-.gas-Warm {
-  // background: linear-gradient(
-  //   to top,
-  //   #00c853 0%,
-  //   #69f0ae 60%,
-  //   #b9f6ca 100%
-  // );
-
+.gas-green {
   background: linear-gradient(
     to top,
-    #8d4a2f 0%, //Copper
-    #c97c5d 60%, // Rose Bronze
-    #f3e0d6 100% // Soft Beige
+    #059669 0%,   /* Dark Emerald */
+    #10b981 60%,  /* Vibrant Emerald */
+    #6ee7b7 100%  /* Light Mint */
   );
 }
 
-.gas-purple {
-  // background: linear-gradient(
-  //   to top,
-  //   #f9a825 0%,
-  //   #ffd54f 60%,
-  //   #fff9c4 100%
-  // );
+.gas-amber {
   background: linear-gradient(
     to top,
-    #6a1b9a 0%,
-    #ba68c8 60%,
-    #f3e5f5 100%
+    #d97706 0%,   /* Dark Amber */
+    #f59e0b 60%,  /* Vibrant Amber */
+    #fde68a 100%  /* Light Yellow */
   );
 }
 
 .gas-red {
   background: linear-gradient(
     to top,
-    #c62828 0%,
-    #ef5350 60%,
-    #ffcdd2 100%
+    #dc2626 0%,   /* Dark Red */
+    #ef4444 60%,  /* Vibrant Red */
+    #fecaca 100%  /* Light Pink */
   );
 }
 
 
-/* Bottom base */
-.cylinder-base {
-  width: 100px;
-  height: 16px;
-  background: #666;
-  border-radius: 0 0 10px 10px;
-  margin-top: 4px;
+/* Base */
+.holder-base {
+  width: 210px;
+  height: 18px;
+  background: linear-gradient(to right, #2d3748, #4a5568, #2d3748);
+  border-radius: 4px 4px 0 0;
+  border-top: 2px solid #718096;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  z-index: 2;
 }
 
 
 .gas-value p {
-  color: var(--chart-value);
-  // color: #01888d;
+  color: #ffffff !important; /* Always pure white */
   white-space: nowrap;
   text-align: center;
-    display: block;
+  display: inline-block;
   font-size: 15px;
-  font-weight: 400;
-  // opacity: 0.85;
+  font-weight: 700 !important; /* Make it bold */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.6) !important;
+  
+  /* Add a subtle dark glass pill background to guarantee contrast everywhere */
+  background: rgba(0, 0, 0, 0.35);
+  padding: 6px 12px;
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.gas-wave {
+/* Piston edge (flat glowing top) */
+.piston-edge {
   position: absolute;
-  top: -20px;
-  left: -50%;
-  width: 200%;
-  height: 40px;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(255, 255, 255, 0.5) 20%,
-    transparent 70%
-  );
-  opacity: 0.4;
-  animation: waveMove 4s linear infinite;
-}
-
-@keyframes waveMove {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(50%);
-  }
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 1);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+  z-index: 4;
 }
 
 .gas-shine {

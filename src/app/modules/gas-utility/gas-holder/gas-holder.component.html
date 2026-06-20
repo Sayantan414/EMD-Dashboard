@@ -44,10 +44,16 @@
       <!-- <div class="metric-container"> -->
 
         <div class="detail-view">
-          <div class="cylinder">
-            <div class="cylinder-cap"></div>
+          <div class="industrial-holder">
+            <!-- Roof with vent -->
+            <div class="holder-roof">
+              <div class="roof-vent"></div>
+            </div>
     
-            <div class="cylinder-body">
+            <div class="holder-body">
+              <!-- Structural overlay -->
+              <div class="holder-ribs"></div>
+
               <!-- VALUE INSIDE -->
               <div class="gas-value">
                 <p>
@@ -63,12 +69,13 @@
                 [ngClass]="gasLevelClass"
                 [style.height.%]="gasFillPercent"
               >
-                <div class="gas-wave"></div>
+                <!-- Piston top instead of liquid wave -->
+                <div class="piston-edge"></div>
                 <div class="gas-shine"></div>
               </div>
             </div>
     
-            <div class="cylinder-base"></div>
+            <div class="holder-base"></div>
           </div>
     
           <!-- HEADER BELOW -->
