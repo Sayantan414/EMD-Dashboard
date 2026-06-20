@@ -302,8 +302,20 @@ td {
     border-left: 3px solid #3b82f6;
 }
 
+.btn.change {
+    border-left: 3px solid #8b5cf6; /* Vibrant Purple */
+}
+
+.btn.configure {
+    border-left: 3px solid #06b6d4; /* Bright Cyan */
+}
+
 .btn.delete {
-    border-left: 3px solid #ef4444;
+    border-left: 3px solid #ef4444; /* Red for Disable */
+}
+
+.btn.default {
+    border-left: 3px solid #64748b; /* Slate Gray */
 }
 
 .btn.copy {
