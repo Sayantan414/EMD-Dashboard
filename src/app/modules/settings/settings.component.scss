@@ -20,6 +20,14 @@
   color: var(--text);
   padding: 24px;
   box-sizing: border-box;
+
+  :host-context(.dark-theme) & {
+      background: var(--color-bg-glass);
+      border-radius: 16px;
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-primary), var(--shadow-secondary), var(--shadow-inset-light), var(--shadow-inset-dark);
+      border: 1.5px solid var(--color-border-primary);
+  }
 }
 
 
@@ -89,31 +97,73 @@ thead th {
     letter-spacing: 0.4px;
     position: sticky;
     top: 0;
-    background: linear-gradient(135deg, #0078d7, #00b8a9); /* Beautiful gradient header */
-    border: 1px solid #fff;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+    text-transform: uppercase;
     z-index: 10;
+
+    :host-context(.dark-theme) & {
+        background: var(--gradient-header);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+        border-right: 1px solid rgba(255, 255, 255, 0.25);
+        border-left: 1px solid rgba(255, 255, 255, 0.25);
+        border-top: 1px solid rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(10px);
+        color: var(--color-text-primary);
+    }
+}
+
+thead th span {
+    animation: rgbColor 4s infinite linear;
+    display: inline-block;
+}
+
+@keyframes rgbColor {
+    0% { color: var(--0); }
+    33% { color: var(--33); }
+    66% { color: var(--66); }
+    100% { color: var(--100); }
 }
 
 tbody tr {
     transition: transform .12s ease, background-color .12s ease, box-shadow .12s ease;
     cursor: default;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 2px solid var(--border);
+
+    :host-context(.dark-theme) & {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        background: transparent;
+    }
 }
 
 tbody tr:hover {
     transform: translateY(-4px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     background-color: var(--tr_hover);
+
+    :host-context(.dark-theme) & {
+        background: var(--color-overlay-green);
+        border: 1px solid var(--color-border-medium);
+        box-shadow: 0 4px 12px rgba(26, 127, 100, 0.3);
+    }
 }
 
 tbody tr:nth-child(odd) {
     background-color: var(--nthch);
+
+    :host-context(.dark-theme) & {
+        background: var(--color-overlay-odd);
+    }
 }
 
 td {
     padding: 14px 18px;
     vertical-align: middle;
     color: var(--text);
+    text-align: left !important;
 
     :host-context(.dark-theme) & {
         color: #ffffff;
@@ -125,6 +175,9 @@ td {
     display: flex;
     gap: 12px;
     align-items: center;
+    justify-content: flex-start;
+    text-align: left !important;
+    width: 100%;
 }
 
 .param .icon {
@@ -141,6 +194,8 @@ td {
 
     :host-context(.dark-theme) & {
         color: #ffffff;
+        background: transparent;
+        border: 1px solid var(--color-border-light);
     }
 }
 
@@ -152,6 +207,7 @@ td {
 .param .label .name {
     font-weight: 600;
     color: var(--text);
+    text-align: left !important;
 
     :host-context(.dark-theme) & {
         color: #ffffff;
@@ -162,6 +218,7 @@ td {
     font-size: 12px;
     color: var(--text);
     opacity: 0.8;
+    text-align: left !important;
 }
 
 /* Value */
@@ -172,6 +229,9 @@ td {
     gap: 8px;
     align-items: center;
     flex-wrap: wrap;
+    justify-content: flex-start;
+    text-align: left !important;
+    width: 100%;
 }
 
 .pill {
@@ -184,9 +244,11 @@ td {
     font-weight: 600;
 
     :host-context(.dark-theme) & {
-        color: #ffffff;
-        background: transparent;
-        border: none;
+        color: var(--color-text-accent);
+        background: var(--valuebox);
+        border: 1px solid var(--color-border-accent);
+        border-radius: 6px;
+        backdrop-filter: blur(5px);
     }
 }
 
