@@ -36,8 +36,9 @@ fuse-horizontal-navigation {
             }
         }
 
-        /* Basic - When item active (current link) */
-        fuse-horizontal-navigation-basic-item {
+        /* Basic & Branch - When item active (current link) */
+        fuse-horizontal-navigation-basic-item,
+        fuse-horizontal-navigation-branch-item {
 
             .fuse-horizontal-navigation-item-active,
             .fuse-horizontal-navigation-item-active-forced {
@@ -71,8 +72,7 @@ fuse-horizontal-navigation {
         /* Branch - When menu open */
         fuse-horizontal-navigation-branch-item {
 
-            .fuse-horizontal-navigation-menu-active,
-            .fuse-horizontal-navigation-menu-active-forced {
+            .fuse-horizontal-navigation-menu-active {
 
                 .fuse-horizontal-navigation-item-wrapper {
                     @apply bg-hover;
@@ -119,8 +119,9 @@ fuse-horizontal-navigation {
 /* Navigation menu item common */
 .fuse-horizontal-navigation-menu-item {
 
-    /* Basic - When item active (current link) */
-    fuse-horizontal-navigation-basic-item {
+    /* Basic & Branch - When item active (current link) */
+    fuse-horizontal-navigation-basic-item,
+    fuse-horizontal-navigation-branch-item {
 
         .fuse-horizontal-navigation-item-active,
         .fuse-horizontal-navigation-item-active-forced {

@@ -309,9 +309,24 @@ export class FuseVerticalNavigationCollapsableItemComponent implements OnInit, O
             }
 
             // Check if the child has a link and is active
-            if ( child.link && this._router.isActive(child.link, child.exactMatch || false) )
+            if ( child.link )
             {
-                return true;
+                const urlTree = this._router.createUrlTree([child.link], {
+                    queryParams: child.queryParams,
+                    fragment: child.fragment
+                });
+
+                const isActiveMatchOptions: any = child.isActiveMatchOptions || {
+                    paths: child.exactMatch ? 'exact' : 'subset',
+                    queryParams: child.exactMatch || child.queryParams ? 'exact' : 'subset',
+                    fragment: 'ignored',
+                    matrixParams: 'ignored'
+                };
+
+                if ( this._router.isActive(urlTree, isActiveMatchOptions) )
+                {
+                    return true;
+                }
             }
         }
 

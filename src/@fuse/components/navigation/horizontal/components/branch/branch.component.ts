@@ -9,7 +9,8 @@ import { FuseHorizontalNavigationDividerItemComponent } from '@fuse/components/n
 import { FuseHorizontalNavigationComponent } from '@fuse/components/navigation/horizontal/horizontal.component';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { FuseNavigationItem } from '@fuse/components/navigation/navigation.types';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, filter } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
     selector       : 'fuse-horizontal-navigation-branch-item',
@@ -38,6 +39,7 @@ export class FuseHorizontalNavigationBranchItemComponent implements OnInit, OnDe
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: FuseNavigationService,
+        private _router: Router,
     )
     {
     }
@@ -62,6 +64,34 @@ export class FuseHorizontalNavigationBranchItemComponent implements OnInit, OnDe
             // Mark for check
             this._changeDetectorRef.markForCheck();
         });
+
+        // Attach a listener to the NavigationEnd event
+        this._router.events
+            .pipe(
+                filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+                takeUntil(this._unsubscribeAll),
+            )
+            .subscribe((event: NavigationEnd) =>
+            {
+                // If the item has a children that has a matching url with the current url, set it to active
+                if ( this._hasActiveChild(this.item, event.urlAfterRedirects) )
+                {
+                    this.item.active = true;
+                }
+                else
+                {
+                    this.item.active = false;
+                }
+                
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
+            });
+
+        // Initialize active state
+        if ( this._hasActiveChild(this.item, this._router.url) )
+        {
+            this.item.active = true;
+        }
     }
 
     /**
@@ -96,5 +126,61 @@ export class FuseHorizontalNavigationBranchItemComponent implements OnInit, OnDe
     trackByFn(index: number, item: any): any
     {
         return item.id || index;
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Private methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Check if the given item has the given url
+     * in one of its children
+     *
+     * @param item
+     * @param currentUrl
+     * @private
+     */
+    private _hasActiveChild(item: FuseNavigationItem, currentUrl: string): boolean
+    {
+        const children = item.children;
+
+        if ( !children )
+        {
+            return false;
+        }
+
+        for ( const child of children )
+        {
+            if ( child.children )
+            {
+                if ( this._hasActiveChild(child, currentUrl) )
+                {
+                    return true;
+                }
+            }
+
+            // Check if the child has a link and is active
+            if ( child.link )
+            {
+                const urlTree = this._router.createUrlTree([child.link], {
+                    queryParams: child.queryParams,
+                    fragment: child.fragment
+                });
+
+                const isActiveMatchOptions: any = child.isActiveMatchOptions || {
+                    paths: child.exactMatch ? 'exact' : 'subset',
+                    queryParams: child.exactMatch || child.queryParams ? 'exact' : 'subset',
+                    fragment: 'ignored',
+                    matrixParams: 'ignored'
+                };
+
+                if ( this._router.isActive(urlTree, isActiveMatchOptions) )
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

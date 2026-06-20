@@ -89,6 +89,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         title: 'Gas Holder',
         type: 'basic',
         link: '/gasutility/gas_holder',
+        exactMatch: true,
         classes: { wrapper: 'nav-item-cog' }
       },
       // {
