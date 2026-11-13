@@ -42,27 +42,44 @@
 </mat-menu> -->
 
 <mat-menu [xPosition]="'before'" #userActions="matMenu" class="corporate-menu">
+
+  <!-- User Info Section -->
+  <div class="user-menu-header" (click)="$event.stopPropagation()">
+    <div class="user-avatar-circle">
+      <mat-icon style="font-size:20px; width:20px; height:20px; color:#fff;">person</mat-icon>
+    </div>
+    <div class="user-info-block">
+      <span class="user-signed-label">Signed in as</span>
+      <span class="user-role-name">{{ user.role }}</span>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <!-- Sign Out Button -->
+  <button mat-menu-item (click)="signOut()" class="signout-btn">
+    <mat-icon class="signout-icon">logout</mat-icon>
+    <span class="signout-label">Sign Out</span>
+  </button>
+
+</mat-menu>
+
+<!-- OLD CODE (commented out for reference) -->
+<!--
+<mat-menu [xPosition]="'before'" #userActions="matMenu" class="corporate-menu">
   <button mat-menu-item>
     <span class="flex flex-col leading-none">
       <span class="menu-text-muted">Signed in as</span>
-      <span class="mt-1.5 text-md font-medium menu-text-strong">{{
-        user.role
-      }}</span>
+      <span class="mt-1.5 text-md font-medium menu-text-strong">{{ user.role }}</span>
     </span>
   </button>
-
   <mat-divider class="my-2"></mat-divider>
-
-  <!-- <button mat-menu-item (click)="viewUser()">
-        <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
-        <span class="menu-text-strong">Profile</span>
-    </button> -->
-
   <button mat-menu-item (click)="signOut()">
     <mat-icon>logout</mat-icon>
     <span class="menu-text text-red-600">Sign out</span>
   </button>
 </mat-menu>
+-->
 
 <!-- <mat-menu class="user-status-menu" #userStatus="matMenu">
     <button mat-menu-item (click)="updateUserStatus('online')">

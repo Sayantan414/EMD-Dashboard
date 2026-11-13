@@ -20,7 +20,8 @@
     /* modern blue for buttons, highlights */
     --accent: #00b8a9;
     /* teal accent */
-    --header_active: #e15cf3;
+    --header_active: #FFD600;
+    // --header_active: #e15cf3;  /* old: pink/purple */
     // --header_active: #f49dff;
 
     /* teal accent */
@@ -299,7 +300,7 @@
     --primary: #1d1d1dd0;
     /* night mode primary */
     --accent: #121212;
-    --header_active: #16de8b;
+    --header_active: #FFD600;  /* yellow - dark mode */
     --header_inactive: #c6c6c6;
     --background: #0b1d26;
     --background_transparent: #1d1d1dd0;
@@ -948,29 +949,98 @@ tr:nth-child(even) {
 
 
 //*** Signed in as, Profile, Sign out part ***//
-/* Default corporate menu text */
-.menu-text {
-    color: #1e293b;
-    /* Slate-800 (dark gray-blue) */
-    font-weight: 500;
-    transition: color 0.3s ease;
+
+/* ── Corporate Menu Panel ── */
+.corporate-menu .mat-mdc-menu-panel,
+.mat-mdc-menu-panel.corporate-menu {
+    min-width: 160px !important;
+    max-width: 180px !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18) !important;
+    padding: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-/* Subtle but readable label text */
-.menu-text-muted {
-    color: #374151;
-    /* Slate-700 */
-    font-size: 0.85rem;
-    font-weight: 500;
+/* ── User Info Header Block ── */
+.user-menu-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: linear-gradient(135deg, #003a6e 0%, #00509e 100%);
+    cursor: default;
+    pointer-events: none;
 }
 
+.user-avatar-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
 
-/* Strong highlight text (like email) */
-.menu-text-strong {
-    color: #1e40af;
-    /* Blue-800 */
+.user-info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.user-signed-label {
+    font-size: 10px;
+    color: #ffffff;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+.user-role-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #FFD600;
+    letter-spacing: 0.4px;
+    text-transform: capitalize;
+}
+
+/* ── Sign Out Button ── */
+.signout-btn {
+    width: 100%;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px;
+    padding: 8px 12px !important;
+    min-height: unset !important;
+    background: transparent;
+    transition: background 0.2s ease !important;
+}
+
+.signout-btn:hover {
+    background: rgba(220, 38, 38, 0.08) !important;
+}
+
+.signout-icon {
+    color: #dc2626 !important;
+    font-size: 17px !important;
+    width: 17px !important;
+    height: 17px !important;
+}
+
+.signout-label {
+    font-size: 13px;
     font-weight: 600;
+    color: #dc2626;
+    letter-spacing: 0.2px;
 }
+
+/* OLD styles kept for reference */
+// .menu-text { color: #1e293b; font-weight: 500; transition: color 0.3s ease; }
+// .menu-text-muted { color: #374151; font-size: 0.85rem; font-weight: 500; }
+// .menu-text-strong { color: #1e40af; font-weight: 600; }
 
 
 .select-all-btn {
