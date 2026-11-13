@@ -263,3 +263,27 @@ li {
 //   -webkit-background-clip: text;
 //   -webkit-text-fill-color: transparent;
 // }
+
+
+
+.footer-text {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #b2ebf2;
+
+    animation: letterExpand 4s ease-in-out infinite;
+}
+
+@keyframes letterExpand {
+
+    0%,
+    100% {
+        letter-spacing: 0.5px;
+    }
+
+    50% {
+        letter-spacing: 2px;
+        // text-shadow: 0 0 8px #00e5ff;
+    }
+}

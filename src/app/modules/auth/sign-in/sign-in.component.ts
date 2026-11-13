@@ -77,7 +77,7 @@ export class AuthSignInComponent implements OnInit {
      */
     ngOnInit(): void {
 
-        this.coverUrl = 'assets/images/energy.jfif';
+        this.coverUrl = 'assets/images/energy2.png';
         // Change background image at regular intervals
         setInterval(() => {
             this.imageIndex = (this.imageIndex % this.maxImages) + 1;
