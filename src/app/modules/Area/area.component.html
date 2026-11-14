@@ -170,10 +170,25 @@
 
       <!-- Chart 3 -->
       <div class="chart-box chart-make">
-        <!-- Loader Overlay -->
+        <!-- NEW Attractive Loader -->
+        <div class="chart-loader" *ngIf="loading">
+          <div class="cob-loader-box">
+            <div class="cob-orbit-ring ring-1"></div>
+            <div class="cob-orbit-ring ring-2"></div>
+            <div class="cob-orbit-ring ring-3"></div>
+            <div class="cob-loader-core">
+              <span class="cob-loader-dot"></span>
+            </div>
+            <p class="cob-loader-text">Loading data<span class="cob-dots"></span></p>
+          </div>
+        </div>
+
+        <!-- OLD Loader (commented out) -->
+        <!--
         <div class="chart-loader" *ngIf="loading">
           <mat-spinner color="primary" [diameter]="90"></mat-spinner>
         </div>
+        -->
         <span
           class="chart-header_make"
           *ngIf="responseData.length > 0 && hasMake"
@@ -184,10 +199,25 @@
 
       <!-- Chart 4 -->
       <div class="chart-box chart-pressure">
-        <!-- Loader Overlay -->
+        <!-- NEW Attractive Loader -->
+        <div class="chart-loader" *ngIf="loading">
+          <div class="cob-loader-box">
+            <div class="cob-orbit-ring ring-1"></div>
+            <div class="cob-orbit-ring ring-2"></div>
+            <div class="cob-orbit-ring ring-3"></div>
+            <div class="cob-loader-core">
+              <span class="cob-loader-dot"></span>
+            </div>
+            <p class="cob-loader-text">Loading data<span class="cob-dots"></span></p>
+          </div>
+        </div>
+
+        <!-- OLD Loader (commented out) -->
+        <!--
         <div class="chart-loader" *ngIf="loading">
           <mat-spinner color="primary" [diameter]="90"></mat-spinner>
         </div>
+        -->
         <span
           class="chart-header_pressure"
           *ngIf="responseData.length > 0 && hasPressure"
@@ -201,10 +231,25 @@
 
       <!-- Chart 1 -->
       <div class="chart-box chart-make">
-        <!-- Loader Overlay -->
+        <!-- NEW Attractive Loader -->
+        <div class="chart-loader" *ngIf="loading">
+          <div class="cob-loader-box">
+            <div class="cob-orbit-ring ring-1"></div>
+            <div class="cob-orbit-ring ring-2"></div>
+            <div class="cob-orbit-ring ring-3"></div>
+            <div class="cob-loader-core">
+              <span class="cob-loader-dot"></span>
+            </div>
+            <p class="cob-loader-text">Loading data<span class="cob-dots"></span></p>
+          </div>
+        </div>
+
+        <!-- OLD Loader (commented out) -->
+        <!--
         <div class="chart-loader" *ngIf="loading">
           <mat-spinner color="primary" [diameter]="90"></mat-spinner>
         </div>
+        -->
         <span
           class="chart-header_make"
           *ngIf="responseData.length > 0 && hasMake"
@@ -215,10 +260,25 @@
 
       <!-- Chart 2 -->
       <div class="chart-box chart-pressure">
-        <!-- Loader Overlay -->
+        <!-- NEW Attractive Loader -->
+        <div class="chart-loader" *ngIf="loading">
+          <div class="cob-loader-box">
+            <div class="cob-orbit-ring ring-1"></div>
+            <div class="cob-orbit-ring ring-2"></div>
+            <div class="cob-orbit-ring ring-3"></div>
+            <div class="cob-loader-core">
+              <span class="cob-loader-dot"></span>
+            </div>
+            <p class="cob-loader-text">Loading data<span class="cob-dots"></span></p>
+          </div>
+        </div>
+
+        <!-- OLD Loader (commented out) -->
+        <!--
         <div class="chart-loader" *ngIf="loading">
           <mat-spinner color="primary" [diameter]="90"></mat-spinner>
         </div>
+        -->
         <span
           class="chart-header_pressure"
           *ngIf="responseData.length > 0 && hasPressure"

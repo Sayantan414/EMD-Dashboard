@@ -40,9 +40,26 @@
   </div>
   
   <div class="modal-body">
+
+    <!-- NEW Attractive Loader -->
+    <div *ngIf="loading" class="cob-loader-overlay">
+      <div class="cob-loader-box">
+        <div class="cob-orbit-ring ring-1"></div>
+        <div class="cob-orbit-ring ring-2"></div>
+        <div class="cob-orbit-ring ring-3"></div>
+        <div class="cob-loader-core">
+          <span class="cob-loader-dot"></span>
+        </div>
+        <p class="cob-loader-text">Loading data<span class="cob-dots"></span></p>
+      </div>
+    </div>
+
+    <!-- OLD Loader (commented out) -->
+    <!--
     <div *ngIf="loading" class="absolute inset-0 z-50 flex items-center justify-center mt-[-150px]">
       <mat-spinner color="primary" [diameter]="100"></mat-spinner>
     </div>
+    -->
     <!-- If data exists -->
   
       <!-- Chart 1 -->

@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -64,7 +64,8 @@ export class AuthSignInComponent implements OnInit {
         private commonService: CommonService,
         private userService: UserService,
         private roleService: RoleService,
-        private _snackBar: MatSnackBar
+        private _snackBar: MatSnackBar,
+        private _cdr: ChangeDetectorRef
     ) {
     }
 
@@ -98,6 +99,44 @@ export class AuthSignInComponent implements OnInit {
             password: ['', Validators.required],
             // rememberMe: [''],
         });
+
+        // Fix: Detect browser autofill and update form values
+        // Browser autofill doesn't trigger Angular's valueChanges, so we poll the DOM
+        setTimeout(() => {
+            this._detectAutofill();
+        }, 500);
+    }
+
+    /**
+     * Detect browser autofill and patch form values accordingly
+     * so the Sign In button becomes enabled when credentials are pre-filled
+     */
+    private _detectAutofill(): void {
+        const useridEl = document.getElementById('userid') as HTMLInputElement;
+        const passwordEl = document.getElementById('password') as HTMLInputElement;
+
+        if (useridEl?.value && passwordEl?.value) {
+            this.signInForm.patchValue({
+                userid: useridEl.value,
+                password: passwordEl.value
+            });
+            this.signInForm.markAllAsTouched();
+            this._cdr.detectChanges();
+        } else {
+            // Retry once more after 1s if autofill hasn't happened yet
+            setTimeout(() => {
+                const uid = document.getElementById('userid') as HTMLInputElement;
+                const pwd = document.getElementById('password') as HTMLInputElement;
+                if (uid?.value && pwd?.value) {
+                    this.signInForm.patchValue({
+                        userid: uid.value,
+                        password: pwd.value
+                    });
+                    this.signInForm.markAllAsTouched();
+                    this._cdr.detectChanges();
+                }
+            }, 1000);
+        }
     }
 
     signIn(): void {

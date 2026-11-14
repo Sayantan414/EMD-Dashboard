@@ -52,10 +52,10 @@ export class GasHolderComponent implements OnInit {
   maxGasLevel = 30;
 
   max_GASHOLDERPRES = 300;
-  max_GASHOLDERTEMP = 70;
+  max_GASHOLDERTEMP = 100;
   max_GAS_FLOW_mills = 30000;
-  max_EXPORTEDGAS = 10000;
-  max_Mills_totaliser = 2000000;
+  max_EXPORTEDGAS = 80000;
+  max_Mills_totaliser = 100000;
   max_PBS_MINUS_MILLS = 80000;
 
   gasholder_res = {

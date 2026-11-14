@@ -549,9 +549,25 @@
     
           <div class="trend-header mt-4">COB#11</div>
             <!-- Loader Overlay -->
+            <!-- NEW Attractive Loader -->
+            <div class="chart-loader" *ngIf="loading">
+              <div class="cob-loader-box">
+                <div class="cob-orbit-ring ring-1"></div>
+                <div class="cob-orbit-ring ring-2"></div>
+                <div class="cob-orbit-ring ring-3"></div>
+                <div class="cob-loader-core">
+                  <span class="cob-loader-dot"></span>
+                </div>
+                <p class="cob-loader-text">Loading data<span class="cob-dots"></span></p>
+              </div>
+            </div>
+
+            <!-- OLD Loader (commented out) -->
+            <!--
             <div class="chart-loader" *ngIf="loading">
               <mat-spinner color="primary" [diameter]="90"></mat-spinner>
             </div>
+            -->
           <!-- Chart  -->
           <div class="chart-box chart-trend">
 
